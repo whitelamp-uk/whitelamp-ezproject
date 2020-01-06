@@ -41,48 +41,6 @@ BEGIN
 END$$
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS `ezpTimesheet`$$
-CREATE PROCEDURE `ezpTimesheet`(
-    IN `weekEndedSundayOrEmptyForAll` date
-   ,IN `developerOrEmptyForAll` varchar(64) charset ascii
-   ,IN `projectOrEmptyForAll` varchar(64) charset ascii
-)
-BEGIN
-  SELECT
-    *
-   ,DAYNAME(`day`) AS `dow`
-   ,`day`
-   ,`hours`
-   ,`developer`
-   ,`project`
-   ,`comment`
-  FROM `ezp_timesheet`
-  WHERE 1
-    AND (
-         weekEndedSundayOrEmptyForAll IS NULL
-      OR weekEndedSundayOrEmptyForAll=''
-      OR weekEndedSundayOrEmptyForAll='0000-00-00'
-      OR (
-           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
-       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
-       AND `day`<=weekEndedSundayOrEmptyForAll
-      )
-    )
-    AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
-    )
-    AND (
-        developerOrEmptyForAll IS NULL
-     OR developerOrEmptyForAll=''
-     OR `developer`=developerOrEmptyForAll
-    )
-  ORDER BY `day`,`developer`,`id`
-  ;
-END$$
-
-DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpJobs`$$
 CREATE PROCEDURE `ezpJobs`(
   IN        `developer` VARCHAR(64) CHARSET ascii
@@ -177,6 +135,77 @@ BEGIN
   WHERE 1
   GROUP BY `ezp_component`.`package`
   ORDER BY `ezp_component`.`package`
+  ;
+END$$
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `ezpTimesheet`$$
+CREATE PROCEDURE `ezpTimesheet`(
+    IN `weekEndedSundayOrEmptyForAll` date
+   ,IN `developerOrEmptyForAll` varchar(64) charset ascii
+   ,IN `projectOrEmptyForAll` varchar(64) charset ascii
+)
+BEGIN
+  SELECT
+    *
+   ,DAYNAME(`day`) AS `dow`
+   ,`day`
+   ,`hours`
+   ,`developer`
+   ,`project`
+   ,`comment`
+  FROM `ezp_timesheet`
+  WHERE 1
+    AND (
+         weekEndedSundayOrEmptyForAll IS NULL
+      OR weekEndedSundayOrEmptyForAll=''
+      OR weekEndedSundayOrEmptyForAll='0000-00-00'
+      OR (
+           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
+       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
+       AND `day`<=weekEndedSundayOrEmptyForAll
+      )
+    )
+    AND (
+         projectOrEmptyForAll IS NULL
+      OR projectOrEmptyForAll=''
+      OR `project`=projectOrEmptyForAll
+    )
+    AND (
+        developerOrEmptyForAll IS NULL
+     OR developerOrEmptyForAll=''
+     OR `developer`=developerOrEmptyForAll
+    )
+  ORDER BY `day`,`project`,`developer`,`id`
+  ;
+  SELECT
+    SUM(`hours`) AS `total_hours`
+   ,`developer`
+   ,`project`
+  FROM `ezp_timesheet`
+  WHERE 1
+    AND (
+         weekEndedSundayOrEmptyForAll IS NULL
+      OR weekEndedSundayOrEmptyForAll=''
+      OR weekEndedSundayOrEmptyForAll='0000-00-00'
+      OR (
+           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
+       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
+       AND `day`<=weekEndedSundayOrEmptyForAll
+      )
+    )
+    AND (
+         projectOrEmptyForAll IS NULL
+      OR projectOrEmptyForAll=''
+      OR `project`=projectOrEmptyForAll
+    )
+    AND (
+        developerOrEmptyForAll IS NULL
+     OR developerOrEmptyForAll=''
+     OR `developer`=developerOrEmptyForAll
+    )
+  GROUP BY `project`,`developer`
+  ORDER BY `project`,`developer`
   ;
 END$$
 
