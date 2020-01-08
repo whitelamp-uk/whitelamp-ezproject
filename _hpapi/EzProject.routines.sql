@@ -141,7 +141,8 @@ END$$
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpTimesheet`$$
 CREATE PROCEDURE `ezpTimesheet`(
-    IN `weekEndedSundayOrEmptyForAll` date
+    IN `monthOrEmptyForAll` char(7) charset ascii
+   ,IN `weekEndedSundayOrEmptyForAll` date
    ,IN `developerOrEmptyForAll` varchar(64) charset ascii
    ,IN `projectOrEmptyForAll` varchar(64) charset ascii
 )
@@ -156,6 +157,12 @@ BEGIN
    ,`comment`
   FROM `ezp_timesheet`
   WHERE 1
+    AND (
+         monthOrEmptyForAll IS NULL
+      OR monthOrEmptyForAll=''
+      OR monthOrEmptyForAll='0000-00'
+      OR `day` LIKE CONCAT(monthOrEmptyForAll,'-__')
+    )
     AND (
          weekEndedSundayOrEmptyForAll IS NULL
       OR weekEndedSundayOrEmptyForAll=''
@@ -184,6 +191,12 @@ BEGIN
    ,`project`
   FROM `ezp_timesheet`
   WHERE 1
+    AND (
+         monthOrEmptyForAll IS NULL
+      OR monthOrEmptyForAll=''
+      OR monthOrEmptyForAll='0000-00'
+      OR `day` LIKE CONCAT(monthOrEmptyForAll,'-__')
+    )
     AND (
          weekEndedSundayOrEmptyForAll IS NULL
       OR weekEndedSundayOrEmptyForAll=''
