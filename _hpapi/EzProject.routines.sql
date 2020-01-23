@@ -4,6 +4,7 @@ SET NAMES utf8;
 SET time_zone = '+00:00';
 
 
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpApp`$$
 CREATE PROCEDURE `ezpApp`(
@@ -40,6 +41,7 @@ BEGIN
   ;
 END$$
 
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpJobs`$$
 CREATE PROCEDURE `ezpJobs`(
@@ -67,6 +69,7 @@ BEGIN
   ORDER BY `ezp_component`.`required_by` IS NULL,`ezp_component`.`required_by`
   ;
 END$$
+
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpPackage`$$
@@ -105,6 +108,7 @@ BEGIN
   ;
 END$$
 
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpSummary`$$
 CREATE PROCEDURE `ezpSummary`(
@@ -138,28 +142,35 @@ BEGIN
   ;
 END$$
 
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpTimesheet`$$
 CREATE PROCEDURE `ezpTimesheet`(
-    IN `monthOrEmptyForAll` char(7) charset ascii
+    IN `yearEndDateOrEmptyForAll` date
+   ,IN `monthOrEmptyForAll` char(7) charset ascii
    ,IN `weekEndedSundayOrEmptyForAll` date
    ,IN `developerOrEmptyForAll` varchar(64) charset ascii
    ,IN `projectOrEmptyForAll` varchar(64) charset ascii
 )
 BEGIN
   SELECT
-    `id`
-   ,`day`
-   ,DAYNAME(`day`) AS `dow`
-   ,`hours`
-   ,`developer`
-   ,`project`
-   ,`comment`
-   ,`vendor`
-   ,`package`
-   ,`handle`
+    CONCAT('Results restricted to those after ',ezpConfig('timeSheetLimitToAfter'),' where data is complete') AS `Notice:`
+  UNION
+  SELECT 'To include earlier results, use ezpTimesheetUnrestricted()'
+  ;
+  SELECT
+    CONCAT(SUM(`hours`),' hours') AS `grand_total`
   FROM `ezp_timesheet`
-  WHERE 1
+  WHERE `day`>ezpConfig('timeSheetLimitToAfter')
+    AND (
+         yearEndDateOrEmptyForAll IS NULL
+      OR yearEndDateOrEmptyForAll=''
+      OR yearEndDateOrEmptyForAll='0000-00-00'
+      OR (
+           `day`>DATE_SUB(yearEndDateOrEmptyForAll,INTERVAL 1 YEAR)
+       AND `day`<=yearEndDateOrEmptyForAll
+      )
+    )
     AND (
          monthOrEmptyForAll IS NULL
       OR monthOrEmptyForAll=''
@@ -186,14 +197,22 @@ BEGIN
      OR developerOrEmptyForAll=''
      OR `developer`=developerOrEmptyForAll
     )
-  ORDER BY `day`,`project`,`developer`,`id`
   ;
   SELECT
     SUM(`hours`) AS `total_hours`
    ,`developer`
    ,`project`
   FROM `ezp_timesheet`
-  WHERE 1
+  WHERE `day`>ezpConfig('timeSheetLimitToAfter')
+    AND (
+         yearEndDateOrEmptyForAll IS NULL
+      OR yearEndDateOrEmptyForAll=''
+      OR yearEndDateOrEmptyForAll='0000-00-00'
+      OR (
+           `day`>DATE_SUB(yearEndDateOrEmptyForAll,INTERVAL 1 YEAR)
+       AND `day`<=yearEndDateOrEmptyForAll
+      )
+    )
     AND (
          monthOrEmptyForAll IS NULL
       OR monthOrEmptyForAll=''
@@ -224,9 +243,27 @@ BEGIN
   ORDER BY `project`,`developer`
   ;
   SELECT
-    CONCAT(SUM(`hours`),' hours') AS `grand_total`
+    `id`
+   ,`day`
+   ,DAYNAME(`day`) AS `dow`
+   ,`hours`
+   ,`developer`
+   ,`project`
+   ,`comment`
+   ,`vendor`
+   ,`package`
+   ,`handle`
   FROM `ezp_timesheet`
-  WHERE 1
+  WHERE `day`>ezpConfig('timeSheetLimitToAfter')
+    AND (
+         yearEndDateOrEmptyForAll IS NULL
+      OR yearEndDateOrEmptyForAll=''
+      OR yearEndDateOrEmptyForAll='0000-00-00'
+      OR (
+           `day`>DATE_SUB(yearEndDateOrEmptyForAll,INTERVAL 1 YEAR)
+       AND `day`<=yearEndDateOrEmptyForAll
+      )
+    )
     AND (
          monthOrEmptyForAll IS NULL
       OR monthOrEmptyForAll=''
@@ -253,6 +290,157 @@ BEGIN
      OR developerOrEmptyForAll=''
      OR `developer`=developerOrEmptyForAll
     )
+  ORDER BY `day`,`project`,`developer`,`id`
+  ;
+END$$
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `ezpTimesheetUnrestricted`$$
+CREATE PROCEDURE `ezpTimesheetUnrestricted`(
+    IN `yearEndDateOrEmptyForAll` date
+   ,IN `monthOrEmptyForAll` char(7) charset ascii
+   ,IN `weekEndedSundayOrEmptyForAll` date
+   ,IN `developerOrEmptyForAll` varchar(64) charset ascii
+   ,IN `projectOrEmptyForAll` varchar(64) charset ascii
+)
+BEGIN
+  SELECT
+    CONCAT('Unrestricted results are incomplete up to and including ',ezpConfig('timeSheetLimitToAfter')) AS `Notice:`
+  ;
+  SELECT
+    CONCAT(SUM(`hours`),' hours') AS `grand_total`
+  FROM `ezp_timesheet`
+  WHERE 1
+    AND (
+         yearEndDateOrEmptyForAll IS NULL
+      OR yearEndDateOrEmptyForAll=''
+      OR yearEndDateOrEmptyForAll='0000-00-00'
+      OR (
+           `day`>DATE_SUB(yearEndDateOrEmptyForAll,INTERVAL 1 YEAR)
+       AND `day`<=yearEndDateOrEmptyForAll
+      )
+    )
+    AND (
+         monthOrEmptyForAll IS NULL
+      OR monthOrEmptyForAll=''
+      OR monthOrEmptyForAll='0000-00'
+      OR `day` LIKE CONCAT(monthOrEmptyForAll,'-__')
+    )
+    AND (
+         weekEndedSundayOrEmptyForAll IS NULL
+      OR weekEndedSundayOrEmptyForAll=''
+      OR weekEndedSundayOrEmptyForAll='0000-00-00'
+      OR (
+           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
+       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
+       AND `day`<=weekEndedSundayOrEmptyForAll
+      )
+    )
+    AND (
+         projectOrEmptyForAll IS NULL
+      OR projectOrEmptyForAll=''
+      OR `project`=projectOrEmptyForAll
+    )
+    AND (
+        developerOrEmptyForAll IS NULL
+     OR developerOrEmptyForAll=''
+     OR `developer`=developerOrEmptyForAll
+    )
+  ;
+  SELECT
+    SUM(`hours`) AS `total_hours`
+   ,`developer`
+   ,`project`
+  FROM `ezp_timesheet`
+  WHERE 1
+    AND (
+         yearEndDateOrEmptyForAll IS NULL
+      OR yearEndDateOrEmptyForAll=''
+      OR yearEndDateOrEmptyForAll='0000-00-00'
+      OR (
+           `day`>DATE_SUB(yearEndDateOrEmptyForAll,INTERVAL 1 YEAR)
+       AND `day`<=yearEndDateOrEmptyForAll
+      )
+    )
+    AND (
+         monthOrEmptyForAll IS NULL
+      OR monthOrEmptyForAll=''
+      OR monthOrEmptyForAll='0000-00'
+      OR `day` LIKE CONCAT(monthOrEmptyForAll,'-__')
+    )
+    AND (
+         weekEndedSundayOrEmptyForAll IS NULL
+      OR weekEndedSundayOrEmptyForAll=''
+      OR weekEndedSundayOrEmptyForAll='0000-00-00'
+      OR (
+           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
+       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
+       AND `day`<=weekEndedSundayOrEmptyForAll
+      )
+    )
+    AND (
+         projectOrEmptyForAll IS NULL
+      OR projectOrEmptyForAll=''
+      OR `project`=projectOrEmptyForAll
+    )
+    AND (
+        developerOrEmptyForAll IS NULL
+     OR developerOrEmptyForAll=''
+     OR `developer`=developerOrEmptyForAll
+    )
+  GROUP BY `project`,`developer`
+  ORDER BY `project`,`developer`
+  ;
+  SELECT
+    `id`
+   ,`day`
+   ,DAYNAME(`day`) AS `dow`
+   ,`hours`
+   ,`developer`
+   ,`project`
+   ,`comment`
+   ,`vendor`
+   ,`package`
+   ,`handle`
+  FROM `ezp_timesheet`
+  WHERE 1
+    AND (
+         yearEndDateOrEmptyForAll IS NULL
+      OR yearEndDateOrEmptyForAll=''
+      OR yearEndDateOrEmptyForAll='0000-00-00'
+      OR (
+           `day`>DATE_SUB(yearEndDateOrEmptyForAll,INTERVAL 1 YEAR)
+       AND `day`<=yearEndDateOrEmptyForAll
+      )
+    )
+    AND (
+         monthOrEmptyForAll IS NULL
+      OR monthOrEmptyForAll=''
+      OR monthOrEmptyForAll='0000-00'
+      OR `day` LIKE CONCAT(monthOrEmptyForAll,'-__')
+    )
+    AND (
+         weekEndedSundayOrEmptyForAll IS NULL
+      OR weekEndedSundayOrEmptyForAll=''
+      OR weekEndedSundayOrEmptyForAll='0000-00-00'
+      OR (
+           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
+       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
+       AND `day`<=weekEndedSundayOrEmptyForAll
+      )
+    )
+    AND (
+         projectOrEmptyForAll IS NULL
+      OR projectOrEmptyForAll=''
+      OR `project`=projectOrEmptyForAll
+    )
+    AND (
+        developerOrEmptyForAll IS NULL
+     OR developerOrEmptyForAll=''
+     OR `developer`=developerOrEmptyForAll
+    )
+  ORDER BY `day`,`project`,`developer`,`id`
   ;
 END$$
 
@@ -285,6 +473,7 @@ BEGIN
   ;
 END$$
 
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpUnscheduled`$$
 CREATE PROCEDURE `ezpUnscheduled`(
@@ -312,6 +501,7 @@ BEGIN
   ORDER BY `ezp_component`.`devtype`,`ezp_component`.`handle`
   ;
 END$$
+
 
 DELIMITER ;
 
