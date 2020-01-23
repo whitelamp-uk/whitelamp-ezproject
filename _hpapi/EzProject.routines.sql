@@ -148,13 +148,16 @@ CREATE PROCEDURE `ezpTimesheet`(
 )
 BEGIN
   SELECT
-    *
-   ,DAYNAME(`day`) AS `dow`
+    `id`
    ,`day`
+   ,DAYNAME(`day`) AS `dow`
    ,`hours`
    ,`developer`
    ,`project`
    ,`comment`
+   ,`vendor`
+   ,`package`
+   ,`handle`
   FROM `ezp_timesheet`
   WHERE 1
     AND (
