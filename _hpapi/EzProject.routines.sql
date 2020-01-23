@@ -223,7 +223,39 @@ BEGIN
   GROUP BY `project`,`developer`
   ORDER BY `project`,`developer`
   ;
+  SELECT
+    CONCAT(SUM(`hours`),' hours') AS `grand_total`
+  FROM `ezp_timesheet`
+  WHERE 1
+    AND (
+         monthOrEmptyForAll IS NULL
+      OR monthOrEmptyForAll=''
+      OR monthOrEmptyForAll='0000-00'
+      OR `day` LIKE CONCAT(monthOrEmptyForAll,'-__')
+    )
+    AND (
+         weekEndedSundayOrEmptyForAll IS NULL
+      OR weekEndedSundayOrEmptyForAll=''
+      OR weekEndedSundayOrEmptyForAll='0000-00-00'
+      OR (
+           DAYOFWEEK(weekEndedSundayOrEmptyForAll)=1
+       AND `day`>DATE_SUB(weekEndedSundayOrEmptyForAll,INTERVAL 1 WEEK)
+       AND `day`<=weekEndedSundayOrEmptyForAll
+      )
+    )
+    AND (
+         projectOrEmptyForAll IS NULL
+      OR projectOrEmptyForAll=''
+      OR `project`=projectOrEmptyForAll
+    )
+    AND (
+        developerOrEmptyForAll IS NULL
+     OR developerOrEmptyForAll=''
+     OR `developer`=developerOrEmptyForAll
+    )
+  ;
 END$$
+
 
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpUnassigned`$$
