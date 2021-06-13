@@ -3,6 +3,12 @@
 SET NAMES utf8;
 SET time_zone = '+00:00';
 
+CREATE TABLE IF NOT EXISTS `_readme` (
+  `project` char(64),
+  `location` varchar(255) NOT NULL,
+  PRIMARY KEY (`project`)
+) ENGINE=InnoDB DEFAULT CHARSET=ascii;
+
 CREATE TABLE IF NOT EXISTS `ezp_component` (
   `vendor` varchar(64) CHARACTER SET ascii NOT NULL,
   `package` varchar(64) CHARACTER SET ascii NOT NULL,
