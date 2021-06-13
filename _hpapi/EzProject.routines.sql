@@ -151,6 +151,7 @@ CREATE PROCEDURE `ezpTimesheet`(
    ,IN `weekEndedSundayOrEmptyForAll` date
    ,IN `developerOrEmptyForAll` varchar(64) charset ascii
    ,IN `projectOrEmptyForAll` varchar(64) charset ascii
+   ,IN `projectStartsWithOrEmptyForAll` varchar(64) charset ascii
 )
 BEGIN
   SELECT
@@ -188,9 +189,14 @@ BEGIN
       )
     )
     AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
+        projectOrEmptyForAll IS NULL
+     OR projectOrEmptyForAll=''
+     OR `project`=projectOrEmptyForAll
+    )
+    AND (
+         projectStartsWithOrEmptyForAll IS NULL
+      OR projectStartsWithOrEmptyForAll=''
+      OR `project` LIKE CONCAT(projectStartsWithOrEmptyForAll,'%')
     )
     AND (
         developerOrEmptyForAll IS NULL
@@ -230,9 +236,14 @@ BEGIN
       )
     )
     AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
+        projectOrEmptyForAll IS NULL
+     OR projectOrEmptyForAll=''
+     OR `project`=projectOrEmptyForAll
+    )
+    AND (
+         projectStartsWithOrEmptyForAll IS NULL
+      OR projectStartsWithOrEmptyForAll=''
+      OR `project` LIKE CONCAT(projectStartsWithOrEmptyForAll,'%')
     )
     AND (
         developerOrEmptyForAll IS NULL
@@ -281,9 +292,14 @@ BEGIN
       )
     )
     AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
+        projectOrEmptyForAll IS NULL
+     OR projectOrEmptyForAll=''
+     OR `project`=projectOrEmptyForAll
+    )
+    AND (
+         projectStartsWithOrEmptyForAll IS NULL
+      OR projectStartsWithOrEmptyForAll=''
+      OR `project` LIKE CONCAT(projectStartsWithOrEmptyForAll,'%')
     )
     AND (
         developerOrEmptyForAll IS NULL
@@ -302,7 +318,7 @@ CREATE PROCEDURE `ezpTimesheetUnrestricted`(
    ,IN `monthOrEmptyForAll` char(7) charset ascii
    ,IN `weekEndedSundayOrEmptyForAll` date
    ,IN `developerOrEmptyForAll` varchar(64) charset ascii
-   ,IN `projectOrEmptyForAll` varchar(64) charset ascii
+   ,IN `projectStartsWithOrEmptyForAll` varchar(64) charset ascii
 )
 BEGIN
   SELECT
@@ -338,9 +354,14 @@ BEGIN
       )
     )
     AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
+        projectOrEmptyForAll IS NULL
+     OR projectOrEmptyForAll=''
+     OR `project`=projectOrEmptyForAll
+    )
+    AND (
+         projectStartsWithOrEmptyForAll IS NULL
+      OR projectStartsWithOrEmptyForAll=''
+      OR `project` LIKE CONCAT(projectStartsWithOrEmptyForAll,'%')
     )
     AND (
         developerOrEmptyForAll IS NULL
@@ -380,9 +401,14 @@ BEGIN
       )
     )
     AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
+        projectOrEmptyForAll IS NULL
+     OR projectOrEmptyForAll=''
+     OR `project`=projectOrEmptyForAll
+    )
+    AND (
+         projectStartsWithOrEmptyForAll IS NULL
+      OR projectStartsWithOrEmptyForAll=''
+      OR `project` LIKE CONCAT(projectStartsWithOrEmptyForAll,'%')
     )
     AND (
         developerOrEmptyForAll IS NULL
@@ -431,9 +457,14 @@ BEGIN
       )
     )
     AND (
-         projectOrEmptyForAll IS NULL
-      OR projectOrEmptyForAll=''
-      OR `project`=projectOrEmptyForAll
+        projectOrEmptyForAll IS NULL
+     OR projectOrEmptyForAll=''
+     OR `project`=projectOrEmptyForAll
+    )
+    AND (
+         projectStartsWithOrEmptyForAll IS NULL
+      OR projectStartsWithOrEmptyForAll=''
+      OR `project` LIKE CONCAT(projectStartsWithOrEmptyForAll,'%')
     )
     AND (
         developerOrEmptyForAll IS NULL
