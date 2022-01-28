@@ -203,12 +203,12 @@ export class Global extends Generic {
     }
 
     async init ( ) {
-        console.log ('Admin GUI initialising');
+        console.log ('gui.js initialising');
         try {
             await this.globalInit ();
         }
         catch (e) {
-            throw new Error (e.message);
+            throw new Error ('gui.js: '+e.message);
             return false;
         }
         this.data.test = {
@@ -232,7 +232,54 @@ export class Global extends Generic {
                 }
             ]
         }
-        this.log ('admin-gui initialised');
+        this.log ('gui.js initialised');
+    }
+
+    async report (evt) {
+        var args, err, form, file, i, link, report, target, title, type;
+        form        = this.qs (this.restricted,'form[data-report]');
+        target      = this.qs (this.restricted,'#'+evt.currentTarget.dataset.target);
+        title       = evt.currentTarget.dataset.title;
+        file        = title.replace(/[^a-zA-Z ]/g,'').replace(/ /g,'-');
+        args        = [];
+        type        = 'xml';
+        if (evt.currentTarget.dataset.download=='csv') {
+            type    = 'csv';
+        }
+        for (i=0;form.elements[i];i++) {
+            args.push (form.elements[i].value);
+        }
+        try {
+            report  = await this.reportRequest (args);
+        }
+        catch (e) {
+            err     = this.errorSplit (e.message);
+            if (err.hpapiCode=='400') {
+                this.splash (2,'Invalid input(s)','Error','OK');
+            }
+            else {
+                this.splash (2,e.message,'Error','OK');
+            }
+            return false;
+        }
+        if (type=='csv') {
+            link = this.downloadLink (
+                'Here is your download'
+               ,file+'.csv'
+               ,'text/csv'
+               ,this.objectToCsv (report)
+            );
+            target.appendChild (link);
+            return true;
+        }
+        link = this.downloadLink (
+            'Here is your download'
+           ,file+'.xml'
+           ,'text/xml'
+           ,this.objectToMsExcel2003Xml (report,title)
+        );
+        target.appendChild (link);
+        return true;
     }
 
 }
