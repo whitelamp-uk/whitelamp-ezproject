@@ -1,0 +1,1270 @@
+
+/* Tags */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color-background-main);
+    color: var(--color-text-main);
+    margin: 0;
+    overflow-y: scroll;
+    font-family: var(--font-family-main);
+    font-size: var(--dim-font-size-main);
+    line-height: var(--dim-font-line-height-main);
+}
+body.wait, body.wait * {
+    cursor: wait !important;
+}
+
+button {
+    margin: 0;
+    border-width: var(--dim-border-width-button);
+    border-radius: var(--dim-border-radius-button);
+    border-color: var(--color-border-button);
+    background-color: var(--color-background-button);
+    padding: var(--dim-padding-button);
+}
+button > div.households {
+    font-size: var(--dim-font-size-small);
+    font-weight: normal;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+a:hover {
+    text-decoration: underline;
+}
+a[data-close], a.close, a[data-maximise], a.maximise, a[data-minimise], a.minimise {
+    display: block;
+    width: var(--dim-width-button-close);
+    height: var(--dim-height-button-close);
+    background-repeat: no-repeat;
+    background-size: contain;
+    box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    border-radius: var(--dim-border-radius-button-close);
+    border-style: none;
+    background-color: transparent;
+    color: transparent;
+    overflow: hidden;
+    cursor: pointer;
+}
+a[data-close], a.close {
+    background-image: var(--url-button-close);
+}
+a[data-icon] {
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+a[data-icon=lock] {
+    background-image: var(--url-icon-lock);
+}
+a[data-icon=burger] {
+    background-image: var(--url-icon-burger);
+}
+a[data-icon=account] {
+    background-image:   var(--url-icon-menu-account);
+}
+a[data-icon=agent] {
+    background-image:   var(--url-icon-menu-agent);
+}
+a[data-icon=flag] {
+    background-image:   var(--url-icon-menu-flag);
+}
+a[data-icon=form] {
+    background-image:   var(--url-icon-menu-form);
+}
+a[data-icon=fundraiser] {
+    background-image:   var(--url-icon-menu-fundraiser);
+}
+a[data-icon=manager] {
+    background-image:   var(--url-icon-menu-manager);
+}
+a[data-icon=processor] {
+    background-image:   var(--url-icon-menu-processor);
+}
+a[data-icon=report] {
+    background-image:   var(--url-icon-menu-report);
+}
+a[data-icon=team] {
+    background-image:   var(--url-icon-menu-team);
+}
+a[data-icon=test] {
+    background-image:   var(--url-icon-menu-test);
+}
+a[data-icon=tree] {
+    background-image:   var(--url-icon-menu-tree);
+}
+a[data-icon=user] {
+    background-image:   var(--url-icon-menu-user);
+}
+a[data-icon=findadd] {
+    background-image:   var(--url-icon-menu-findadd);
+}
+a[data-maximise], a.maximise {
+    background-image: var(--url-button-maximise);
+}
+a[data-minimise], a.minimise {
+    background-image: var(--url-button-minimise);
+}
+a[download] {
+    text-decoration: underline;
+}
+a[download]:hover {
+    text-decoration: none;
+}
+
+a[data-insert=tech] {
+    position: fixed;
+    z-index: 1001;
+    right: 2em;
+    bottom: 1em;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 1.6em;
+    height: 1.6em;
+    background-image: var(--url-icon-tech);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+div.nugget.address {
+    cursor: pointer;
+}
+
+form :focus {
+    background-color: var(--color-background-focused-form-element);
+}
+form input[type=checkbox]:focus, form input[type=radio]:focus {
+    outline: var(--dim-border-width-focused-form-setter) solid var(--color-background-focused-form-element);
+}
+form section {
+    margin: var(--dim-margin-form-section) 0 0 0;
+    border-style: solid;
+    border-width: var(--dim-border-width-separator) 0 0 0;
+    border-color: var(--color-border-main);
+    padding: var(--dim-padding-form-section) 0 0 0;
+}
+form section:last-child {
+    padding: var(--dim-margin-form-section) 0 var(--dim-margin-form-section) 0;
+}
+form section h4 {
+    margin: 0;
+}
+form section a {
+    font-weight: bold;
+}
+form + section {
+    margin: var(--dim-margin-form-section) 0 0 0;
+    border-style: solid;
+    border-width: var(--dim-border-width-separator) 0 0 0;
+    border-color: var(--color-border-main);
+    padding: var(--dim-padding-form-section) 0 var(--dim-padding-section-after-form) 0;
+}
+form[data-place] {
+    clear: both;
+}
+form[data-place] a.update {
+    float: right;
+    position: relative;
+    top: -0.25em;
+}
+form[data-editmode] select:disabled {
+    color: inherit;
+}
+form[data-history],form[data-groups] {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+}
+
+h1 {
+    font-family: inherit;
+    font-size: var(--dim-font-size-h1);
+    text-align: center;
+}
+
+input {
+    line-height: inherit;
+    background-color: var(--color-background-input);
+}
+
+td,th {
+    border-style: solid;
+    border-width: var(--dim-border-width-table-cell);
+}
+
+
+/* Tag classes */
+
+div.subheading {
+    position: relative;
+    top: -1.25em;
+    font-style: italic;
+}
+
+nav.navigator {
+    position: fixed;
+    z-index: 40;
+    left: 0.5vw;
+    top: 0.5em;
+    width: 97vw;
+    min-height: 3.65em;
+    box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    border-style: solid;
+    border-width: var(--dim-border-width-component);
+    border-radius: var(--dim-border-radius-component);
+    border-color: var(--color-border-main);
+    background-color: var(--color-background-navigator);
+    background-image: var(--url-logo-app);
+    background-repeat: no-repeat;
+    background-position: top 0.45em left 0.55em;
+    padding: 0.75em 4em 0.75em 11.2em;
+}
+nav.navigator > button {
+    margin: 0 0 0 var(--dim-margin-navigator-button);
+    min-width: 7.4em;
+}
+nav.navigator a[data-icon=lock] {
+    position: absolute;
+    left: 10em;
+    top: 0.75em;
+    display: block;
+    margin: 0;
+    width: 1.2em;
+    height: 1.6em;
+    padding: 0;
+}
+nav.navigator [data-icon=burger] {
+    position: absolute;
+    left: 11.8em;
+    top: 0.7em;
+    display: block;
+    margin: 0;
+    width: 2em;
+    height: 2em;
+    padding: 0;
+}
+nav.navigator [data-icon=findadd] {
+    position: absolute;
+    left: 14em;
+    top: 0.7em;
+    display: block;
+    margin: 0;
+    width: 2em;
+    height: 2em;
+    padding: 0;
+}
+nav.navigator h2.nav-title {
+    position: absolute;
+    left: 12.5em;
+    top: 0.3em;
+    display: block;
+    margin: 0;
+    width: 23.5em;
+    background-color: var(--color-background-navigator-title);
+    padding: 0;
+}
+nav.submenu.nugget {
+    position: fixed;
+    z-index: 40;
+    left: 28em;
+    top: 5em;
+    min-width: 45em;
+    min-height: 2.7em;
+    box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    border-style: solid;
+    border-width: var(--dim-border-width-component);
+    border-radius: var(--dim-border-radius-component);
+    border-color: var(--color-border-main);
+    background-color: var(--color-background-navigator);
+}
+
+section.view {
+    padding-top: var(--dim-top-spacer);
+}
+
+/* IDs */
+
+#gui-access {
+    margin:             0 0 0 1em;
+    padding:            4em 0.5em 0 0.5em;
+}
+#gui-access > nav.navigator {
+    width:              10.25em;
+    padding-left:       0.6em;
+}
+
+#gui-password-reset-cancel {
+    display:            none;
+}
+
+#gui-password-reset {
+    display:            none;
+}
+
+#gui-password-reset #gui-phone-check {
+    display:            none;
+}
+
+#gui-password-reset #gui-answer-check {
+    display:            none;
+}
+
+#gui-password-reset #gui-sms-check {
+    display:            none;
+}
+
+#gui-password-reset #gui-verify-check {
+    display:            none;
+}
+
+#gui-password-reset #gui-password-change {
+    display:            none;
+}
+
+#gui-restricted {
+    display:            none;
+    margin:             0;
+    padding:            4em 0.5em 0 0.5em;
+}
+
+#gui-restricted > h2 {
+    padding-left:       0.7em;
+}
+
+#gui-menu {
+    display:            none;
+    z-index:            900;
+    position:           fixed;
+    left:               1.5em;
+    top:                8.65em;
+    width:              calc(100vw - 7em);
+    height:             calc(100vh - 11em);
+    margin:             0;
+    border-radius:      var(--dim-border-radius-component);
+    padding:            0;
+    background-color:   transparent;
+}
+#gui-menu.visible {
+    display:            block;
+}
+#gui-menu [data-menu] {
+    width:              100%;
+    height:             100%;
+    margin:             0;
+    border-radius:      var(--dim-border-radius-component);
+    padding:            0.1em 0 0 0.4em;
+    background-color:   var(--color-background-menu);
+}
+
+#gui-menu [data-icon] {
+    display:            block;
+    margin:             0.2em 0.1em 0.2em 0.3em;
+    padding:            0 0.2em 0 0.4em;
+    user-select:        none;
+}
+#gui-menu a[data-icon] {
+    border-radius:      var(--dim-border-radius-button);
+    background-color:   var(--color-background-button-menu);
+}
+#gui-menu [data-menu] .menu-group > [data-icon] {
+    font-weight:        bold;
+}
+#gui-menu [data-menu] .menu-item > [data-icon] {
+    margin-left:        1em;
+}
+#gui-menu [data-menu] section.menu-options > a[data-icon=findadd] {
+    width:              13em;
+    margin:             0.5em 0 0.5em 0.5em;
+}
+#gui-menu a.selected {
+    background-color:   var(--color-background-button-menu-hover);
+}
+#gui-menu a[data-icon]:hover {
+    background-color:   var(--color-background-button-menu-hover);
+    text-decoration:    none;
+}
+#gui-menu li {
+    list-style:         none;
+    margin:             0;
+}
+#gui-menu [data-menu] .menu-group {
+    width:              var(--dim-width-menu-group);
+    margin:             0;
+    border-style:       solid;
+    border-width:       var(--dim-border-width-menu-group);
+    border-color:       var(--color-border-main);
+    border-radius:      var(--dim-border-radius-component);
+    padding:            0;
+}
+#gui-menu [data-menu] .menu-options {
+    display:            none;
+    position:           fixed;
+    left:               calc(var(--dim-width-menu-group) + 3em);
+    top:                9.8em;
+    width:              calc(100vw - var(--dim-width-menu-group) - 9.5em);
+    height:             calc(100vh - 13em);
+    margin:             0;
+    border-style:       solid;
+    border-width:       var(--dim-border-width-component);
+    border-color:       var(--color-border-main);
+    border-radius:      var(--dim-border-radius-component);
+    padding:            0;
+}
+#gui-menu [data-menu] .menu-options.visible {
+    display:            block;
+}
+#gui-menu [data-menu] .menu-options .history {
+    height:             calc(100vh - 20em);
+    overflow-x:         hidden;
+    overflow-y:         scroll;
+}
+#gui-menu [data-menu] .menu-options > [data-screen] {
+    display:            block;
+    margin:             0.3em;
+    font-size:          var(--dim-font-size-menu);
+}
+#gui-menu [data-menu] .menu-options .history-info {
+    margin:             0.3em;
+    font-style:         italic;
+}
+#gui-menu [data-menu] .menu-options .history-item:nth-of-type(odd) {
+    background-color:   var(--color-background-stripe-odd);
+}
+#gui-menu [data-menu] .menu-options .history-item:nth-of-type(even) {
+    background-color:   var(--color-background-stripe-even);
+}
+#gui-menu [data-menu] .menu-options .history-item > .history-legend {
+    margin:             0.3em;
+    display:            inline-block;
+    width:              15em;
+}
+#gui-menu [data-menu] .menu-options .history-item > .history-screens {
+    float:              right;
+    margin:             0.3em 5em 0 0;
+}
+#gui-menu [data-menu] .menu-options .history-item > .history-screens > a {
+    display:            inline;
+    margin:             0 0 0 1em;
+}
+#gui-menu [data-icon] {
+    background-position: right;
+    font-size: var(--dim-font-size-menu);
+}
+
+#gui-splash {
+    display:            none;
+    z-index:            1000;
+    position:           fixed;
+    left:               0;
+    top:                0;
+    width:              100vw;
+    height:             100vh;
+    margin:             0;
+    padding:            0;
+    background-color:   var(--color-background-splash);
+}
+#gui-splash.visible {
+    display:            block;
+}
+#gui-splash section {
+    position:           absolute;
+    left:               25vw;
+    top:                20vh;
+    clear:              right;
+    margin:             0;
+    width:              50vw;
+    background-color:   var(--color-background-component);
+    border-style:       solid;
+    border-width:       var(--dim-border-width-component);
+    border-radius:      var(--dim-border-radius-component);
+    border-color:       var(--color-border-main);
+    padding:            var(--dim-padding-splash-section);
+}
+#gui-splash button {
+    float:              right;
+}
+
+#gui-status {
+    display:            block;
+    z-index:            999;
+    position:           fixed;
+    right:              2em;
+    top:                5.5em;
+    box-sizing:         border-box;
+    width:              0;
+    height:             2.8em;
+    background-color:   var(--color-background-warning);
+    border-style:       solid;
+    border-width:       0;
+    border-radius:      var(--dim-border-radius-component);
+    border-color:       var(--color-border-warning);
+    padding:            0.5em 0 0 0;
+    overflow:           hidden;
+    white-space:        nowrap;
+}
+#gui-status.transition {
+    border-width:       var(--dim-border-width-component);
+    padding:            0.5em 0.5em 0 0.5em;
+    transition:         width 0.5s;
+}
+#gui-status.transition.visible {
+    border-width:       var(--dim-border-width-component);
+    width:              50vw;
+}
+
+#gui-tech {
+    display:            block;
+    position:           fixed;
+    z-index:            999;
+    left:               2vw;
+    top:                10vh;
+    width:              0;
+    height:             0;
+    overflow:           visible;
+}
+#gui-tech div.tech {
+    display:            block;
+    position:           absolute;
+    z-index:            999;
+    width:              75vw;
+    height:             88vh;
+    overflow-x:         auto;
+    overflow-y:         scroll;
+}
+#gui-tech div.tech a[data-close] {
+    float:              right;
+}
+#gui-tech div.tech form {
+    display:            inline-block;
+    float:              right;
+    margin-right:       2em;
+}
+#gui-tech div.tech .unvisited {
+    font-style:         italic;
+    font-weight:        bold;
+    color:              var(--color-text-unvisited);
+}
+#gui-tech div.tech pre {
+    overflow-x:         hidden;
+}
+
+#signature {
+    width:              var(--dim-width-signature);
+    height:             var(--dim-height-signature);
+    background-color:   var(--color-background-signature);
+}
+
+
+/* Classes */
+
+a.atom {
+    cursor: pointer;
+}
+a.atom:hover {
+    background-color: var(--color-border-main);
+    color: var(--color-background-component);
+    text-decoration: none;
+}
+.atom {
+    border-style: solid;
+    border-width: var(--dim-border-width-button);
+    border-radius: 0.5em;
+    border-color: var(--color-border-main);
+    padding: var(--dim-padding-link);
+    font-weight: bold;
+}
+
+.backtrail {
+    color: var(--color-text-backtrail);
+}
+
+.char-4 {
+    width: var(--dim-width-input-char-4);
+}
+
+.char-16 {
+    width: var(--dim-width-input-char-16);
+}
+
+.char-64 {
+    width: var(--dim-width-input-char-64);
+}
+
+.clipboard {
+    position: fixed;
+    z-index: 999;
+    left: 25vw;
+    top: 50vh;
+    border-style: solid;
+    border-width: 3px;
+    border-color: var(--color-border-main);
+    width: 50vw;
+    padding: 0.3em;
+}
+
+.component {
+    padding: var(--dim-padding-form-component);
+}
+
+.edit-mode {
+    background-color: var(--color-background-readonly);
+}
+
+.edit.nugget {
+    position: fixed;
+    z-index: 20;
+    top: 5em;
+    margin: 0 0 0 1em;
+    min-width: 25em;
+    padding: 0.1em 0.3em 0.1em 0.3em;
+    box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    background-color: var(--color-background-navigator);
+}
+.edit.nugget a {
+    display: block;
+    float: left;
+    margin: -0.03em 0 0 0.3em;
+    padding: 0;
+    width: 2.4em;
+    height: 2.4em;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-image: var(--url-icon-edit-on);
+}
+.edit.nugget a:hover {
+    background-color: var(--color-background-main);
+}
+.edit.nugget a.on {
+    background-image: var(--url-icon-edit-off);
+}
+.edit.nugget h2 {
+    display: inline;
+    margin: 0 0.5em 0 2.5em;
+}
+
+.filter.nugget {
+    position: fixed;
+    z-index: 50;
+    display: inline-block;
+    top: 0.5em;
+    width: 3.6em;
+    transition: width 0.35s ease-out;
+    height: 3.65em;
+    right: 1.5vw;
+    margin: 0;
+    box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    background-color: var(--color-background-navigator);
+    overflow: hidden;
+}
+.filter.nugget.expanded {
+    width: 73vw;
+    transition: width 0.35s ease-out;
+}
+.filter.nugget a img {
+    height: 2em;
+}
+.filter.nugget .filter {
+    display: inline-block;
+    margin: 0.3em 0 0 0.1em;
+}
+.filter.nugget form {
+    display: none;
+    position: absolute;
+    left: 3.5em;
+    top: 0.2em;
+    margin: 0.5em 0 0.5em 0;
+    width: 70vw;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.filter.nugget.expanded form {
+    display: block;
+}
+.filter.nugget form > div {
+    width: 70vw;
+    min-width: 50em;
+    left: 3.5em;
+    top: 0.2em;
+    margin: 0;
+    padding: 0;
+}
+.filter.nugget form > div > * {
+    margin: 0 0.6em 0 0;
+    padding: 0;
+}
+.filter.nugget select[data-deleted] {
+    width: 8em;
+}
+.filter.nugget input {
+    width: 8em;
+    padding: 0.3em;
+}
+
+.filtered-out {
+    display: none;
+}
+
+.hotkey-focus {
+    border-style: solid !important;
+    border-width: var(--dim-border-width-hotkey-focus) !important;
+    border-color: var(--color-border-hotkey-focus) !important;
+}
+
+.legend {
+    display: inline-block;
+    margin-left: var(--dim-margin-legend);
+    min-width: var(--dim-width-legend);
+    vertical-align: top;
+}
+
+.lower {
+    text-transform: lowercase;
+}
+
+.map {
+    width: 450px;
+    height: 300px;
+}
+
+.masked + .mask {
+    position: absolute;
+    display: none;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.masked + .mask.active {
+    display: block;
+}
+
+.new button.new {
+    float: left;
+    position: relative;
+    left: -0.2em;
+    top: -0.4em;
+    border-style: solid;
+    border-width: var(--dim-border-width-button);
+    border-radius: 0.8em;
+    font-weight: bold;
+}
+.new form {
+    display: none;
+}
+.new form.visible {
+    display: block;
+    margin-bottom: 0.6em;
+}
+.new.nugget {
+    position: fixed;
+    z-index: 30;
+    left: 28em;
+    top: 5em;
+    width: 45em;
+    box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    background-color: var(--color-background-navigator);
+    padding-bottom: 0;
+}
+.new.nugget.unfixed {
+    position: absolute;
+    top: auto;
+    margin-top: -0.6em;
+}
+.new.nugget.unfixed + * {
+    margin-top: 5em;
+}
+.new.nugget .legend {
+    background-color: var(--color-background-navigator-opaque);
+}
+.new.nugget + section {
+    margin-top: 1em;
+}
+
+.no-sync {
+    background-color: var(--color-background-warning);
+    color: var(--color-text-warning);
+    font-weight: bold;
+    line-height: inherit;
+}
+
+.nugget {
+    position: relative;
+    margin: var(--dim-margin-component);
+    border-style: solid;
+    border-width: var(--dim-border-width-component);
+    border-radius: var(--dim-border-radius-component);
+    border-color: var(--color-border-main);
+    background-color: var(--color-background-component);
+    padding: var(--dim-padding-component);
+}
+.nugget.scoped {
+    font-weight: bold;
+    background-color: var(--color-background-component-scoped) !important;
+}
+.nugget.deleted {
+    color: var(--color-text-component-deleted);
+    background-color: transparent;
+}
+.nugget.deleted.scoped {
+    color: var(--color-text-component-deleted-scoped);
+    background-color: var(--color-background-component-deleted-scoped);
+}
+.nugget.deleted img {
+    opacity: var(--color-opacity-component-deleted-image);
+}
+.nugget h3, .nugget h4 {
+    margin: 0;
+}
+.nugget img.icon, .nugget img.logo {
+    position: static;
+    float: right;
+}
+.nugget img.icon, .nugget img.logo {
+    margin: 1em 0.5em 0.5em 0;
+    height: 3em;
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--color-border-main);
+}
+.nugget .icon {
+    border-radius: 2em;
+}
+.nugget input, .nugget select, .nugget textarea {
+    width: var(--dim-width-component-input);
+}
+.nugget input[type=checkbox], .nugget input[type=radio] {
+    width: auto;
+}
+.nugget textarea {
+    height: var(--dim-height-component-textarea);
+}
+.nugget textarea.tall {
+    height: var(--dim-height-component-textarea-tall);
+}
+.nugget button {
+    margin-top: 0.3em;
+    font-weight: inherit;
+}
+.nugget.deleted button {
+    color: var(--color-text-component-button-deleted);
+}
+.nugget button.emphasised {
+    border-color: var(--color-text-component-button-emphasised);
+    background-color: var(--color-background-component-button-emphasised);
+    font-weight: bold;
+    color: var(--color-text-component-button-emphasised);
+}
+.nugget form[data-table] div.deleted {
+    background-color: var(--color-background-component-form-deleted);
+}
+
+.number {
+    text-align: right;
+}
+
+.option-block {
+    display: inline block;
+}
+
+.past {
+    color: var(--color-text-component-greyed);
+}
+
+.readonly, .readonly:disabled, [readonly], [readonly]:disabled {
+    background-color: var(--color-background-input-readonly);
+    color: inherit;
+}
+
+.strike {
+    text-decoration: line-through;
+    color: var(--color-text-strike);
+}
+
+.strong {
+    font-weight: bold;
+}
+
+
+.upper {
+    text-transform: uppercase;
+}
+
+.valid, .valid:focus {
+    background-color: var(--color-background-input-valid);
+}
+
+
+
+
+/* tf-tree */
+
+section.tf-tree {
+    font-size: var(--tf-tree-dim-font-size);
+}
+
+.tf-tree.expanded {
+    position: fixed;
+    z-index: var(--tf-tree-z-index);
+    left: 2vw;
+    top: 4vh;
+    min-width: 94vw;
+    min-height: 92vh;
+    border-style: solid;
+    border-width: var(--tf-tree-dim-border-width);
+    border-radius: var(--tf-tree-dim-border-radius-main);
+    border-color: var(--color-border-main);
+    background-color: var(--tf-tree-color-background-main);
+    padding: 1em;
+}
+.tf-tree .tf-nc {
+    box-shadow: var(--tf-tree-dim-shadow-box-main) var(--tf-tree-color-shadow-box-main);
+    border-radius: var(--tf-tree-dim-border-radius-component);
+    font-weight: bold;
+}
+.tf-tree > ul > li.manager > .tf-nc {
+    background-color: var(--tf-tree-color-background-administrator);
+}
+.tf-tree .manager > .tf-nc {
+    background-color: var(--tf-tree-color-background-manager);
+}
+.tf-tree .team > .tf-nc {
+    background-color: var(--tf-tree-color-background-team);
+}
+.tf-tree .team > .tf-nc hr {
+    margin-bottom: var(--tf-tree-dim-margin-separator);
+    height: var(--tf-tree-dim-height-separator);
+    border-color: var(--tf-tree-color-separator);
+}
+.tf-tree .team  > .tf-nc .atom {
+    margin-top: var(--tf-tree-dim-margin-fundraiser);
+    background-color: var(--tf-tree-color-background-fundraiser);
+    font-weight: normal;
+}
+.tf-tree .team  > .tf-nc .atom.teamleader {
+    font-weight: bold;
+}
+.tf-tree [data-fundraiser] {
+    padding-right: 1em;
+}
+.tf-tree [data-fundraiser] details {
+    display: inline;
+    position: absolute;
+    z-index: 100;
+    margin: 0.1em 0 0 0.3em;
+    font-size: 1em;
+    font-weight: normal;
+}
+.tf-tree [data-fundraiser] details[open] {
+    z-index: 101;
+    background-color: rgb(210,230,255);
+    padding: 0 1em 1em 0;
+}
+.tf-tree [data-fundraiser] details span {
+    position: relative;
+    left: 1.5em;
+    top: -2em;
+    font-size: 0.8em;
+}
+
+
+.current-screen {
+    color: inherit;
+    font-weight: bold;
+}
+
+.error {
+    color: var(--color-text-error);
+    font-weight: bold;
+}
+
+.warning {
+    color: var(--color-text-warning);
+    font-weight: bold;
+}
+
+
+
+
+/* Attributes */
+
+[data-status] {
+    cursor: help;
+}
+[data-status] input {
+    cursor: default;
+}
+
+
+
+
+/* Style jiggery to accommodate logging box */
+
+#logger {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 14vw;
+    height: 99.9vh;
+    border-style: solid;
+    overflow-y: scroll;
+    resize: horizontal;
+}
+#gui-restricted.with-logger {
+    width: 85vw;
+}
+#gui-restricted.with-logger nav.navigator {
+    width: 82.5vw;
+}
+#gui-restricted.with-logger .filter.nugget {
+    right: 16.1vw;
+}
+#gui-restricted.with-logger .filter.nugget.expanded {
+    width: 63vw;
+}
+#gui-restricted.with-logger > img.logo {
+    right: 16.5vw;
+}
+#gui-status.with-logger {
+    right: 16vw;
+}
+
+
+/* PinPad */
+
+.pinpad {
+    clear: both;
+    overflow: auto;
+    display: inline-block;
+    border-style: solid;
+    border-width: 1px;
+    padding: 0.3em;
+}
+.pinpad + * {
+    clear: both;
+}
+.pinpad .display {
+    margin: 0.2em;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.3em;
+    padding: 0.3em 0 0.3em 0;
+    text-align: center;
+    font-family: 'courier new';
+    font-size: 1.5em;
+}
+.pinpad .display span {
+    letter-spacing: 0.6em;
+    margin-right: -0.6em;
+}
+.pinpad .key {
+    float: left;
+    margin: 0.3em;
+    width: 3em;
+    height: 2em;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 0.3em;
+    padding-top: 1em;
+    text-align: center;
+    cursor: pointer;
+}
+.pinpad .key:nth-child(3n+2) {
+    clear: left;
+}
+.pinpad .key:active {
+    box-shadow: inset 0px 0px 5px #c1c1c1;
+}
+
+
+
+/* Layers */
+
+.layer {
+    position: fixed;
+    left: 0;
+    top: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--color-background-layer);
+    padding: 0;
+}
+.layer > .nugget {
+    var(--dim-shadow-box-main) var(--color-shadow-box-main);
+    width: 60vw;
+    background-color: var(--color-background-component);
+    overflow-y: auto;
+}
+.layer .edit.nugget {
+    position: absolute;
+    left: 1em;
+    top: 1em;
+}
+.layer section.close {
+    height: 3em;
+}
+.layer section.close h3 {
+    padding-top: 1em;
+    margin-bottom: 0;
+}
+.layer .nugget a[data-close], .layer .nugget a.close {
+    position: fixed;
+    top: auto;
+    margin-top: 0.5em;
+}
+.layer > .nugget.new-completed {
+    width: 40vw;
+    min-height: 30vh;
+}
+
+
+/* Layer 1 */
+
+.layer1 > .layer {
+    z-index: 100;
+}
+.layer1 > .layer > .nugget {
+    margin: 5vh 0 0 20vw;
+    width: 60vw;
+    min-height: 60vh;
+    max-height: 85vh;
+}
+.layer1 > .layer .new.nugget {
+    z-index: 130;
+}
+.layer1 > .layer .filter.nugget {
+    z-index: 150;
+}
+.layer1 > .layer .nugget a[data-close], .layer1 > .layer .nugget a.close {
+    z-index: 140;
+    right: 21vw;
+}
+.layer1 .edit.nugget {
+    z-index: 120;
+}
+
+
+/* Layer 2 */
+
+.layer2 > .layer {
+    z-index: 200;
+}
+.layer2 > .layer > .nugget {
+    margin: 7.5vh 0 0 22.5vw;
+    width: 55vw;
+    min-height: 55vh;
+    max-height: 80vh;
+}
+.layer2 > .layer .new.nugget {
+    z-index: 230;
+}
+.layer2 > .layer .filter.nugget {
+    z-index: 250;
+}
+.layer2 > .layer .nugget a[data-close], .layer2 > .layer .nugget a.close {
+    z-index: 240;
+}
+
+/* Layer 3 */
+
+.layer3 > .layer {
+    z-index: 300;
+}
+.layer3 > .layer > .nugget {
+    margin: 10vh 0 0 25vw;
+    width: 50vw;
+    min-height: 60vh;
+    max-height: 75vh;
+}
+.layer3 > .layer .new.nugget {
+    z-index: 330;
+}
+.layer3 > .layer .filter.nugget {
+    z-index: 350;
+}
+.layer3 > .layer .nugget a[data-close], .layer3 > .layer .nugget a.close {
+    z-index: 340;
+}
+
+
+/* MEDIA QUERIES */
+
+@media screen and (max-width: 74em) {
+    #gui-access, #gui-restricted {
+        padding-top: 6em;
+    }
+    .filter.nugget {
+        top: 6.35em;
+    }
+    nav.submenu.nugget {
+        top: 11.4em;
+        min-width: 60vw;
+    }
+    .new.nugget {
+        top: 10.8em;
+        width: 70vw;
+    }
+    #gui-restricted > img.logo {
+        top: 6.5em;
+    }
+}
+@media screen and (max-width: 44em) {
+    #gui-access, #gui-restricted {
+        padding-top: 8em;
+    }
+    .filter.nugget {
+        top: 8.35em;
+    }
+    nav.submenu.nugget {
+        top: 13.4em;
+        min-width: 80vw;
+    }
+    .new.nugget {
+        top: 12.8em;
+        width: 80vw;
+    }
+}
+@media screen and (max-width: 38em) {
+    #gui-access, #gui-restricted {
+        padding-top: 10em;
+    }
+    .filter.nugget {
+        top: 10.35em;
+        overflow-y: auto;
+    }
+    nav.submenu.nugget {
+        top: 15.4em;
+        min-width: 80vw;
+    }
+    .new.nugget {
+        top: 14.8em;
+        width: 80vw;
+    }
+}
+@media screen and (max-width: 30em) {
+    #gui-access, #gui-restricted {
+        padding-top: 17em;
+    }
+    .filter.nugget {
+        top: 17.35em;
+        overflow-y: auto;
+    }
+    nav.submenu.nugget {
+        top: 22.4em;
+        min-width: 80vw;
+    }
+    .new.nugget {
+        top: 21.8em;
+        width: 75vw;
+    }
+}
+

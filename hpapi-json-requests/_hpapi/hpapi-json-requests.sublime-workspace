@@ -1,0 +1,751 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"triptime",
+				"triptimeclass"
+			],
+			[
+				"aja",
+				"ajaxOpts"
+			],
+			[
+				"font-",
+				"font-variant"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"mysqli",
+				"mysqli_fetch"
+			],
+			[
+				"po",
+				"postcode"
+			],
+			[
+				"ad",
+				"addr1"
+			],
+			[
+				"fn",
+				"fname"
+			],
+			[
+				"cr",
+				"creditcardsurcharge"
+			],
+			[
+				"post",
+				"postdata"
+			],
+			[
+				"de",
+				"description"
+			],
+			[
+				"red",
+				"redirect_fail"
+			],
+			[
+				"print",
+				"print_r"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/mark/snowy/home/mark/hpapi/burden-and-burden/hpapi-json-requests/dev/admin_accounts.json",
+			"settings":
+			{
+				"buffer_size": 330,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/admin-cfg.js",
+			"settings":
+			{
+				"buffer_size": 3595,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					14,
+					1,
+					"insert",
+					{
+						"characters": "thefundrai"
+					},
+					"CwAAANsNAAAAAAAA3A0AAAAAAAAAAAAA3A0AAAAAAADcDQAAAAAAABUAAABidXJkZW5hbmRidXJkZW4uY28udWvcDQAAAAAAAN0NAAAAAAAAAAAAAN0NAAAAAAAA3g0AAAAAAAAAAAAA3g0AAAAAAADfDQAAAAAAAAAAAADfDQAAAAAAAOANAAAAAAAAAAAAAOANAAAAAAAA4Q0AAAAAAAAAAAAA4Q0AAAAAAADiDQAAAAAAAAAAAADiDQAAAAAAAOMNAAAAAAAAAAAAAOMNAAAAAAAA5A0AAAAAAAAAAAAA5A0AAAAAAADlDQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8A0AAAAAAADbDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					15,
+					1,
+					"insert",
+					{
+						"characters": "singfoundry"
+					},
+					"CwAAAOUNAAAAAAAA5g0AAAAAAAAAAAAA5g0AAAAAAADnDQAAAAAAAAAAAADnDQAAAAAAAOgNAAAAAAAAAAAAAOgNAAAAAAAA6Q0AAAAAAAAAAAAA6Q0AAAAAAADqDQAAAAAAAAAAAADqDQAAAAAAAOsNAAAAAAAAAAAAAOsNAAAAAAAA7A0AAAAAAAAAAAAA7A0AAAAAAADtDQAAAAAAAAAAAADtDQAAAAAAAO4NAAAAAAAAAAAAAO4NAAAAAAAA7w0AAAAAAAAAAAAA7w0AAAAAAADwDQAAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA5Q0AAAAAAADlDQAAAAAAAAAAAAAAAPC/"
+				],
+				[
+					16,
+					1,
+					"insert",
+					{
+						"characters": ".com"
+					},
+					"BAAAAPANAAAAAAAA8Q0AAAAAAAAAAAAA8Q0AAAAAAADyDQAAAAAAAAAAAADyDQAAAAAAAPMNAAAAAAAAAAAAAPMNAAAAAAAA9A0AAAAAAAAAAAAA",
+					"AQAAAAAAAAABAAAA8A0AAAAAAADwDQAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/agent-cfg.js",
+			"settings":
+			{
+				"buffer_size": 3163,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"paste",
+					null,
+					"AgAAAPgLAAAAAAAAUQwAAAAAAAAAAAAAUQwAAAAAAABRDAAAAAAAAFUAAAAgICAgICAgIHRoaXMudXJsICAgICAgICAgICAgICAgICAgICA9ICdodHRwczovL2Rldi5idXJkZW5hbmRidXJkZW4uY28udWsvbWFyay9hcGkvJzsK",
+					"AQAAAAAAAAABAAAA+AsAAAAAAABNDAAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/fundraiser-cfg.js",
+			"settings":
+			{
+				"buffer_size": 3773,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"paste",
+					null,
+					"AgAAAFoOAAAAAAAAsw4AAAAAAAAAAAAAsw4AAAAAAACzDgAAAAAAAFUAAAAgICAgICAgIHRoaXMudXJsICAgICAgICAgICAgICAgICAgICA9ICdodHRwczovL2Rldi5idXJkZW5hbmRidXJkZW4uY28udWsvbWFyay9hcGkvJzsK",
+					"AQAAAAAAAAABAAAAWg4AAAAAAACvDgAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		},
+		{
+			"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/manager-cfg.js",
+			"settings":
+			{
+				"buffer_size": 3451,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			},
+			"undo_stack":
+			[
+				[
+					3,
+					1,
+					"paste",
+					null,
+					"AgAAABgNAAAAAAAAcQ0AAAAAAAAAAAAAcQ0AAAAAAABxDQAAAAAAAFUAAAAgICAgICAgIHRoaXMudXJsICAgICAgICAgICAgICAgICAgICA9ICdodHRwczovL2Rldi5idXJkZW5hbmRidXJkZW4uY28udWsvbWFyay9hcGkvJzsK",
+					"AQAAAAAAAAABAAAAGA0AAAAAAABtDQAAAAAAAAAAAAAAAPC/"
+				]
+			]
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/mark/snowy/home/mark/hpapi/burden-and-burden/hpapi-json-requests",
+		"/home/mark/snowy/home/mark/hpapi/burden-and-burden/hpapi-json-requests/dev"
+	],
+	"file_history":
+	[
+		"/home/mark/snowy/home/mark/test3.php",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/admin_update_tuple.json",
+		"/home/think/snowy/results.json",
+		"/home/think/snowy/bab-data/model/BurdenandBurden.routines.sql",
+		"/home/think/snowy/bab-data/model/BurdenandBurden.rows.sql",
+		"/home/think/snowy/hpapi/burden-and-burden/global-server/Bab/GlobalObject.class.php",
+		"/home/think/snowy/hpapi/burden-and-burden/fundraiser-server/Bab/Fundraiser.class.php",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/johnny_rank_ra_ev_update.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/johnny_rank_ra_ev_insert.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/johnny_rank_ra_pc_update.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/admin_insert_row.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/johnny_rank_ra_pc_insert.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/sue_little_authenticate.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/sue_little_postcode_units.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-privileges-sql/.hpapi/HpapiModel.rows.sql",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/johnny_rank_knocks.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/ping.json",
+		"/home/think/snowy/hpapi/burden-and-burden/hpapi-json-requests/dev/agent_1_authenticate.json",
+		"/run/user/1000/gvfs/sftp:host=snowy,user=mark/home/mark/hpapi/burden-and-burden/hpapi-json-requests/dev/johnny_rank_daily_data.json",
+		"/run/user/1000/gvfs/sftp:host=snowy,user=mark/home/mark/hpapi/burden-and-burden/hpapi-json-requests/.hpapi/hpapi-json-requests.sublime-project",
+		"/run/user/1000/gvfs/sftp:host=snowy,user=mark/home/mark/hpapi/burden-and-burden/global-server/Bab/GlobalObject.class.php",
+		"/run/user/1000/gvfs/sftp:host=snowy,user=mark/home/mark/hpapi/burden-and-burden/global-server/global-server.dfn.php",
+		"/run/user/1000/gvfs/sftp:host=snowy,user=mark/home/mark/hpapi/burden-and-burden/global-server/.hpapi/global-server.sublime-project",
+		"/run/user/1000/gvfs/sftp:host=snowy,user=mark/home/mark/hpapi/burden-and-burden/global-client/global.js",
+		"/home/dom/hpapi/whitelamp-uk/hpapi-hpapi/.hpapi/HpapiModel.rows.sql",
+		"/home/dom/work/burden/hpapi/burden-and-burden/fundraiser-client/README.md",
+		"/home/dom/work/burden/bab-docs/reference/Research_Topics/RDBMS_Design.txt",
+		"/home/dom/work/burden/bab-docs/reference/Research_Topics/PHP-MySQL_Development.txt",
+		"/home/dom/work/burden/hpapi/whitelamp-uk/hpapi-client-php-cli/LICENSE",
+		"/home/dom/bab-docs/reference/Research_Topics/PHP-MySQL_Development.txt",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/fundraiser-server/Bab/Fundraiser.class.php",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/class/hpapi.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/class/global.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/admin-gui/js/index.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/class/fundraiser-gui.js",
+		"/home/dom/bab-docs/reference/Research_Topics/RDBMS_Design.txt",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/global-client/global.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/admin-gui/js/plugins.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/whitelamp-uk/hpapi-hpapi/.hpapi/HpapiModel.routines.sql",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/class/fundraiser-cfg.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/index.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/index.phonegap.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/index.phonegap.html",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/index.html",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/admin-gui/js/iife/handlebars.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/dom/myApp/www/js/class/fundraiser-cfg.2.js",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/fundraiser-gui/index.html",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/home/api/0.9/hpapi/burden-and-burden/fundraiser-gui/README.md",
+		"/run/user/1000/gvfs/sftp:host=dev.burdenandburden.co.uk/var/www/html/fundraisers/index.html",
+		"/run/user/1000/gvfs/sftp:host=calico/home/williamg/public_html/wp-content/plugins/woocommerce/includes/class-wc-order-item.php",
+		"/home/dom/work/jonohowlett/excell/notes.txt",
+		"/home/dom/work/jonohowlett/excell/xl4zdprox/xl4zdprox4.php",
+		"/home/dom/work/jonohowlett/excell/xl4zdprox/xl4zdproxfiles/motd.json",
+		"/home/dom/domstuff/house/countax.txt",
+		"/home/dom/work/wileman/sprint_server_setup2.txt",
+		"/home/dom/work/systems/dogfood4_setup",
+		"/home/dom/work/systems/pedigree_setup.txt",
+		"/home/dom/work/epproductions/notes.txt",
+		"/home/dom/work/thebeatshed/notes.txt",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/var/www/sb5/others/PHPMailer/class.phpmailer.php",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/var/www/mailprocess/mp.php",
+		"/home/dom/work/wpec/wp-e-commerce/wpsc-admin/includes/purchase-log-list-table-class.php",
+		"/home/dom/work/recentwork24.txt",
+		"/home/dom/work/enricogangai/notes.txt",
+		"/home/dom/domstuff/travel/our_flights.txt",
+		"/home/dom/work/systems/gromit_setup.txt",
+		"/home/dom/work/systems/gromit_wol.txt",
+		"/home/dom/work/systems/newdisk2.txt",
+		"/home/dom/work/systems/newdisk1.txt",
+		"/tmp/fz3temp-1/wpsc-default.css",
+		"/home/dom/work/currentwork.txt",
+		"/tmp/fz3temp-1/functions.php",
+		"/home/dom/work/intexdesign/WebsiteDevelopmetApril2010 PC.ppt",
+		"/tmp/fz3temp-1/misc.php",
+		"/tmp/fz3temp-1/functions 2.php",
+		"/tmp/fz3temp-1/wp-config.php",
+		"/home/dom/work/mediacellar/goldenrepro/notes.txt",
+		"/home/dom/work/innovate-electrical/www/public_html/wp-login.php",
+		"/home/dom/work/systems/attack_log",
+		"/home/dom/domstuff/bday/notes.txt",
+		"/home/dom/work/wpec/wp-e-commerce/wpsc-merchants/paypal-express.merchant.php",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/devsb5/template/english/main.tpl",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/devsb5/pw_basket_rider_collections.js",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5/pw_basket_rider_collections.js",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5/tpl/english/basket/user_ba_100_mobile.tpl",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5/tpl/english/basket/user_ba_100.tpl",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5/tpl/english/basket/user_ba_su_101.tpl",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5/tpl/english/basket/user_ba_100_pa.tpl",
+		"/home/dom/work/mediacellar/medforum/fix.php",
+		"/home/dom/work/mediacellar/medforum/events-list-grouped.php",
+		"/home/dom/work/mediacellar/medforum/curfunctions.php",
+		"/home/dom/work/mediacellar/medforum/cur-events-list-grouped.php",
+		"/home/dom/work/innovate-electrical/notes.txt",
+		"/home/dom/domstuff/finance/tax-current-situation.txt",
+		"/home/dom/work/recentwork_n.txt",
+		"/run/user/1000/gvfs/sftp:host=pedigree/home/merlin/thebeatshed.co.uk/httpdocs/test/wp-config.php",
+		"/home/dom/work/wpec/wpec-generic-gateway-template-plugin/wpec-generic-gateway-template-plugin.php",
+		"/home/dom/work/ocs/angelcars/notes.txt",
+		"/home/dom/work/recentwork23.txt",
+		"/home/dom/domstuff/anna-virgin.txt",
+		"/home/dom/work/recentwork2.txt",
+		"/home/dom/work/recentwork.txt",
+		"/home/dom/domstuff/house/improvements.txt",
+		"/home/dom/work/wpec/gold_cart_files/merchants/auth_net.php",
+		"/home/dom/work/wpec/gold_cart_files/merchants/authorize.php",
+		"/home/dom/work/wpec/gold_cart_files/merchants/authorize.merchant.php",
+		"/home/dom/work/recentwork22.txt",
+		"/home/dom/work/wpec/wp-e-commerce/wpsc-core/js/wp-e-commerce.js",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5truncate2.sql",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5/library/functions.inc.php",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5truncate.sql",
+		"/run/user/1000/gvfs/sftp:host=sprint,user=domlat/home/domlat/sb5subsetfinal.sql",
+		"/home/dom/work/usbmodem.txt",
+		"/tmp/fz3temp-1/style.css",
+		"/tmp/fz3temp-1/header 2.php",
+		"/tmp/fz3temp-1/header.php",
+		"/home/dom/work/innovate-electrical/minicartbits.txt",
+		"/tmp/fz3temp-1/shopping_cart_widget.php",
+		"/home/dom/work/innovate-electrical/www/public_html/wp-content/plugins/wp-e-commerce/wpsc-components/theme-engine-v1/widgets/shopping_cart_widget.php",
+		"/tmp/fz3temp-1/ajax.php",
+		"/home/dom/work/innovate-electrical/www/public_html/wp-content/plugins/wp-e-commerce/wpsc-components/theme-engine-v1/helpers/ajax.php",
+		"/tmp/fz3temp-1/admin-ajax.php",
+		"/tmp/fz3temp-1/style 2.css",
+		"/tmp/fz3temp-1/error_log",
+		"/tmp/fz3temp-1/footer.php",
+		"/home/dom/work/williamgee/clusterednotes.txt",
+		"/home/dom/work/williamgee/servwiseserver.txt",
+		"/home/dom/work/williamgee/notes.txt"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"ra-emergency-procedures-fire-test",
+			"raName",
+			"ra-",
+			"ra-vn",
+			"ra-vn-",
+			" reques",
+			"reques",
+			"ping (",
+			"authO",
+			"Id",
+			"snowy",
+			"/op",
+			"INET6",
+			"log (",
+			"bab",
+			"10.248",
+			"ipinfo c",
+			"error_lo",
+			"error_l",
+			"error_lo",
+			"pedigree",
+			"<form",
+			"form",
+			"today",
+			"when",
+			"To :",
+			"triptimeclass",
+			"when",
+			"rs_trip",
+			"notes fo",
+			"else",
+			"txt_time",
+			"11/sep",
+			".js",
+			"<script>",
+			":",
+			"/scripts",
+			"init",
+			"checkout.",
+			"rsync",
+			"lastname",
+			"0",
+			"7006",
+			"7",
+			"gmai",
+			"google",
+			"30/jun: 17:45->18:00 18:05->18:20\n03/jul: 11:15->12:15 12:20->12:50 13:25->13:30 13:55->14:35 14:50->15:39 15:47->16:05 16:06->16:19 16:50->17:13 17:16->17:20 17:22->17:54 18:03->18:06 18:33->18:40\n04/jul: 18:25->18:33\n05/jul: 09:15->10:40 10:55->11:22 11:27->11:41 12:25->12:37 13:00->14:24 16:00->16:18 16:33->16:38 16:41->16:46 19:04->19:30\n10/jul: 13:23->13:31 13:48->13:51 16:49->16:57 17:41->17:45 18:14->18:32 18:34->18:50 19:03->19:07 19:08->19:15 19:18->19:21 21:55->22:00\n12/jul: 09:38->09:50 12:30->12:48 13:59->14:05 14:10->15:10 17:30->18:50 21:29->21:34 22:15->22:19\n13/jul: 09:00->09:30\n24/jul: 09:18->09:21 10:16->10:31 10:40->11:16 11:21->11:29 13:38->13:54 (anna bargeing in) 14:43->15:20 (to shop) 16:05->16:17 16:21->16:38 16:49->17:00 17:09->17:19 17:28->17:32 17:40->18:18 18:22->18:25 18:47->19:08\n26/jul: 12:25->12:30 15:17->16:05 17:55->18:05\n31/jul: 10:43->11:01\n02/aug: 11:52->12:05 13:45->13:55 18:40->19:20\n09/aug: 09:30->09:45 11:53->11:55 12:02->12:15 12:53->13:13",
+			"vss",
+			"CREATE",
+			"Items",
+			"+",
+			"usb",
+			"sdbg",
+			"vss_product_type",
+			"vss_instant_download",
+			"vss_media",
+			"TRUNCATE TABLE",
+			"vss_product_type_discount",
+			"product_type_pro",
+			"worldp",
+			"tabs",
+			"zao",
+			"echo",
+			"wpsc_alternate_cart_html",
+			"_wpsc_ajax_get_cart",
+			"get_cart",
+			"sliding_cart",
+			"Logo",
+			"rate",
+			" ->",
+			"16/feb",
+			"30/jan",
+			"'",
+			"10/ja",
+			"01/dev",
+			"@240 ",
+			"Help for 2016",
+			"14/nov",
+			"10/nov",
+			"11/nov",
+			"basket",
+			"country",
+			"=",
+			"&",
+			"Currency",
+			"95&Currency",
+			"&",
+			"worldpay.com",
+			"$spf_name = 'fooandbar';\n$vendor_email = 'foo@bar.com';\n$spf_protocol = '3.00';\n$strEncryptionPassword = 'sdafuyoasdiuy';\n$redirect_ok   = $_SERVER['SERVER_NAME'].'/thankyou';\n$redirect_fail = $_SERVER['SERVER_NAME'].'/oops';\n$currency = 'GBP';\n$description = 'Payment to Chiswick Auctions';",
+			"quic",
+			"gate",
+			"EUR EXCHANGE RATE ",
+			"N&P DO NOT CHARGE A FOREIGN HANDLING FEE",
+			"custom_message",
+			"custom_me",
+			"DL",
+			"key",
+			"27/jan",
+			"this.ticket",
+			"EUR EXCHANGE RATE",
+			"N&P DO NOT CHARGE A FOREIGN HANDLING FEE",
+			"david",
+			"sagepay",
+			"stock",
+			"29/apr",
+			"hash",
+			"=",
+			"parse",
+			"&",
+			"moi",
+			"emailthisstudent",
+			"function",
+			"Disable 3.0 payment",
+			"strPost",
+			"simpleXor",
+			"2.2",
+			"17/oct: 15:10->15:28 (fix upload) 18:20->18:35 18:52->19:22 (speed???)\n24/oct: 16:30->16:40\n29/oct: 17:43->17:48 18:42->19:06\n21/nov: 18:37->18:42\n24/dec: 12:05->12:15 12:25->12:40\n07/jan: 18:55->19:30\n09/jan: 16:48->17:15 17:19->17:22 17:33->18:24 18:30->18:40\n12/jan: 15:02->15:13 (end time guess based on email)\n",
+			"feb",
+			"ntl",
+			"script src",
+			"wpsc_update_purchase_log_status",
+			"wpsc_purchase_log_update",
+			"save",
+			"blocked",
+			"08/jan",
+			"kerber",
+			"sectrad",
+			"check_securetrading_response"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"ra-ev-",
+			"Eur rate ",
+			"Eur rate",
+			"",
+			"EUR RATE",
+			""
+		],
+		"reverse": false,
+		"scrollbar_highlights": true,
+		"show_context": true,
+		"use_buffer2": true,
+		"use_gitignore": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/mark/snowy/home/mark/hpapi/burden-and-burden/hpapi-json-requests/dev/admin_accounts.json",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 330,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JSON/JSON.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/admin-cfg.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3595,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3496,
+								3585
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1035.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/agent-cfg.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3163,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3153,
+								3153
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1140.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/fundraiser-cfg.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3773,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3763,
+								3763
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1200.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"stack_multiselect": false,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/mark/snowy/home/mark/hpapi/_hpapi-config/burden-and-burden/manager-cfg.js",
+					"selected": true,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3451,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3451,
+								3451
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1260.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"stack_multiselect": false,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 29.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "hpapi-json-requests.sublime-project",
+	"replace":
+	{
+		"height": 70.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 244.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

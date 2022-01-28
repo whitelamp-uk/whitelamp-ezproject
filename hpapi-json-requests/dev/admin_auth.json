@@ -1,0 +1,12 @@
+{
+    "key" : "89c56ad8-8ff3-11e8-902b-001f16148bc1",
+    "email" : "a@b.c",
+    "password" : "password",
+    "method": {
+        "vendor": "whitelamp-ezproject",
+        "package": "swimlanes-server",
+        "class": "\\EzProject\\Swimlanes",
+        "method": "authenticate",
+        "arguments": []
+    }
+}

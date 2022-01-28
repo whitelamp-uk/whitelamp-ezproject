@@ -1,0 +1,185 @@
+
+/* Variables */
+
+:root {
+
+/* COLOURS */
+
+  /* Background colours */
+    --color-background-input:                       rgb(255,255,255);
+    --color-background-input-valid:                 rgb(210,255,200);
+    --color-background-input-readonly:              rgb(255,237,237);
+    --color-background-main:                        rgb(230,232,230);
+    --color-background-button:                      rgb(238,238,238);
+    --color-background-button-menu:                 rgba(161,166,161,1.0);
+    --color-background-button-menu-hover:           rgba(255,255,255,1.0);
+    --color-background-component:                   rgb(202,209,203);
+    --color-background-component-button-emphasised: rgb(143,172,147);
+    --color-background-component-deleted-scoped:    rgb(197,219,200);
+    --color-background-component-form-deleted:      rgb(255,224,162);
+    --color-background-component-scoped:            rgb(143,172,147);
+    --color-background-focused-form-element:        rgb(255,255,200);
+    --color-background-layer:                       rgba(127,127,127,0.9);
+    --color-background-menu:                        rgba(185,191,186,0.9);
+    --color-background-navigator:                   rgba(185,191,186,0.9);
+    --color-background-navigator-opaque:            rgba(188,194,189,1.0);
+    --color-background-navigator-title:             rgba(185,191,186,1.0);
+    --color-background-readonly:                    rgb(255,221,221);
+    --color-background-signature:                   rgb(255,255,255);
+    --color-background-splash:                      rgba(127,127,127,0.7);
+    --color-background-stripe-odd:                  rgb(220,222,220);
+    --color-background-stripe-even:                 rgb(180,182,180);
+    --color-background-traffic-amber:               rgb(255,200,140);
+    --color-background-traffic-green:               rgb(140,255,140);
+    --color-background-traffic-red:                 rgb(255,140,140);
+    --color-background-warning:                     rgb(255,221,221);
+
+  /* Background days of the week */
+    --color-background-mon:                         rgb(255,255,217);
+    --color-background-tue:                         rgb(255,217,217);
+    --color-background-wed:                         rgb(217,255,127);
+    --color-background-thu:                         rgb(255,236,217);
+    --color-background-fri:                         rgb(217,255,236);
+    --color-background-sat:                         rgb(236,217,255);
+    --color-background-sun:                         rgb(255,255,255);
+
+  /* Border colours */
+    --color-border-button:                          rgb(255,255,255) rgb(221,221,221) rgb(221,221,221) rgb(255,255,255);
+    --color-border-component-button-emphasised:     rgb(170,187,170) rgb(136,153,136) rgb(136,153,136) rgb(170,187,170);
+    --color-border-hotkey-focus:                    rgb(255,0,0);
+    --color-border-main:                            rgb(110,113,110);
+    --color-border-warning:                         rgb(172,78,78);
+
+  /* Colour opacities */
+    --color-opacity-component-deleted-image:        0.4;
+
+  /* Box shadow colours */
+    --color-shadow-box-main:                        rgb(88,102,90,0.5);
+
+  /* Text colors */
+    --color-text-backtrail:                         rgb(136,136,136);
+    --color-text-component-button-deleted:          rgb(170,170,170);
+    --color-text-component-button-emphasised:       rgb(0,0,0);
+    --color-text-component-deleted:                 rgb(200,108,0);
+    --color-text-component-deleted-scoped:          rgb(200,108,0);
+    --color-text-component-greyed:                  rgb(128,128,128);
+    --color-text-component-scoped:                  rgb(255,170,68);
+    --color-text-error:                             rgb(102,0,0);
+    --color-text-main:                              rgb(0,0,0);
+    --color-text-strike:                            rgb(170,170,170);
+    --color-text-unvisited:                         rgb(191,112,0);
+    --color-text-warning:                           rgb(191,112,0);
+
+/* DIMENSIONS */
+
+  /* Border radii */
+    --dim-border-radius-button:                     0.4em;
+    --dim-border-radius-button-close:               1em;
+    --dim-border-radius-component:                  1em;
+
+  /* Border widths */
+    --dim-border-width-button:                      1px;
+    --dim-border-width-component:                   2px;
+    --dim-border-width-focused-form-setter:         5px;
+    --dim-border-width-hotkey-focus:                2px;
+    --dim-border-width-separator:                   1px;
+    --dim-border-width-table-cell:                  1px;
+    --dim-border-width-menu-group:                  0;
+
+  /* Font sizes */
+    --dim-font-size-h1:                             3em;
+    --dim-font-size-main:                           0.9em;
+    --dim-font-size-small:                          0.6em;
+    --dim-font-line-height-main:                    1.5;
+    --dim-font-size-menu:                           1.2em;
+
+  /* Heights */
+    --dim-height-button-close:                      2em;
+    --dim-height-component-textarea:                5em;
+    --dim-height-component-textarea-tall:           40em;
+    --dim-height-signature:                         24em;
+
+  /* Margins */
+    --dim-margin-component:                         0 1em 1em 1em;
+    --dim-margin-form-section:                      0.3em;
+    --dim-margin-legend:                            0.3em;
+    --dim-margin-navigator-button:                  0.5em;
+
+  /* Paddings */
+    --dim-top-spacer:                               4.6em;
+    --dim-padding-button:                           0.3em 0.6em 0.3em 0.6em;
+    --dim-padding-form-component:                   1em;
+    --dim-padding-form-section:                     0.3em;
+    --dim-padding-component:                        0.3em 0.6em 0.6em 0.6em;
+    --dim-padding-link:                             0 0.3em 0 0.3em;
+    --dim-padding-section-after-form:               0.6em;
+    --dim-padding-splash-section:                   1em 1em 3em 1em;
+
+  /* Box shadow sizes */
+    --dim-shadow-box-main:                          0.2em 0.2em 0.2em;
+
+  /* Widths */
+    --dim-width-button-close:                       2em;
+    --dim-width-component-input:                    25em;
+    --dim-width-input-char-4:                       4em;
+    --dim-width-input-char-16:                      16em;
+    --dim-width-input-char-64:                      56em;
+    --dim-width-legend:                             12em;
+    --dim-width-menu-group:                         15em;
+    --dim-width-signature:                          48em;
+
+/* FONTS */
+
+  /* Families */
+    --font-family-main:                             "aktiv-grotesk","verdana","sans-serif";
+
+/* IMAGES */
+
+  /* Insert control */
+    --url-button-close:                             url('../media/close.png');
+    --url-button-maximise:                          url('../media/maximise.png');
+    --url-button-minimise:                          url('../media/minimise.png');
+
+  /* General icons */
+    --url-icon-burger:                              url('../media/burger.png');
+    --url-icon-edit-on:                             url('../media/edit-on.png');
+    --url-icon-edit-off:                            url('../media/edit-off.png');
+    --url-icon-lock:                                url('../media/lock.png');
+    --url-icon-tech:                                url('../media/report.png');
+
+  /* Menu icons */
+    --url-icon-menu-account:                        url('../media/menu/account.png');
+    --url-icon-menu-agent:                          url('../media/menu/agent.png');
+    --url-icon-menu-flag:                           url('../media/menu/flag.png');
+    --url-icon-menu-form:                           url('../media/menu/form.png');
+    --url-icon-menu-fundraiser:                     url('../media/menu/fundraiser.png');
+    --url-icon-menu-manager:                        url('../media/menu/manager.png');
+    --url-icon-menu-processor:                      url('../media/menu/processor.png');
+    --url-icon-menu-report:                         url('../media/menu/report.png');
+    --url-icon-menu-team:                           url('../media/menu/team.png');
+    --url-icon-menu-test:                           url('../media/menu/test.png');
+    --url-icon-menu-tree:                           url('../media/menu/tree.png');
+    --url-icon-menu-user:                           url('../media/menu/user.png');
+    --url-icon-menu-findadd:                        url('../media/menu/findadd.png');
+
+}
+
+.tf-tree {
+    --tf-tree-color-background-administrator:      rgb(221,221,221);
+    --tf-tree-color-background-fundraiser:         rgb(221,221,255);
+    --tf-tree-color-background-main:               var(--color-background-component);
+    --tf-tree-color-background-manager:            rgb(255,221,221);
+    --tf-tree-color-background-team:               rgb(221,255,221);
+    --tf-tree-color-separator:                     rgb(0,0,0);
+    --tf-tree-color-shadow-box-main:               var(--color-shadow-box-main);
+    --tf-tree-dim-border-radius-component:         0.4em;
+    --tf-tree-dim-border-radius-main:              var(--dim-border-radius-component);
+    --tf-tree-dim-border-width:                    var(--dim-border-width-component);
+    --tf-tree-dim-font-size:                       0.55em;
+    --tf-tree-dim-height-separator:                1px;
+    --tf-tree-dim-margin-fundraiser:               0.3em;
+    --tf-tree-dim-margin-separator:                0.3em;
+    --tf-tree-dim-shadow-box-main:                 var(--dim-shadow-box-main);
+    --tf-tree-z-index:                             90;
+}
+

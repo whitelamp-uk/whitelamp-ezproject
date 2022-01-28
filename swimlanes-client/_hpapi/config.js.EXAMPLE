@@ -1,0 +1,36 @@
+
+
+export class Config {
+
+    constructor ( ) {
+        this.connectTO              = 10;          // seconds
+        this.diagnostic             = {
+            data                    : true
+        };
+        this.enforceLocalStorage    = false;
+        this.environment            = "development";
+        this.forceTemplateLoad      = true;
+        this.history                = {
+            sessionDuration         : 1800,       // seconds to flag screens
+            storageDuration         : 0,          // seconds to remember states
+            storageLength           : 12          // items per group
+        };
+        this.inBodyLogger           = true;
+        this.label                  = {
+            login                   : "Log in",
+            unlock                  : "Unlock"
+        };
+        this.loginByBadge           = true;
+        this.mediaUrl               = '/media';
+        this.navigatorOptions       = {
+            lock                    : '#gui-splash',
+            burger                  : '#gui-menu',
+            findadd                 : null
+        };
+        this.screenTO               = 3600;         // seconds
+        this.templateTO             = 4;            // seconds
+        this.url                    = 'https://some.host/some/api/';
+    }
+
+}
+

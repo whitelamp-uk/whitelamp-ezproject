@@ -1,0 +1,12 @@
+{
+    "email" : "a@b.c",
+    "password" : "",
+    "method": {
+        "vendor": "whitelamp-uk",
+        "package": "hpapi-utility",
+        "class": "\\Hpapi\\Utility",
+        "method": "ping",
+        "arguments": [
+        ]
+    }
+}

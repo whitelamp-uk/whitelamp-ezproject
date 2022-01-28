@@ -1,0 +1,14 @@
+{
+    "key" : "9894c0d9-0913-11e9-b658-6d7f358a16ce",
+    "email" : "system@[::1]",
+    "password" : "password",
+    "method": {
+        "vendor": "whitelamp-uk",
+        "package": "hpapi-sec",
+        "class": "\\Hpapi\\Security",
+        "method": "job",
+        "arguments": [
+            "30s"
+        ]
+    }
+}

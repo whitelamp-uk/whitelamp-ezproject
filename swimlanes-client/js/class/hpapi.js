@@ -1,0 +1,1 @@
+../../../../whitelamp-uk/hpapi-client/hpapi.js
