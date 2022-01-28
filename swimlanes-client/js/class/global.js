@@ -1,4 +1,6 @@
 
+/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+
 import {Generic} from './generic.js';
 
 export class Global extends Generic {

@@ -6,8 +6,3 @@ CREATE TABLE IF NOT EXISTS `ezp_developer` (
   PRIMARY KEY (`developer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO `ezp_developer` VALUES
-('Amber'),
-('Dom'),
-('Mark');
-

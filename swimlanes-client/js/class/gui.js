@@ -1,4 +1,6 @@
 
+/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+
 import {Swimlanes} from './swimlanes.js';
 
 export class Gui extends Swimlanes {

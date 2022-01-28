@@ -1,20 +1,12 @@
 <?php
 
 // Minutes to add to "now"
-define ( 'BAB_TOKEN_LIFE_MINS',                 10                                                          );
+define ( 'EZP_SWIMLANES_TOKEN_LIFE_MINS',                 10 );
 
 // Verification code persistence in seconds
-define ( 'BAB_VERIFY_TIME',                     300                                                         );
+define ( 'EZP_SWIMLANES_VERIFY_TIME',                     300 );
 
-<<<<<<< Updated upstream
-=======
-// File path to images
-define ( 'BAB_DIR_IMAGE_ACCOUNT',       '/home/docs/www/media/image/account'                                );
-define ( 'BAB_DIR_IMAGE_FUNDRAISER',    '/home/docs/www/media/image/fundraiser'                             );
-define ( 'BAB_DIR_SIGNUP_SIGNATURE',    '/home/docs/www/signatures/signups'                                 );
+define ( 'EZP_SWIMLANES_DIR_IMAGE_USER',    '/home/docs/www/media/image/user' );
 
-// File name pattern for account logos
-define ( 'BAB_FILE_PATTERN_ACCOUNT',    'account-?.png'                                                     );
-define ( 'BAB_FILE_PATTERN_FUNDRAISER', 'fundraiser-?.png'                                                  );
->>>>>>> Stashed changes
+define ( 'EZP_SWIMLANES_FILE_PATTERN_USER', 'user-?.png' );
 

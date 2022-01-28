@@ -1,4 +1,6 @@
 
+/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+
 import {Global} from './global.js';
 
 export class Swimlanes extends Global {

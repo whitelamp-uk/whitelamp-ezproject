@@ -66,38 +66,14 @@ a[data-icon=lock] {
 a[data-icon=burger] {
     background-image: var(--url-icon-burger);
 }
-a[data-icon=account] {
-    background-image:   var(--url-icon-menu-account);
-}
-a[data-icon=agent] {
-    background-image:   var(--url-icon-menu-agent);
-}
 a[data-icon=flag] {
     background-image:   var(--url-icon-menu-flag);
-}
-a[data-icon=form] {
-    background-image:   var(--url-icon-menu-form);
-}
-a[data-icon=fundraiser] {
-    background-image:   var(--url-icon-menu-fundraiser);
-}
-a[data-icon=manager] {
-    background-image:   var(--url-icon-menu-manager);
-}
-a[data-icon=processor] {
-    background-image:   var(--url-icon-menu-processor);
 }
 a[data-icon=report] {
     background-image:   var(--url-icon-menu-report);
 }
-a[data-icon=team] {
-    background-image:   var(--url-icon-menu-team);
-}
 a[data-icon=test] {
     background-image:   var(--url-icon-menu-test);
-}
-a[data-icon=tree] {
-    background-image:   var(--url-icon-menu-tree);
 }
 a[data-icon=user] {
     background-image:   var(--url-icon-menu-user);
@@ -900,79 +876,6 @@ a.atom:hover {
 
 .valid, .valid:focus {
     background-color: var(--color-background-input-valid);
-}
-
-
-
-
-/* tf-tree */
-
-section.tf-tree {
-    font-size: var(--tf-tree-dim-font-size);
-}
-
-.tf-tree.expanded {
-    position: fixed;
-    z-index: var(--tf-tree-z-index);
-    left: 2vw;
-    top: 4vh;
-    min-width: 94vw;
-    min-height: 92vh;
-    border-style: solid;
-    border-width: var(--tf-tree-dim-border-width);
-    border-radius: var(--tf-tree-dim-border-radius-main);
-    border-color: var(--color-border-main);
-    background-color: var(--tf-tree-color-background-main);
-    padding: 1em;
-}
-.tf-tree .tf-nc {
-    box-shadow: var(--tf-tree-dim-shadow-box-main) var(--tf-tree-color-shadow-box-main);
-    border-radius: var(--tf-tree-dim-border-radius-component);
-    font-weight: bold;
-}
-.tf-tree > ul > li.manager > .tf-nc {
-    background-color: var(--tf-tree-color-background-administrator);
-}
-.tf-tree .manager > .tf-nc {
-    background-color: var(--tf-tree-color-background-manager);
-}
-.tf-tree .team > .tf-nc {
-    background-color: var(--tf-tree-color-background-team);
-}
-.tf-tree .team > .tf-nc hr {
-    margin-bottom: var(--tf-tree-dim-margin-separator);
-    height: var(--tf-tree-dim-height-separator);
-    border-color: var(--tf-tree-color-separator);
-}
-.tf-tree .team  > .tf-nc .atom {
-    margin-top: var(--tf-tree-dim-margin-fundraiser);
-    background-color: var(--tf-tree-color-background-fundraiser);
-    font-weight: normal;
-}
-.tf-tree .team  > .tf-nc .atom.teamleader {
-    font-weight: bold;
-}
-.tf-tree [data-fundraiser] {
-    padding-right: 1em;
-}
-.tf-tree [data-fundraiser] details {
-    display: inline;
-    position: absolute;
-    z-index: 100;
-    margin: 0.1em 0 0 0.3em;
-    font-size: 1em;
-    font-weight: normal;
-}
-.tf-tree [data-fundraiser] details[open] {
-    z-index: 101;
-    background-color: rgb(210,230,255);
-    padding: 0 1em 1em 0;
-}
-.tf-tree [data-fundraiser] details span {
-    position: relative;
-    left: 1.5em;
-    top: -2em;
-    font-size: 0.8em;
 }
 
 

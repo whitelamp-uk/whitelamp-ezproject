@@ -1,4 +1,6 @@
 
+/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+
 import {Gui} from './gui.js';
 
 export class Enforcer extends Gui {
