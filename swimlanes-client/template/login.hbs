@@ -1,0 +1,99 @@
+
+<!-- ACCESS SCREEN -->
+
+<nav class="navigator"></nav>
+
+<h2>Log in</h2>
+    
+<div class="login nugget">
+
+
+  <div id="gui-user">
+    <span class="legend">Email</span>
+    <input id="gui-email" name="email" type="email" required />
+  </div>
+
+  <div id="gui-auth">
+
+    <div>
+      <span class="legend">Password</span>
+      <input id="gui-password" name="password" type="password" />
+    </div>
+
+    <div>
+      <span class="legend">&nbsp;</span>
+      <button id="gui-unlock">Log in</button>
+    </div>
+
+  </div>
+
+  <div>
+    <span class="legend">&nbsp;</span>
+    <button id="gui-password-reset-start">Reset password</button>
+  </div>
+
+  <div id="gui-password-reset">
+
+    <div id="gui-phone-check">
+
+      <div>
+        <span class="legend">Last 3 phone digits</span>
+        <input id="gui-phone" name="phone" type="tel" pattern="^[0-9]{3}$" required class="char-4" />
+      </div>
+
+    </div>
+
+    <div id="gui-answer-check">
+
+      <div>
+        <span class="legend">Question</span>
+        <span id="gui-question"></span>
+      </div>
+
+      <div>
+        <span class="legend">Answer</span>
+        <input id="gui-answer" name="answer" type="text" maxlength="255" required class="char-64" />
+      </div>
+
+    </div>
+
+    <div id="gui-sms-check">
+
+      <div>
+        Get verification code by SMS</span>
+      </div>
+
+    </div>
+
+    <div id="gui-verify-check">
+
+      <div>
+        <span class="legend">Verification code</span>
+        <input id="gui-verify" name="verify" type="text" maxlength="6" required class="char-4" />
+      </div>
+
+    </div>
+
+    <div id="gui-password-change">
+
+    <div>
+      <span class="legend">New password</span>
+      <input id="gui-password-new" name="pwd-new" type="password" required />
+    </div>
+
+    <div>
+      <span class="legend">Confirm</span>
+      <input id="gui-password-confirm" name="pwd-cnf" type="password" required />
+    </div>
+
+  </div>
+
+  <div>
+    <span class="legend">&nbsp;</span>
+    <button id="gui-password-reset-continue" data-continue="email">Continue</button>
+    <button id="gui-password-reset-cancel">Cancel</button>
+    <span id="gui-password-reset-message" class="warning"></span>
+  </div>
+
+</div>
+

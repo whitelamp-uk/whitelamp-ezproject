@@ -135,6 +135,9 @@
 
 /* IMAGES */
 
+  /* Logo */
+    --url-logo-app:                                 url('../media/logo-swimlanes.png');
+
   /* Insert control */
     --url-button-close:                             url('../media/close.png');
     --url-button-maximise:                          url('../media/maximise.png');

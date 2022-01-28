@@ -201,6 +201,7 @@ nav.navigator {
     background-image: var(--url-logo-app);
     background-repeat: no-repeat;
     background-position: top 0.45em left 0.55em;
+    background-size: auto 2.6em;
     padding: 0.75em 4em 0.75em 11.2em;
 }
 nav.navigator > button {
@@ -273,7 +274,7 @@ section.view {
     padding:            4em 0.5em 0 0.5em;
 }
 #gui-access > nav.navigator {
-    width:              10.25em;
+    width:              12em;
     padding-left:       0.6em;
 }
 
