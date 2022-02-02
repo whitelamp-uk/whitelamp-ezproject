@@ -1,5 +1,5 @@
 
-/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+/* Copyright 2022 Whitelamp http://www.whitelamp.co.uk */
 
 import {Global} from './global.js';
 
@@ -16,7 +16,7 @@ export class Swimlanes extends Global {
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
                ,"package" : "swimlanes-server"
-               ,"class" : "\\Whitelamp\\Swimlanes"
+               ,"class" : "\\EzProject\\Swimlanes"
                ,"method" : "passwordReset"
                ,"arguments" : [
                     answer,code,password
@@ -39,7 +39,7 @@ export class Swimlanes extends Global {
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
                ,"package" : "admin-server"
-               ,"class" : "\\Bab\\Admin"
+               ,"class" : "\\EzProject\\Swimlanes"
                ,"method" : "secretQuestion"
                ,"arguments" : [
                   phoneEnd
@@ -57,6 +57,31 @@ export class Swimlanes extends Global {
         }
     }
 
+    async statusesRequest ( ) {
+        var request;
+        request     = {
+            "email" : this.access.email.value
+           ,"method" : {
+                "vendor" : "whitelamp-ezproject"
+               ,"package" : "swimlanes-server"
+               ,"class" : "\\EzProject\\Swimlanes"
+               ,"method" : "statuses"
+               ,"arguments" : [
+                ]
+            }
+        }
+        var response;
+        try {
+            response = await this.request (request);
+            this.data.statuses = response.returnValue;
+            return true;
+        }
+        catch (e) {
+            console.error ('Could not get statuses: '+e.message);
+            return false;
+        }
+    }
+
     async swimlaneRequest (swimlaneCode) {
         var request;
         request     = {
@@ -64,7 +89,7 @@ export class Swimlanes extends Global {
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
                ,"package" : "swimlanes-server"
-               ,"class" : "\\Whitelamp\\Swimlanes"
+               ,"class" : "\\EzProject\\Swimlanes"
                ,"method" : "swimlane"
                ,"arguments" : [
                     swimlaneCode
@@ -89,7 +114,7 @@ export class Swimlanes extends Global {
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
                ,"package" : "swimlanes-server"
-               ,"class" : "\\Whitelamp\\Swimlanes"
+               ,"class" : "\\EzProject\\Swimlanes"
                ,"method" : "swimlanes"
                ,"arguments" : [
                     swimpoolCode
@@ -107,27 +132,26 @@ export class Swimlanes extends Global {
         }
     }
 
-    async usersRequest (swimpoolCode) {
+    async swimmersRequest ( ) {
         var request, response;
         request     = {
             "email" : this.access.email.value
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
                ,"package" : "swimlanes-server"
-               ,"class" : "\\Whitelamp\\Swimlanes"
-               ,"method" : "users"
+               ,"class" : "\\EzProject\\Swimlanes"
+               ,"method" : "swimmers"
                ,"arguments" : [
-                    swimpoolCode
                 ]
             }
         }
         try {
             response = await this.request (request);
-            this.data.users         = response.returnValue;
+            this.data.swimmers = response.returnValue;
             return true;
         }
         catch (e) {
-            console.error ('Could not get users for "'+swimpoolCode+'": '+e.message);
+            console.error ('Could not get swimmers: '+e.message);
             return false;
         }
     }
@@ -138,7 +162,7 @@ export class Swimlanes extends Global {
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
                ,"package" : "swimlanes-server"
-               ,"class" : "\\Whitelamp\\Swimlanes"
+               ,"class" : "\\EzProject\\Swimlanes"
                ,"method" : "verify"
                ,"arguments" : []
             }

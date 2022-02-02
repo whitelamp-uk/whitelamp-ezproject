@@ -7,13 +7,15 @@ BEGIN
   DECLARE usr varchar(255);
   SELECT USER() INTO usr;
   INSERT INTO `ezp_swimlog` (
-    `user`,`swim_id`,`status`,`swimlane`,
-    `parent_swim_id`,`project`,
+    `user`,`swim_id`,
+    `parent_swim_id`,`swimpool`,
+    `swimlane`,`status`,`project`,
     `name`,`notes`,`specification`
   )
   VALUES (
-    usr,NEW.`id`,NEW.`status`,NEW.`swimlane`,
-    NEW.`parent_swim_id`,NEW.`project`,
+    usr,NEW.`id`,
+    NEW.`parent_swim_id`,NEW.`swimpool`,
+    NEW.`swimlane`,NEW.`status`,NEW.`project`,
     NEW.`name`,NEW.`notes`,NEW.`specification`
   );
 END$$
@@ -26,13 +28,15 @@ BEGIN
   DECLARE usr varchar(255);
   SELECT USER() INTO usr;
   INSERT INTO `ezp_swimlog` (
-    `user`,`swim_id`,`status`,`swimlane`,
-    `parent_swim_id`,`project`,
+    `user`,`swim_id`,
+    `parent_swim_id`,`swimpool`,
+    `swimlane`,`status`,`project`,
     `name`,`notes`,`specification`
   )
   VALUES (
-    usr,NEW.`id`,NEW.`status`,NEW.`swimlane`,
-    NEW.`parent_swim_id`,NEW.`project`,
+    usr,NEW.`id`,
+    NEW.`parent_swim_id`,NEW.`swimpool`,
+    NEW.`swimlane`,NEW.`status`,NEW.`project`,
     NEW.`name`,NEW.`notes`,NEW.`specification`
   );
 END$$
@@ -46,14 +50,16 @@ BEGIN
   DECLARE usr varchar(255);
   SELECT USER() INTO usr;
   INSERT INTO `ezp_swimlog` (
-    `user`,`swim_id`,`status`,`swimlane`,
-    `parent_swim_id`,`project`,
+    `user`,`swim_id`,
+    `parent_swim_id`,`swimpool`,
+    `swimlane`,`status`,`project`,
     `name`,`notes`,`specification`
   )
   VALUES (
-    usr,OLD.`id`,OLD.`status`,OLD.`swimlane`,
-    OLD.`parent_swim_id`,OLD.`project`,
-    OLD.`name`,'DELETED',''
+    usr,OLD.`id`,
+    OLD.`parent_swim_id`,OLD.`swimpool`,
+    OLD.`swimlane`,OLD.`status`,OLD.`project`,
+    OLD.`name`,OLD.`notes`,OLD.`specification`
   );
 END$$
 

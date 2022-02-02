@@ -148,40 +148,12 @@
     --url-icon-edit-on:                             url('../media/edit-on.png');
     --url-icon-edit-off:                            url('../media/edit-off.png');
     --url-icon-lock:                                url('../media/lock.png');
-    --url-icon-tech:                                url('../media/report.png');
+    --url-icon-flag:                                url('../media/flag.png');
+    --url-icon-report:                              url('../media/report.png');
+    --url-icon-tech:                                url('../media/tech.png');
+    --url-icon-test:                                url('../media/test.png');
+    --url-icon-swimmer:                             url('../media/swimmer.png');
+    --url-icon-findadd:                             url('../media/findadd.png');
 
-  /* Menu icons */
-    --url-icon-menu-account:                        url('../media/menu/account.png');
-    --url-icon-menu-agent:                          url('../media/menu/agent.png');
-    --url-icon-menu-flag:                           url('../media/menu/flag.png');
-    --url-icon-menu-form:                           url('../media/menu/form.png');
-    --url-icon-menu-manager:                        url('../media/menu/manager.png');
-    --url-icon-menu-processor:                      url('../media/menu/processor.png');
-    --url-icon-menu-report:                         url('../media/menu/report.png');
-    --url-icon-menu-team:                           url('../media/menu/team.png');
-    --url-icon-menu-test:                           url('../media/menu/test.png');
-    --url-icon-menu-tree:                           url('../media/menu/tree.png');
-    --url-icon-menu-user:                           url('../media/menu/user.png');
-    --url-icon-menu-findadd:                        url('../media/menu/findadd.png');
-
-}
-
-.tf-tree {
-    --tf-tree-color-background-administrator:      rgb(221,221,221);
-    --tf-tree-color-background-user:         rgb(221,221,255);
-    --tf-tree-color-background-main:               var(--color-background-component);
-    --tf-tree-color-background-manager:            rgb(255,221,221);
-    --tf-tree-color-background-team:               rgb(221,255,221);
-    --tf-tree-color-separator:                     rgb(0,0,0);
-    --tf-tree-color-shadow-box-main:               var(--color-shadow-box-main);
-    --tf-tree-dim-border-radius-component:         0.4em;
-    --tf-tree-dim-border-radius-main:              var(--dim-border-radius-component);
-    --tf-tree-dim-border-width:                    var(--dim-border-width-component);
-    --tf-tree-dim-font-size:                       0.55em;
-    --tf-tree-dim-height-separator:                1px;
-    --tf-tree-dim-margin-user:               0.3em;
-    --tf-tree-dim-margin-separator:                0.3em;
-    --tf-tree-dim-shadow-box-main:                 var(--dim-shadow-box-main);
-    --tf-tree-z-index:                             90;
 }
 

@@ -1,7 +1,7 @@
 {
     "key" : "89c56ad8-8ff3-11e8-902b-001f16148bc1",
-    "email" : "a@b.c",
-    "password" : "password",
+    "email" : "mark.page@thefundraisingfoundry.com",
+    "password" : "nedrub",
     "method": {
         "vendor": "whitelamp-ezproject",
         "package": "swimlanes-server",

@@ -1,5 +1,5 @@
 
-/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+/* Copyright 2022 Whitelamp http://www.whitelamp.co.uk */
 
 import {Generic} from './generic.js';
 
@@ -45,7 +45,7 @@ export class Global extends Generic {
                ,"method" : {
                     "vendor" : "whitelamp-ezproject"
                    ,"package" : "swimlanes-server"
-                   ,"class" : "Swimlanes"
+                   ,"class" : "\\EzProject\\Swimlanes"
                    ,"method" : "authenticate"
                    ,"arguments" : [
                     ]
@@ -54,16 +54,12 @@ export class Global extends Generic {
             if (pwd) {
                 request.password = pwd;
             }
-            if ('key' in this) {
-                request.key = this.key;
-            }
             response = await this.request (request);
             if ('currentUser' in this) {
                 console.log ('authenticate(): clearing current user details');
                 this.currentUser = {};
                 this.data.currentUser = {};
             }
-            throw new Error (e.message);
             this.authCheck (response);
         }
         catch (e) {
@@ -133,7 +129,6 @@ export class Global extends Generic {
         }
         this.templateFetch ('lock');
         this.templateFetch ('splash');
-        this.templateFetch ('place');
         await this.templateFetch ('login');
         this.currentScreen          = null;
         this.currentTemplates       = {};
@@ -141,7 +136,7 @@ export class Global extends Generic {
         this.parametersClear ();
         this.dataRefresh ();
         this.globalLoad ();
-        this.access.innerHTML       = this.templates.login ({badge:this.cfg.loginByBadge});
+        this.access.innerHTML       = this.templates.login ({});
         doctitle                    = this.qs (document,'title');
         if (doctitle) {
             nav                     = this.qs (this.access,'nav.navigator');
@@ -154,17 +149,10 @@ export class Global extends Generic {
         // Define user scope
         userScope                   = this.userScope ();
         this.authAutoPermit         =  0;
-        if (this.cfg.loginByBadge) {
-            userScope.addEventListener ('keyup',this.badgeListen.bind(this));
-            userScope.addEventListener ('change',this.badgeListen.bind(this));
-        }
         if (this.urlUser.length>0) {
             // Passed in URL so allow instant login
             this.authAutoPermit     =  1;
             userScope.value         = this.urlUser;
-            if (this.cfg.loginByBadge) {
-                this.badgeListen (userScope);
-            }
         }
         this.saveScopeSet (userScope.value);
         userScope.addEventListener ('keyup',this.saveScopeListen.bind(this));

@@ -21,13 +21,14 @@
     <link rel="stylesheet" href="./css/base.css" />
     <link rel="stylesheet" href="./css/config.css" />
     <link rel="stylesheet" href="./css/generic.css" />
+    <link rel="stylesheet" href="./css/swimlanes.css" />
 
     <link rel="author" href="http://www.whitelamp.com/" />
     <title title="EzProject tool for Kanban-style swim lanes">EzProject Swimlanes</title>
 
   </head>
 
-  <body>
+  <body id="whitelamp-ezproject-swimlanes-client">
 
     <section id="gui-restricted"></section>
 
@@ -38,6 +39,14 @@
     <section id="gui-status"></section>
 
     <section id="gui-tech"></section>
+
+    <menu type="list" id="gui-menu" tabindex="0">
+    </menu>
+
+    <menu type="context" id="gui-context">
+      <menuitem id="gui-new-window" label="Open new app screen"></menuitem>
+      <menuitem id="gui-copy-url" label="Copy as external URL"></menuitem>
+    </menu>
 
   </body>
 

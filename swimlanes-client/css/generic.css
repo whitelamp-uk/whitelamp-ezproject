@@ -9,7 +9,7 @@ body {
     background-color: var(--color-background-main);
     color: var(--color-text-main);
     margin: 0;
-    overflow-y: scroll;
+    overflow-y: auto;
     font-family: var(--font-family-main);
     font-size: var(--dim-font-size-main);
     line-height: var(--dim-font-line-height-main);
@@ -67,19 +67,19 @@ a[data-icon=burger] {
     background-image: var(--url-icon-burger);
 }
 a[data-icon=flag] {
-    background-image:   var(--url-icon-menu-flag);
+    background-image:   var(--url-icon-flag);
 }
-a[data-icon=report] {
-    background-image:   var(--url-icon-menu-report);
+a[data-icon=tech] {
+    background-image:   var(--url-icon-tech);
 }
 a[data-icon=test] {
-    background-image:   var(--url-icon-menu-test);
+    background-image:   var(--url-icon-test);
 }
 a[data-icon=user] {
-    background-image:   var(--url-icon-menu-user);
+    background-image:   var(--url-icon-swimmer);
 }
 a[data-icon=findadd] {
-    background-image:   var(--url-icon-menu-findadd);
+    background-image:   var(--url-icon-findadd);
 }
 a[data-maximise], a.maximise {
     background-image: var(--url-button-maximise);
@@ -188,9 +188,9 @@ div.subheading {
 nav.navigator {
     position: fixed;
     z-index: 40;
-    left: 0.5vw;
+    left: 1.5em;
     top: 0.5em;
-    width: 97vw;
+    width: calc(100vw - 3em);
     min-height: 3.65em;
     box-shadow: var(--dim-shadow-box-main) var(--color-shadow-box-main);
     border-style: solid;
@@ -210,7 +210,7 @@ nav.navigator > button {
 }
 nav.navigator a[data-icon=lock] {
     position: absolute;
-    left: 10em;
+    left: 12em;
     top: 0.75em;
     display: block;
     margin: 0;
@@ -270,7 +270,7 @@ section.view {
 /* IDs */
 
 #gui-access {
-    margin:             0 0 0 1em;
+    margin:             2.5em 0 0 1em;
     padding:            4em 0.5em 0 0.5em;
 }
 #gui-access > nav.navigator {

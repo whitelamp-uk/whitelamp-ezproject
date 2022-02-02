@@ -205,7 +205,7 @@ BEGIN
     AND (
         developerOrEmptyForAll IS NULL
      OR developerOrEmptyForAll=''
-     OR `t`.`developer`=developerOrEmptyForAll
+     OR `t`.`user`=developerOrEmptyForAll
     )
     AND (
         costcentreOrEmptyForAll IS NULL
@@ -217,7 +217,7 @@ BEGIN
   ;
   SELECT
     SUM(`t`.`hours`) AS `total_hours`
-   ,`t`.`developer`
+   ,`t`.`user` AS `developer`
    ,`t`.`project`
    ,`p`.`projcostcentre`
   FROM `ezp_timesheet` AS `t`
@@ -262,22 +262,22 @@ BEGIN
     AND (
         developerOrEmptyForAll IS NULL
      OR developerOrEmptyForAll=''
-     OR `t`.`developer`=developerOrEmptyForAll
+     OR `t`.`user`=developerOrEmptyForAll
     )
     AND (
         costcentreOrEmptyForAll IS NULL
      OR costcentreOrEmptyForAll=''
      OR `p`.`projcostcentre`=costcentreOrEmptyForAll
     )
-  GROUP BY `t`.`project`,`t`.`developer`
-  ORDER BY `t`.`project`,`t`.`developer`
+  GROUP BY `t`.`project`,`t`.`user`
+  ORDER BY `t`.`project`,`t`.`user`
   ;
   SELECT
     `t`.`id`
    ,`t`.`day`
    ,DAYNAME(`t`.`day`) AS `dow`
    ,`t`.`hours`
-   ,`t`.`developer`
+   ,`t`.`user` AS `developer`
    ,`t`.`project`
    ,`p`.`projcostcentre`
    ,`t`.`comment`
@@ -326,14 +326,14 @@ BEGIN
     AND (
         developerOrEmptyForAll IS NULL
      OR developerOrEmptyForAll=''
-     OR `t`.`developer`=developerOrEmptyForAll
+     OR `t`.`user`=developerOrEmptyForAll
     )
     AND (
         costcentreOrEmptyForAll IS NULL
      OR costcentreOrEmptyForAll=''
      OR `p`.`projcostcentre`=costcentreOrEmptyForAll
     )
-  ORDER BY `t`.`day`,`p`.`projcostcentre`,`t`.`project`,`t`.`developer`,`t`.`id`
+  ORDER BY `t`.`day`,`p`.`projcostcentre`,`t`.`project`,`t`.`user`,`t`.`id`
   ;
 END$$
 
@@ -393,12 +393,12 @@ BEGIN
     AND (
         developerOrEmptyForAll IS NULL
      OR developerOrEmptyForAll=''
-     OR `developer`=developerOrEmptyForAll
+     OR `user`=developerOrEmptyForAll
     )
   ;
   SELECT
     SUM(`hours`) AS `total_hours`
-   ,`developer`
+   ,`user` AS `developer`
    ,`project`
   FROM `ezp_timesheet`
   WHERE 1
@@ -440,17 +440,17 @@ BEGIN
     AND (
         developerOrEmptyForAll IS NULL
      OR developerOrEmptyForAll=''
-     OR `developer`=developerOrEmptyForAll
+     OR `user`=developerOrEmptyForAll
     )
-  GROUP BY `project`,`developer`
-  ORDER BY `project`,`developer`
+  GROUP BY `project`,`user`
+  ORDER BY `project`,`user`
   ;
   SELECT
     `id`
    ,`day`
    ,DAYNAME(`day`) AS `dow`
    ,`hours`
-   ,`developer`
+   ,`user` AS `developer`
    ,`project`
    ,`comment`
    ,`vendor`
@@ -496,9 +496,9 @@ BEGIN
     AND (
         developerOrEmptyForAll IS NULL
      OR developerOrEmptyForAll=''
-     OR `developer`=developerOrEmptyForAll
+     OR `user`=developerOrEmptyForAll
     )
-  ORDER BY `day`,`project`,`developer`,`id`
+  ORDER BY `day`,`project`,`user`,`id`
   ;
 END$$
 

@@ -1,44 +1,192 @@
 
-/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+/* Copyright 2022 Whitelamp http://www.whitelamp.co.uk */
 
 import {Swimlanes} from './swimlanes.js';
 
 export class Gui extends Swimlanes {
 
-    swimlanesListen ( ) {
-        var e, element, elements;
-        elements            = this.qsa (this.restricted,'form#agentallows [data-agentallow]');
-        for (e of elements) {
-            e.addEventListener ('change',this.agentallowToggle.bind(this));
-        }
-        elements            = this.qsa (this.restricted,'form#agentallows [data-agentfunction]');
-        for (element of elements) {
-            if ('prohibit' in element.dataset) {
-                continue;
-            }
-            element.addEventListener ('change',this.agentpermitToggle.bind(this));
-        }
-    }
-
     constructor (config) {
         super (config);
     }
 
-    async swimlanes ( ) {
-        try {
-            await this.swimlanesRequest (
-            );
-            this.statusShow ('Contract changed');
-            this.screenRender (this.currentScreen,null,false);
+    async sayHello (evt) {
+        console.log (evt.currentTarget);
+    }
+
+    swimlanesInit ( ) {
+        var buttonset,i,form,pool,opts,status;
+        form = this.qs (this.restricted,'#toolbar');
+        pool = document.createElement ('select');
+        pool.id = 'input-pool';
+        pool.name = 'pool';
+        opts = [];
+        opts[0] = document.createElement ('option');
+        opts[0].value = '';
+        opts[0].textContent = 'Swimpool:';
+        pool.appendChild (opts[0]);
+        for (i=0;i<this.data.currentUser.swimpools.length;i++) {
+            opts[i+1] = document.createElement ('option');
+            opts[i+1].value = this.data.currentUser.swimpools[i].code;
+            opts[i+1].textContent = this.data.currentUser.swimpools[i].name;
+            pool.appendChild (opts[i+1]);
         }
-        catch (e) {
-            this.splash (2,'Could not load swimlanes','Error','OK');
+        form.appendChild (pool);
+        pool.addEventListener ('input',this.swimpool.bind(this));
+        buttonset = document.createElement ('span');
+        buttonset.classList.add ('set');
+        buttonset.classList.add ('status');
+        form.appendChild (buttonset);
+        for (i=0;i<this.data.statuses.length;i++) {
+            status = document.createElement ('button');
+            status.dataset.swimstate = this.data.statuses[i].code;
+            status.dataset.icon = this.data.statuses[i].icon;
+            status.textContent = this.data.statuses[i].code;
+            status.setAttribute ('title',this.data.statuses[i].name);
+            buttonset.appendChild (status);
+            status.addEventListener ('click',this.buttonSetSelect.bind(this));
+            status.addEventListener ('click',this.toggleStatus.bind(this));
+        }
+        buttonset = document.createElement ('span');
+        buttonset.classList.add ('set');
+        buttonset.classList.add ('swimlane');
+        form.appendChild (buttonset);
+    }
+
+    buttonSetSelect (evt) {
+        var button;
+        button = evt.currentTarget;
+        if (button.classList.contains('selected')) {
+            button.classList.remove ('selected');
+        }
+        else {
+            button.classList.add ('selected');
         }
     }
 
-    testHandler (evt) {
-        // Bespoke handler
-        alert ('So you want to do stuff, eh?');
+    async swimlanes (swimpoolCode) {
+        var button,buttons,buttonset,cell,i,j,lane,lanesNew,lanesOld,pool;
+        pool        = this.qs (this.restricted,'#swimpool');
+        buttonset   = this.qs (pool,'#toolbar .set.swimlane');
+        if (!buttonset) {
+            console.error ('Could not find <span class="set swimlane">');
+            return;
+        }
+        buttons     = this.qsa (buttonset,'[data-swimpool][data-swimlane]');
+        lanesOld    = this.qsa (pool,'section.swimlane');
+        lanesNew    = await this.swimlanesRequest (swimpoolCode);
+        // Remove unwanted buttons
+        for (button of buttons) {
+            if (!this.find(lanesNew,'swimpool',button.dataset.swimpool)) {
+                if (!this.find(lanesNew,'code',button.dataset.code)) {
+                    button.remove ();
+                }
+            }
+        }
+        // Remove unwanted lanes
+        for (lane of lanesOld) {
+            if (!this.find(lanesNew,'swimpool',lane.dataset.swimpool)) {
+                if (!this.find(lanesNew,'code',lane.dataset.code)) {
+                    lane.remove ();
+                }
+            }
+        }
+        // Add missing buttons
+        for (i=0;i<lanesNew.length;i++) {
+            button = this.qs (
+                pool,
+                '#toolbar .set.swimlane [data-swimpool="'+lanesNew[i].swimpool+'"][data-swimlane="'+lanesNew[i].code+'"]'
+            );
+            if (!button) {
+                button = document.createElement ('button');
+                button.dataset.swimpool = lanesNew[i].swimpool;
+                button.dataset.swimlane = lanesNew[i].code;
+                button.textContent = lanesNew[i].swimpool+'-'+lanesNew[i].code
+                buttonset.appendChild (button);
+                button.addEventListener ('click',this.buttonSetSelect.bind(this));
+                button.addEventListener ('click',this.toggleLane.bind(this));
+            }
+        }
+        // Add missing lanes
+        for (i=0;i<lanesNew.length;i++) {
+            lane = this.qs (
+                pool,
+                'section.swimlane[data-swimpool="'+lanesNew[i].swimpool+'"][data-swimlane="'+lanesNew[i].code+'"]'
+            );
+            if (!lane) {
+                lane = document.createElement ('section');
+                lane.classList.add ('swimlane');
+                lane.dataset.swimpool = lanesNew[i].swimpool;
+                lane.dataset.swimlane = lanesNew[i].code;
+                // Status cells
+                for (j=0;j<this.data.statuses.length;j++) {
+                    cell = document.createElement ('section');
+                    cell.classList.add ('status');
+                    cell.dataset.swimstate = this.data.statuses[j].code;
+                    lane.appendChild (cell);
+                }
+                pool.appendChild (lane);
+            }
+        }
+    }
+
+    swimmers (swimpoolGroup) {
+        var i,j,swimmers;
+        swimmers = [];
+        for (i=0;i<this.data.swimmers.length;i++) {
+            for (j=0;j<this.data.swimmers[i].swimpools.length;j++) {
+                if (this.data.swimmers[i].swimpools[j].usergroup==swimpoolGroup) {
+                    swimmers.push (this.data.swimmers[i]);
+                }
+            }
+        }
+        return swimmers;
+    }
+
+    swimpool (evt) {
+        var code,lane,lanes;
+        code = evt.currentTarget.value;
+        lanes = this.qsa (this.restricted,'#swimpool section.swimlane');
+        for (lane of lanes) {
+            lane.remove ();
+        }
+        if (code) {
+            this.swimlanes (code);
+        }
+    }
+
+    toggleLane (evt) {
+        var l,lane,p;
+        p = evt.currentTarget.dataset.swimpool;
+        l = evt.currentTarget.dataset.swimlane;
+        lane = this.qs (
+            this.restricted,
+            '#swimpool section.swimlane[data-swimpool="'+p+'"][data-swimlane="'+l+'"]'
+        );
+        if (lane) {
+            if (lane.classList.contains('selected')) {
+                lane.classList.remove ('selected');
+            }
+            else {
+                lane.classList.add ('selected');
+            }
+        }
+    }
+
+    toggleStatus (evt) {
+        var cell,cells,s;
+        s = evt.currentTarget.dataset.swimstate;
+        cells = this.qsa (
+            this.restricted,
+            '#swimpool section.swimlane section[data-swimstate="'+s+'"]'
+        );
+        for (cell of cells) {
+            if (cell.classList.contains('selected')) {
+                cell.classList.remove ('selected');
+            }
+            else {
+                cell.classList.add ('selected');
+            }
+        }
     }
 
 }

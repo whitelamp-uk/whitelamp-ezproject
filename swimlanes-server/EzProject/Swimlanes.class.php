@@ -20,23 +20,42 @@ class Swimlanes {
 
     public function authenticate ( ) {
         try {
-            $result                         = $this->hpapi->dbCall (
-                'ezpSwimlanesUser'
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesSwimpools'
+            );
+            $pools = $this->hpapi->parse2D ($result);
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesUsers'
                ,$this->userId
             );
         }
         catch (\Exception $e) {
             $this->hpapi->diagnostic ($e->getMessage());
-            throw new \Exception (EZP_SWIMLANES_STR_AUTH_DB);
+            throw new \Exception (EZP_SWIMLANES_STR_DB);
             return false;
         }
         if (!count($result)) {
             throw new \Exception (EZP_SWIMLANES_STR_USER);
             return false;
         }
-        $out                                = $this->hpapi->parse2D ($result)[0];
-        $out->templates                     = $this->templates ();
-        return $out;
+        $user = $this->hpapi->parse2D ($result)[0];
+        $user->swimpools = [];
+        if ($user->groups) {
+            $groups = explode (':',$user->groups);
+            $user->groups = [];
+            foreach ($groups as $g) {
+                foreach ($pools as $p) {
+                    if ($p->usergroup==$g) {
+                        $user->swimpools[] = $p;
+                    }
+                }
+            }
+        }
+        else {
+            $user->groups = [];
+        }
+        $user->templates = $this->templates ();
+        return $user;
     }
 
     public function config ( ) {
@@ -54,6 +73,20 @@ class Swimlanes {
         }
         // Done
         return $out;
+    }
+
+    public function statuses ( ) {
+        try {
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesStatuses'
+            );
+            return $this->hpapi->parse2D ($result);
+        }
+        catch (\Exception $e) {
+            $this->hpapi->diagnostic ($e->getMessage());
+            throw new \Exception (EZP_SWIMLANES_STR_DB);
+            return false;
+        }
     }
 
     public function passwordReset ($answer,$code,$newPassword) {
@@ -329,6 +362,89 @@ class Swimlanes {
         }
     }
 
+    public function swimmers ( ) {
+        try {
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesSwimpools'
+            );
+            $pools = $this->hpapi->parse2D ($result);
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesUsers'
+               ,null
+            );
+            $users = $this->hpapi->parse2D ($result);
+            $swimmers_by_id = [];
+            foreach ($users as $i=>$u) {
+                if ($u->groups) {
+                    $u->groups = explode (':',$u->groups);
+                }
+                else {
+                    $u->groups = [];
+                }
+                foreach ($u->groups as $g) {
+                    foreach ($pools as $p) {
+                        if ($p->usergroup==$g) {
+                            if (!array_key_exists($u->userId,$swimmers_by_id)) {
+                                $swimmers_by_id[$u->userId] = $u;
+                                $swimmers_by_id[$u->userId]->swimpools = [];
+                            }
+                            $swimmers_by_id[$u->userId]->swimpools[] = $p;
+                        }
+                    }
+                }
+            }
+            $swimmers = [];
+            foreach ($swimmers_by_id as $s) {
+                $swimmers[] = $s;
+            }
+        }
+        catch (\Exception $e) {
+            $this->hpapi->diagnostic ($e->getMessage());
+            throw new \Exception (EZP_SWIMLANES_STR_DB);
+            return false;
+        }
+        return $swimmers;
+    }
+
+    public function swimlanes ($swimpoolCode) {
+        try {
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesSwimlanes',
+                $this->hpapi->email,
+                $swimpoolCode
+            );
+            return $this->hpapi->parse2D ($result);
+        }
+        catch (\Exception $e) {
+            $this->hpapi->diagnostic ($e->getMessage());
+            throw new \Exception (EZP_SWIMLANES_STR_DB);
+            return false;
+        }
+    }
+
+    public function swims ($swimpoolCode,$swimlaneCode,$statusCode) {
+        try {
+            if (count($this->swimlanes($swimpoolCode))) {
+                $result = $this->hpapi->dbCall (
+                    'ezpSwimlanesSwims',
+                    $swimpoolCode,
+                    $swimlaneCode,
+                    $statusCode
+                );
+                return $this->hpapi->parse2D ($result);
+            }
+            else {
+                throw new \Exception (EZP_SWIMLANES_STR_403);
+                return false;
+            }
+        }
+        catch (\Exception $e) {
+            $this->hpapi->diagnostic ($e->getMessage());
+            throw new \Exception (EZP_SWIMLANES_STR_DB);
+            return false;
+        }
+    }
+
     public function templates ( ) {
         $g                      = array ();
         $t                      = array ();
@@ -342,35 +458,6 @@ class Swimlanes {
             }
         }
         return $t;
-    }
-
-    public function users ( ) {
-        try {
-            $users                                  = $this->hpapi->dbCall (
-                'ezpSwimlanesUsers'
-            );
-            $users                                  = $this->hpapi->parse2D ($users);
-            foreach ($users as $i=>$u) {
-                if ($u->memberships) {
-                    $users[$i]->memberships         = explode ('::',$u->memberships);
-                }
-                else {
-                    $users[$i]->memberships         = [];
-                }
-            }
-        }
-        catch (\Exception $e) {
-            $this->hpapi->diagnostic ($e->getMessage());
-            throw new \Exception (EZP_SWIMLANES_STR_DB);
-            return false;
-        }
-        foreach ($users as $i=>$u) {
-            $users[$i]->hasImage                    = false;
-            if (is_readable(EZP_SWIMLANES_DIR_IMAGE_USER.'/'.str_replace('?',$u->userId,EZP_SWIMLANES_FILE_PATTERN_USER))) {
-                    $users[$i]->hasImage            = true;
-            }
-        }
-        return $users;
     }
 
 }
