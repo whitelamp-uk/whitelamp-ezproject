@@ -102,8 +102,10 @@ export class Gui extends Swimlanes {
             );
             if (!button) {
                 button = document.createElement ('button');
+                button.classList.add ('selected');
                 button.dataset.swimpool = lanesNew[i].swimpool;
                 button.dataset.swimlane = lanesNew[i].code;
+                button.setAttribute ('title',lanesNew[i].name);
                 button.textContent = lanesNew[i].swimpool+'-'+lanesNew[i].code
                 buttonset.appendChild (button);
                 button.addEventListener ('click',this.buttonSetSelect.bind(this));
@@ -118,6 +120,7 @@ export class Gui extends Swimlanes {
             );
             if (!lane) {
                 lane = document.createElement ('section');
+                lane.classList.add ('selected');
                 lane.dataset.swimpool = lanesNew[i].swimpool;
                 lane.dataset.swimlane = lanesNew[i].code;
                 label1 = document.createElement ('label');
