@@ -26,22 +26,19 @@ END$$
 DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpSwimlanesUsers`$$
 CREATE PROCEDURE `ezpSwimlanesUsers`(
-    IN `uid` INT(11) UNSIGNED
+    IN `eml` varchar(254) CHARSET ascii
 )
 BEGIN
   SELECT
     `u`.`id` AS `userId`
+   ,`u`.`email`
    ,`u`.`name`
-   ,GROUP_CONCAT(`m`.`usergroup` SEPARATOR ':') AS `groups`
   FROM `hpapi_user` AS `u`
   JOIN `hpapi_membership` AS `auth`
     ON `auth`.`user_id`=`u`.`id`
    AND `auth`.`usergroup`='swimlanes'
-  LEFT JOIN `hpapi_membership` AS `m`
-         ON `m`.`user_id`=`u`.`id`
-        AND `m`.`usergroup`!='swimlanes'
   WHERE `u`.`active`=1
-    AND ( uid IS NULL OR uid=0 OR `u`.`id`=uid )
+    AND ( eml IS NULL OR eml='' OR `u`.`email`=eml )
   GROUP BY `u`.`id`
   ;
 END$$

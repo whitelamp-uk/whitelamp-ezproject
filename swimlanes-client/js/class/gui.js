@@ -5,6 +5,18 @@ import {Swimlanes} from './swimlanes.js';
 
 export class Gui extends Swimlanes {
 
+    buttonSetSelect (evt) {
+        evt.preventDefault();
+        var button;
+        button = evt.currentTarget;
+        if (button.classList.contains('selected')) {
+            button.classList.remove ('selected');
+        }
+        else {
+            button.classList.add ('selected');
+        }
+    }
+
     constructor (config) {
         super (config);
     }
@@ -24,10 +36,10 @@ export class Gui extends Swimlanes {
         opts[0].value = '';
         opts[0].textContent = 'Swimpool:';
         pool.appendChild (opts[0]);
-        for (i=0;i<this.data.currentUser.swimpools.length;i++) {
+        for (i=0;i<this.data.config.swimpools.length;i++) {
             opts[i+1] = document.createElement ('option');
-            opts[i+1].value = this.data.currentUser.swimpools[i].code;
-            opts[i+1].textContent = this.data.currentUser.swimpools[i].name;
+            opts[i+1].value = this.data.config.swimpools[i].code;
+            opts[i+1].textContent = this.data.config.swimpools[i].name;
             pool.appendChild (opts[i+1]);
         }
         form.appendChild (pool);
@@ -36,15 +48,18 @@ export class Gui extends Swimlanes {
         buttonset.classList.add ('set');
         buttonset.classList.add ('status');
         form.appendChild (buttonset);
-        for (i=0;i<this.data.statuses.length;i++) {
+        for (i=0;i<this.data.config.statuses.length;i++) {
             status = document.createElement ('button');
-            status.dataset.swimstate = this.data.statuses[i].code;
-            status.dataset.icon = this.data.statuses[i].icon;
-            status.textContent = this.data.statuses[i].code;
-            status.setAttribute ('title',this.data.statuses[i].name);
+            status.dataset.swimstate = this.data.config.statuses[i].code;
+            status.dataset.icon = this.data.config.statuses[i].icon;
+            status.textContent = this.data.config.statuses[i].code;
+            status.setAttribute ('title',this.data.config.statuses[i].name);
             buttonset.appendChild (status);
             status.addEventListener ('click',this.buttonSetSelect.bind(this));
             status.addEventListener ('click',this.toggleStatus.bind(this));
+            if (this.data.config.statuses[i].show_by_default) {
+                status.click ();
+            }
         }
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
@@ -52,19 +67,8 @@ export class Gui extends Swimlanes {
         form.appendChild (buttonset);
     }
 
-    buttonSetSelect (evt) {
-        var button;
-        button = evt.currentTarget;
-        if (button.classList.contains('selected')) {
-            button.classList.remove ('selected');
-        }
-        else {
-            button.classList.add ('selected');
-        }
-    }
-
     async swimlanes (swimpoolCode) {
-        var button,buttons,buttonset,cell,i,j,lane,lanesNew,lanesOld,pool;
+        var button,buttons,buttonset,cell,i,j,labelc,label1,label2,lane,lanesNew,lanesOld,pool;
         pool        = this.qs (this.restricted,'#swimpool');
         buttonset   = this.qs (pool,'#toolbar .set.swimlane');
         if (!buttonset) {
@@ -114,14 +118,33 @@ export class Gui extends Swimlanes {
             );
             if (!lane) {
                 lane = document.createElement ('section');
-                lane.classList.add ('swimlane');
                 lane.dataset.swimpool = lanesNew[i].swimpool;
                 lane.dataset.swimlane = lanesNew[i].code;
+                label1 = document.createElement ('label');
+                label1.classList.add ('after');
+                label1.textContent = lane.dataset.swimpool + '-' + lane.dataset.swimlane;
+                lane.appendChild (label1);
+                label2 = document.createElement ('label');
+                label2.classList.add ('before');
+                label2.textContent = lane.dataset.swimpool + '-' + lane.dataset.swimlane;
+                lane.appendChild (label2);
+                lane.classList.add ('swimlane');
                 // Status cells
-                for (j=0;j<this.data.statuses.length;j++) {
+                for (j=0;j<this.data.config.statuses.length;j++) {
                     cell = document.createElement ('section');
                     cell.classList.add ('status');
-                    cell.dataset.swimstate = this.data.statuses[j].code;
+                    button = this.qs (
+                        pool,
+                        '#toolbar .set [data-swimstate="'+this.data.config.statuses[j].code+'"]'
+                    );
+                    if (button && button.classList.contains('selected')) {
+                        // If the status button is selected
+                        cell.classList.add ('selected');
+                    }
+                    cell.dataset.swimstate = this.data.config.statuses[j].code;
+                    labelc = document.createElement ('label');
+                    labelc.textContent = cell.dataset.swimstate;
+                    cell.appendChild (labelc);
                     lane.appendChild (cell);
                 }
                 pool.appendChild (lane);

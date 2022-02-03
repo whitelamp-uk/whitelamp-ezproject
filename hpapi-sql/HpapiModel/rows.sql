@@ -24,8 +24,8 @@ INSERT IGNORE INTO `hpapi_package` (`vendor`, `package`, `requires_key`, `notes`
 
 INSERT IGNORE INTO `hpapi_method` (`vendor`, `package`, `class`, `method`, `label`, `notes`) VALUES
 
-('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'authenticate',	'More user details',	'Dummy method to authenticate'),
-('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'statuses',	'List status options',	'List of Kanban states'),
+('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'authenticate',	'Basic current user details',	'Dummy method to authenticate'),
+('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'config',	'Config data',	'Gets Swimlanes configuration data for client'),
 ('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimlanes',	'List of swimlanes',	'List of swimlanes - groups of swims - available to user'),
 ('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimmers',	'List swimmers',	'List of swimpool users'),
 ('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims',	'List swims',	'List of swims - atomic tasks - for a given status');
@@ -47,7 +47,7 @@ INSERT IGNORE INTO `hpapi_methodarg` (`vendor`, `package`, `class`, `method`, `a
 INSERT IGNORE INTO `hpapi_run` (`usergroup`, `vendor`, `package`, `class`, `method`) VALUES
 
 ('swimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'authenticate'),
-('swimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'statuses'),
+('swimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'config'),
 ('swimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimlanes'),
 ('swimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimmers'),
 ('swimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims');
@@ -81,7 +81,7 @@ INSERT IGNORE INTO `hpapi_sprarg` (`model`, `spr`, `argument`, `name`, `empty_al
 
 ('EzProject',	'ezpSwimlanesSwimlanes',	1,	'Email',	0,	'email'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	2,	'Swimpool code',	0,	'varchar-4'),
-('HpapiModel',	'ezpSwimlanesUsers',	1,	'User ID',	1,	'int-11-positive');
+('HpapiModel',	'ezpSwimlanesUsers',	1,	'Email',	1,	'email');
 
 
 --         Expose DataModel.storedProcedureName to \NameSpace\ClassName::methodName ()
@@ -89,11 +89,12 @@ INSERT IGNORE INTO `hpapi_sprarg` (`model`, `spr`, `argument`, `name`, `empty_al
 INSERT IGNORE INTO `hpapi_call` (`model`, `spr`, `vendor`, `package`, `class`, `method`) VALUES
 
 ('HpapiModel',	'ezpSwimlanesUsers',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'authenticate'),
+('HpapiModel',	'ezpSwimlanesUsers',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'config'),
 ('HpapiModel',	'ezpSwimlanesUsers',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimmers'),
-('EzProject',	'ezpSwimlanesStatuses',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'statuses'),
+('EzProject',	'ezpSwimlanesStatuses',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'config'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimlanes'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims'),
-('EzProject',	'ezpSwimlanesSwimpools',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'authenticate'),
+('EzProject',	'ezpSwimlanesSwimpools',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'config'),
 ('EzProject',	'ezpSwimlanesSwimpools',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimmers'),
 ('EzProject',	'ezpSwimlanesSwims',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims');
 

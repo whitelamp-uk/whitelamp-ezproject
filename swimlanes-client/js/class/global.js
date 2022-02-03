@@ -72,10 +72,13 @@ export class Global extends Generic {
         super.authForget ();
     }
 
-    async authOk ( ) {
+    async authOk (response) {
+console.table (response);
+        this.currentUser = response.returnValue;
         super.authOk ();
-        // Now get business configuration data
+        // Now get business configuration data this.data.config
         await this.configRequest ();
+        this.data.currentUser = this.currentUser;
         // Render a screen by URL (only when page loads)
         if (this.urlScreen) {
             await this.templateFetch (this.urlScreen);

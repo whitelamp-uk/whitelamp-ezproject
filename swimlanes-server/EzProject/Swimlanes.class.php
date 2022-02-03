@@ -19,41 +19,15 @@ class Swimlanes {
     }
 
     public function authenticate ( ) {
-        try {
-            $result = $this->hpapi->dbCall (
-                'ezpSwimlanesSwimpools'
-            );
-            $pools = $this->hpapi->parse2D ($result);
+        // The framework does the actual authentication every request
+        // This method is for client app authentication of a browser session
+        // The standard base class hpapi.js expects to receive user details
+        // having the property templates (for Handlebars)
             $result = $this->hpapi->dbCall (
                 'ezpSwimlanesUsers'
-               ,$this->userId
+               ,$this->hpapi->email
             );
-        }
-        catch (\Exception $e) {
-            $this->hpapi->diagnostic ($e->getMessage());
-            throw new \Exception (EZP_SWIMLANES_STR_DB);
-            return false;
-        }
-        if (!count($result)) {
-            throw new \Exception (EZP_SWIMLANES_STR_USER);
-            return false;
-        }
-        $user = $this->hpapi->parse2D ($result)[0];
-        $user->swimpools = [];
-        if ($user->groups) {
-            $groups = explode (':',$user->groups);
-            $user->groups = [];
-            foreach ($groups as $g) {
-                foreach ($pools as $p) {
-                    if ($p->usergroup==$g) {
-                        $user->swimpools[] = $p;
-                    }
-                }
-            }
-        }
-        else {
-            $user->groups = [];
-        }
+        $user = $this->hpapi->parse2D ($result) [0];
         $user->templates = $this->templates ();
         return $user;
     }
@@ -62,31 +36,57 @@ class Swimlanes {
         $out                        = new \stdClass ();
         try {
             $out->timezoneExpected  = $this->timezone;
-            $out->agentfunctions    = $this->hpapi->parse2D (
-                $this->hpapi->dbCall ('ezpThingy')
-            );
         }
         catch (\Exception $e) {
             $this->hpapi->diagnostic ($e->getMessage());
             throw new \Exception (EZP_SWIMLANES_STR_DB);
             return false;
         }
-        // Done
-        return $out;
-    }
-
-    public function statuses ( ) {
         try {
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesUsers'
+               ,null
+            );
+            $users = $this->hpapi->parse2D ($result);
+            $result = $this->hpapi->dbCall (
+                'ezpSwimlanesSwimpools'
+            );
+            $pools = $this->hpapi->parse2D ($result);
             $result = $this->hpapi->dbCall (
                 'ezpSwimlanesStatuses'
             );
-            return $this->hpapi->parse2D ($result);
+            $out->statuses = $this->hpapi->parse2D ($result);
         }
         catch (\Exception $e) {
             $this->hpapi->diagnostic ($e->getMessage());
             throw new \Exception (EZP_SWIMLANES_STR_DB);
             return false;
         }
+        $out->swimpools = [];
+        foreach ($pools as $i=>$pool) {
+            $pool->allowed = false;
+            if ($pool->swimmers) {
+                $pool->swimmers = explode (';;',$pool->swimmers);
+                foreach ($pool->swimmers as $j=>$swimmer) {
+                    $swimmer = explode ('::',$swimmer);
+                    $pool->swimmers[$j] = new \stdClass ();
+                    $pool->swimmers[$j]->code = $swimmer[0];
+                    $pool->swimmers[$j]->email = $swimmer[1];
+                    foreach ($users as $user) {
+                        if ($user->email==$pool->swimmers[$j]->email) {
+                            $swimmers[$j]->name = $user->name;
+                            if ($user->email==$this->hpapi->email) {
+                                $pool->allowed = true;
+                            }
+                        }
+                    }
+                }
+            }
+            if ($pool->allowed) {
+                $out->swimpools[] = $pool;
+            }
+        }
+        return $out;
     }
 
     public function passwordReset ($answer,$code,$newPassword) {
@@ -362,50 +362,6 @@ class Swimlanes {
         }
     }
 
-    public function swimmers ( ) {
-        try {
-            $result = $this->hpapi->dbCall (
-                'ezpSwimlanesSwimpools'
-            );
-            $pools = $this->hpapi->parse2D ($result);
-            $result = $this->hpapi->dbCall (
-                'ezpSwimlanesUsers'
-               ,null
-            );
-            $users = $this->hpapi->parse2D ($result);
-            $swimmers_by_id = [];
-            foreach ($users as $i=>$u) {
-                if ($u->groups) {
-                    $u->groups = explode (':',$u->groups);
-                }
-                else {
-                    $u->groups = [];
-                }
-                foreach ($u->groups as $g) {
-                    foreach ($pools as $p) {
-                        if ($p->usergroup==$g) {
-                            if (!array_key_exists($u->userId,$swimmers_by_id)) {
-                                $swimmers_by_id[$u->userId] = $u;
-                                $swimmers_by_id[$u->userId]->swimpools = [];
-                            }
-                            $swimmers_by_id[$u->userId]->swimpools[] = $p;
-                        }
-                    }
-                }
-            }
-            $swimmers = [];
-            foreach ($swimmers_by_id as $s) {
-                $swimmers[] = $s;
-            }
-        }
-        catch (\Exception $e) {
-            $this->hpapi->diagnostic ($e->getMessage());
-            throw new \Exception (EZP_SWIMLANES_STR_DB);
-            return false;
-        }
-        return $swimmers;
-    }
-
     public function swimlanes ($swimpoolCode) {
         try {
             $result = $this->hpapi->dbCall (
@@ -413,6 +369,13 @@ class Swimlanes {
                 $this->hpapi->email,
                 $swimpoolCode
             );
+            if (!count($result)) {
+                throw new \Exception (EZP_SWIMLANES_STR_POOL);
+                return false;
+            }
+            if (count($result)==1 && !$result[0]['id']) {
+                return [];
+            }
             return $this->hpapi->parse2D ($result);
         }
         catch (\Exception $e) {

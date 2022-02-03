@@ -51,7 +51,7 @@ export class Enforcer extends Gui {
     preloaders (templateName) {
         switch (templateName) {
             case 'home':
-                return [this.statusesRequest,this.swimmersRequest];
+                return [this.configRequest];
             default:
                 return [];
         }

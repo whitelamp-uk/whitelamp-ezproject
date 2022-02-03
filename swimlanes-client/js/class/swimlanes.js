@@ -47,7 +47,7 @@ export class Swimlanes extends Global {
             }
         }
         try {
-        var response                = await this.request (request,true);
+        var response = await this.request (request,true);
             return response.returnValue;
         }
         catch (e) {
@@ -57,34 +57,9 @@ export class Swimlanes extends Global {
         }
     }
 
-    async statusesRequest ( ) {
-        var request;
-        request     = {
-            "email" : this.access.email.value
-           ,"method" : {
-                "vendor" : "whitelamp-ezproject"
-               ,"package" : "swimlanes-server"
-               ,"class" : "\\EzProject\\Swimlanes"
-               ,"method" : "statuses"
-               ,"arguments" : [
-                ]
-            }
-        }
-        var response;
-        try {
-            response = await this.request (request);
-            this.data.statuses = response.returnValue;
-            return true;
-        }
-        catch (e) {
-            console.error ('Could not get statuses: '+e.message);
-            return false;
-        }
-    }
-
     async swimlaneRequest (swimlaneCode) {
         var request;
-        request     = {
+        request = {
             "email" : this.access.email.value
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
@@ -109,7 +84,7 @@ export class Swimlanes extends Global {
 
     async swimlanesRequest (swimpoolCode) {
         var request;
-        request     = {
+        request = {
             "email" : this.access.email.value
            ,"method" : {
                 "vendor" : "whitelamp-ezproject"
@@ -128,30 +103,6 @@ export class Swimlanes extends Global {
         }
         catch (e) {
             console.error ('Could not get swimlanes: '+e.message);
-            return false;
-        }
-    }
-
-    async swimmersRequest ( ) {
-        var request, response;
-        request     = {
-            "email" : this.access.email.value
-           ,"method" : {
-                "vendor" : "whitelamp-ezproject"
-               ,"package" : "swimlanes-server"
-               ,"class" : "\\EzProject\\Swimlanes"
-               ,"method" : "swimmers"
-               ,"arguments" : [
-                ]
-            }
-        }
-        try {
-            response = await this.request (request);
-            this.data.swimmers = response.returnValue;
-            return true;
-        }
-        catch (e) {
-            console.error ('Could not get swimmers: '+e.message);
             return false;
         }
     }

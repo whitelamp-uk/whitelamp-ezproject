@@ -20,16 +20,36 @@ CREATE PROCEDURE `ezpSwimlanesSwimlanes`(
 )
 BEGIN
   SELECT
-    `sl`.*
+    `sl`.`id`
+   ,`sp`.`code` AS `swimpool`
+   ,`sl`.`code`
+   ,`sl`.`name`
+   ,`sl`.`created`
+   ,`sl`.`updated`
+   ,GROUP_CONCAT(
+      CONCAT(`swims`.`status`,':',`swims`.`quantity`)
+    ) AS `swims`
   FROM `ezp_user` AS `u`
   JOIN `ezp_swimmer` AS `sr`
     ON `sr`.`user`=`u`.`code`
   JOIN `ezp_swimpool` AS `sp`
     ON `sp`.`code`=`sr`.`swimpool`
    AND `sp`.`code`=swimpoolCode
-  JOIN `ezp_swimlane` AS `sl`
+  LEFT JOIN `ezp_swimlane` AS `sl`
     ON `sl`.`swimpool`=`sp`.`code`
+  LEFT JOIN (
+    SELECT
+      `swimpool`
+     ,`swimlane`
+     ,`status`
+     ,COUNT(`id`) AS `quantity`
+    FROM `ezp_swim`
+    GROUP BY `swimpool`,`swimlane`,`status`
+  ) AS `swims`
+    ON `swims`.`swimpool`=`sl`.`swimpool`
+   AND `swims`.`swimlane`=`sl`.`code`
   WHERE `u`.`email`=eml
+  GROUP BY `sp`.`code`,`sl`.`code`
   ;
 END$$
 
@@ -40,8 +60,14 @@ CREATE PROCEDURE `ezpSwimlanesSwimpools`(
 )
 BEGIN
   SELECT
-    *
-  FROM `ezp_swimpool` AS `p`
+    `sp`.*
+   ,GROUP_CONCAT(DISTINCT CONCAT(`ur`.`code`,'::',`ur`.`email`) SEPARATOR ';;') AS `swimmers`
+  FROM `ezp_swimpool` AS `sp`
+  LEFT JOIN `ezp_swimmer` AS `sr`
+         ON `sr`.`swimpool`=`sp`.`code`
+  LEFT JOIN `ezp_user` AS `ur`
+         ON `ur`.`code`=`sr`.`user`
+  GROUP BY `sp`.`code`
   ;
 END$$
 
