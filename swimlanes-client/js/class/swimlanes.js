@@ -57,17 +57,19 @@ export class Swimlanes extends Global {
         }
     }
 
-    async swimlaneRequest (swimlaneCode) {
+    async swimsRequest (swimpoolCode,swimlaneCode,statusCode) {
         var request;
         request = {
-            "email" : this.access.email.value
-           ,"method" : {
-                "vendor" : "whitelamp-ezproject"
-               ,"package" : "swimlanes-server"
-               ,"class" : "\\EzProject\\Swimlanes"
-               ,"method" : "swimlane"
-               ,"arguments" : [
-                    swimlaneCode
+            "email" : this.access.email.value,
+            "method" : {
+                "vendor" : "whitelamp-ezproject",
+                "package" : "swimlanes-server",
+                "class" : "\\EzProject\\Swimlanes",
+                "method" : "swims",
+                "arguments" : [
+                    swimpoolCode,
+                    swimlaneCode,
+                    statusCode
                 ]
             }
         }
@@ -77,7 +79,7 @@ export class Swimlanes extends Global {
             return response.returnValue;
         }
         catch (e) {
-            console.error ('Could not get swimlane: '+e.message);
+            console.error ('Could not get swims: '+e.message);
             return false;
         }
     }

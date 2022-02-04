@@ -38,7 +38,8 @@ INSERT IGNORE INTO `hpapi_methodarg` (`vendor`, `package`, `class`, `method`, `a
 
 ('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimlanes',	1,	'Swimpool code',	0,	'varchar-4'),
 ('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims',	1,	'Swimpool code',	0,	'varchar-4'),
-('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims',	2,	'Swimlane code',	0,	'varchar-4');
+('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims',	2,	'Swimlane code',	0,	'varchar-4'),
+('whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims',	3,	'Status code',	0,	'varchar-4');
 
 
 
@@ -81,6 +82,9 @@ INSERT IGNORE INTO `hpapi_sprarg` (`model`, `spr`, `argument`, `name`, `empty_al
 
 ('EzProject',	'ezpSwimlanesSwimlanes',	1,	'Email',	0,	'email'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	2,	'Swimpool code',	0,	'varchar-4'),
+('EzProject',	'ezpSwimlanesSwims',	1,	'Swimpool code',	0,	'varchar-4'),
+('EzProject',	'ezpSwimlanesSwims',	2,	'Swimlane code',	0,	'varchar-4'),
+('EzProject',	'ezpSwimlanesSwims',	3,	'Swimstatus code',	0,	'varchar-4'),
 ('HpapiModel',	'ezpSwimlanesUsers',	1,	'Email',	1,	'email');
 
 

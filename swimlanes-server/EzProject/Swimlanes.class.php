@@ -376,13 +376,27 @@ class Swimlanes {
             if (count($result)==1 && !$result[0]['id']) {
                 return [];
             }
-            return $this->hpapi->parse2D ($result);
         }
         catch (\Exception $e) {
             $this->hpapi->diagnostic ($e->getMessage());
             throw new \Exception (EZP_SWIMLANES_STR_DB);
             return false;
         }
+        $lanes = $this->hpapi->parse2D ($result);
+        foreach ($lanes as $i=>$lane) {
+            if ($lanes[$i]->swims) {
+                $swims = explode (';;',$lanes[$i]->swims);
+                $lanes[$i]->swims = new \stdClass ();
+                foreach ($swims as $qty) {
+                    $qty = explode ('::',$qty);
+                    $lanes[$i]->swims->{$qty[0]} = 1 * $qty[1];
+                }
+            }
+            else {
+                $lanes[$i]->swims = new \stdClass ();
+            }
+        }
+        return $lanes;
     }
 
     public function swims ($swimpoolCode,$swimlaneCode,$statusCode) {

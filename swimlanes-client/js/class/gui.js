@@ -5,6 +5,29 @@ import {Swimlanes} from './swimlanes.js';
 
 export class Gui extends Swimlanes {
 
+    adminer (action,table,column,operator,value) {
+        var db_user,url;
+        db_user = this.qs (this.restricted,'#toolbar input[name="db_user"]');
+alert (db_user);
+        if (db_user && db_user.value) {
+            url  = '/adm22/?username='+db_user.value;
+            url += '&db=ezproject&'+action+'='+table;
+            if (action=='select') {
+                url += '&where[0][col]='+column;
+                url += '&where[0][op]='+operator;
+                url += '&where[0][val]='+value;
+            }
+            else if (action=='edit') {
+                url += '&where['+column+']='+value;
+            }
+            console.log ('URL: '+url);
+this.splash (0,url);
+        }
+else {
+this.splash (0,'Need database user to calculate link');
+}
+    }
+
     buttonSetSelect (evt) {
         evt.preventDefault();
         var button;
@@ -25,6 +48,39 @@ export class Gui extends Swimlanes {
         console.log (evt.currentTarget);
     }
 
+    resize (evt) {
+        if (this.resizeTimeout) {
+            clearTimeout (this.resizeTimeout);
+        }
+        this.resizeTimeout = setTimeout (this.resizeEnd.bind(this),250);
+    }
+
+    resizeEnd (evt) {
+        var btn,btns,count,height,lane,lanes,status,statuses,width;
+        lanes = this.qsa (this.restricted,'#swimpool section.swimlane.selected');
+        height = this.qs (this.restricted,'section.splits .y-'+lanes.length);
+        btns = this.qsa (this.restricted,'#toolbar .set.status button.selected');
+        width = this.qs (this.restricted,'section.splits .x-'+btns.length);
+        statuses = this.qsa (this.restricted,'#swimpool section.status.selected');
+        if (height) {
+            for (lane of lanes) {
+                lane.style.height = height.offsetHeight + 'px';
+            }
+            for (status of statuses) {
+                status.style.height = (height.offsetHeight-2) + 'px';
+            }
+        }
+        if (width) {
+            for (status of statuses) {
+                status.style.width = width.offsetWidth + 'px';
+            }
+        }
+    }
+
+    swimEdit (evt) {
+        this.adminer ('edit','ezp_swim','id','%3D',evt.currentTarget.dataset.id);
+    }
+
     swimlanesInit ( ) {
         var buttonset,i,form,pool,opts,status;
         form = this.qs (this.restricted,'#toolbar');
@@ -43,6 +99,10 @@ export class Gui extends Swimlanes {
             pool.appendChild (opts[i+1]);
         }
         form.appendChild (pool);
+        i = document.createElement ('input');
+        i.name = 'db_user';
+        i.setAttribute ('placeholder','Database user');
+        form.appendChild (i);
         pool.addEventListener ('input',this.swimpool.bind(this));
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
@@ -65,10 +125,11 @@ export class Gui extends Swimlanes {
         buttonset.classList.add ('set');
         buttonset.classList.add ('swimlane');
         form.appendChild (buttonset);
+        window.addEventListener ('resize',this.resize.bind(this));
     }
 
     async swimlanes (swimpoolCode) {
-        var button,buttons,buttonset,cell,i,j,labelc,label1,label2,lane,lanesNew,lanesOld,pool;
+        var button,buttons,buttonset,cell,height,i,j,labelc,label1,label2,lane,lanesNew,lanesOld,pool,qty;
         pool        = this.qs (this.restricted,'#swimpool');
         buttonset   = this.qs (pool,'#toolbar .set.swimlane');
         if (!buttonset) {
@@ -124,10 +185,12 @@ export class Gui extends Swimlanes {
                 lane.dataset.swimpool = lanesNew[i].swimpool;
                 lane.dataset.swimlane = lanesNew[i].code;
                 label1 = document.createElement ('label');
+                label1.setAttribute ('title',lanesNew[i].name);
                 label1.classList.add ('after');
                 label1.textContent = lane.dataset.swimpool + '-' + lane.dataset.swimlane;
                 lane.appendChild (label1);
                 label2 = document.createElement ('label');
+                label2.setAttribute ('title',lanesNew[i].name);
                 label2.classList.add ('before');
                 label2.textContent = lane.dataset.swimpool + '-' + lane.dataset.swimlane;
                 lane.appendChild (label2);
@@ -146,26 +209,22 @@ export class Gui extends Swimlanes {
                     }
                     cell.dataset.swimstate = this.data.config.statuses[j].code;
                     labelc = document.createElement ('label');
+                    labelc.setAttribute ('title',this.data.config.statuses[j].name);
                     labelc.textContent = cell.dataset.swimstate;
+                    if (cell.dataset.swimstate in lanesNew[i].swims) {
+                        qty = document.createElement ('span');
+                        qty.classList.add ('swims');
+                        qty.textContent = '('+lanesNew[i].swims[cell.dataset.swimstate]+')';
+                        labelc.appendChild (qty);
+                    }
                     cell.appendChild (labelc);
                     lane.appendChild (cell);
                 }
                 pool.appendChild (lane);
+                this.swimsByLane (lane);
             }
         }
-    }
-
-    swimmers (swimpoolGroup) {
-        var i,j,swimmers;
-        swimmers = [];
-        for (i=0;i<this.data.swimmers.length;i++) {
-            for (j=0;j<this.data.swimmers[i].swimpools.length;j++) {
-                if (this.data.swimmers[i].swimpools[j].usergroup==swimpoolGroup) {
-                    swimmers.push (this.data.swimmers[i]);
-                }
-            }
-        }
-        return swimmers;
+        this.resizeEnd ();
     }
 
     swimpool (evt) {
@@ -177,6 +236,32 @@ export class Gui extends Swimlanes {
         }
         if (code) {
             this.swimlanes (code);
+        }
+    }
+
+    async swims (cell) {
+        var i,swim,swims;
+        swims = await this.swimsRequest (
+            cell.parentElement.dataset.swimpool,
+            cell.parentElement.dataset.swimlane,
+            cell.dataset.swimstate
+        );
+// TODO: not this easy because existing swims must not be replicated
+        for (i=0;i<swims.length;i++) {
+            swim = document.createElement ('span');
+            swim.classList.add ('swim');
+            swim.dataset.id = swims[i].id;
+            swim.textContent = '#'+swims[i].id;
+            cell.appendChild (swim);
+            swim.addEventListener ('click',this.swimEdit.bind(this));
+        }
+    }
+
+    swimsByLane (lane) {
+        var cell,cells;
+        cells = this.qsa (lane,'section.status.selected');
+        for (cell of cells) {
+            this.swims (cell);
         }
     }
 
@@ -194,8 +279,10 @@ export class Gui extends Swimlanes {
             }
             else {
                 lane.classList.add ('selected');
+                this.swimsByLane (lane);
             }
         }
+        this.resizeEnd ();
     }
 
     toggleStatus (evt) {
@@ -211,8 +298,10 @@ export class Gui extends Swimlanes {
             }
             else {
                 cell.classList.add ('selected');
+                this.swims (cell);
             }
         }
+        this.resizeEnd ();
     }
 
 }

@@ -27,7 +27,8 @@ BEGIN
    ,`sl`.`created`
    ,`sl`.`updated`
    ,GROUP_CONCAT(
-      CONCAT(`swims`.`status`,':',`swims`.`quantity`)
+      CONCAT(`swims`.`status`,'::',`swims`.`quantity`)
+      SEPARATOR ';;'
     ) AS `swims`
   FROM `ezp_user` AS `u`
   JOIN `ezp_swimmer` AS `sr`
