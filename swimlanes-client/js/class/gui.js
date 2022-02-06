@@ -134,7 +134,8 @@ export class Gui extends Swimlanes {
             p.dataset.id = swim.id;
             sp = document.createElement ('span');
             sp.classList.add ('link');
-            sp.textContent = 'Edit this';
+            sp.textContent = 'Edit this ';
+            sp.innerHTML += '<span class="arrow">&#8599;</span>';
             sp.addEventListener ('click',this.swimEdit.bind(this));
             p.appendChild (sp);
             s.appendChild (p);
@@ -334,7 +335,7 @@ export class Gui extends Swimlanes {
                         if (cell.dataset.swimstate in lanesNew[i].swims) {
                             qty = document.createElement ('span');
                             qty.classList.add ('swims');
-                            qty.textContent = '('+lanesNew[i].swims[cell.dataset.swimstate]+')';
+                            qty.innerHTML = '<span class="count">('+lanesNew[i].swims[cell.dataset.swimstate]+') &#8599;</span>';
                             labelc.appendChild (qty);
                         }
                         cell.appendChild (labelc);

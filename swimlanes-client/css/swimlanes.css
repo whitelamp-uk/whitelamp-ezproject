@@ -76,6 +76,7 @@
     z-index: 40;
 }
 
+#swimpool .swim .link,
 #toolbar [name],
 #toolbar button,
 #toolbar .set .open {
@@ -85,11 +86,19 @@
     border-radius: 0;
 }
 
+#swimpool .swim .link,
+#toolbar .set .open,
+#swimpool .swims .count {
+    background-color: cyan;
+}
+#swimpool .swim .link,
 #toolbar .set .open {
     margin: 0 0.3em 0 0.3em;
-    background-color: cyan;
     padding: 0 0.1em 0 0.1em;
     cursor: pointer;
+}
+#swimpool .swim .arrow {
+    font-size: 1.6em;
 }
 
 #toolbar select {
@@ -200,6 +209,7 @@
     padding: 3em;
 }
 #swimpool .swim summary {
+    display: inline-block;
     cursor: pointer;
 }
 #swimpool .swim[open] summary {
@@ -207,7 +217,9 @@
 }
 #swimpool .swim .link {
     cursor: pointer;
-    text-decoration: underline;
+}
+#swimpool .swim .arrow {
+    font-size: 1.6em;
 }
 
 .flash {
