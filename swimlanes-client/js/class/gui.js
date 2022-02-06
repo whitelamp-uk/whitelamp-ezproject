@@ -31,6 +31,7 @@ export class Gui extends Swimlanes {
         }
         else {
             this.flash (db_user);
+            this.statusShow ('Enter your database user for Adminer editing');
         }
     }
 
