@@ -58,7 +58,7 @@ export class Swimlanes extends Global {
     }
 
     async swimsRequest (swimpoolCode,swimlaneCode,statusCode) {
-        var request;
+        var request,response;
         request = {
             "email" : this.access.email.value,
             "method" : {
@@ -73,10 +73,14 @@ export class Swimlanes extends Global {
                 ]
             }
         }
-        var response;
         try {
             response = await this.request (request);
-            return response.returnValue;
+console.log ('PING:');
+            if (!this.data.timePointer) {
+                this.data.timePointer = response.returnValue.datetime;
+console.log (this.data.timePointer);
+            }
+            return response.returnValue.swims;
         }
         catch (e) {
             console.error ('Could not get swims: '+e.message);
@@ -85,7 +89,8 @@ export class Swimlanes extends Global {
     }
 
     async swimlanesRequest (swimpoolCode) {
-        var request;
+        var request,response;
+        this.data.swimpoolCode = swimpoolCode;
         request = {
             "email" : this.access.email.value
            ,"method" : {
@@ -94,11 +99,10 @@ export class Swimlanes extends Global {
                ,"class" : "\\EzProject\\Swimlanes"
                ,"method" : "swimlanes"
                ,"arguments" : [
-                    swimpoolCode
+                    this.data.swimpoolCode
                 ]
             }
         }
-        var response;
         try {
             response = await this.request (request);
             return response.returnValue;
@@ -107,6 +111,38 @@ export class Swimlanes extends Global {
             console.error ('Could not get swimlanes: '+e.message);
             return false;
         }
+    }
+
+    async updatesRequest ( ) {
+        var request,response;
+console.log (this.data.swimpoolCode+' '+this.data.timePointer);
+        if (this.data.swimpoolCode && this.data.timePointer) {
+console.log ('PONG');
+            request = {
+                "email" : this.access.email.value,
+                "method" : {
+                    "vendor" : "whitelamp-ezproject",
+                    "package" : "swimlanes-server",
+                    "class" : "\\EzProject\\Swimlanes",
+                    "method" : "updates",
+                    "arguments" : [
+                        this.data.swimpoolCode,
+                        this.data.timePointer
+                    ]
+                }
+            }
+            try {
+                response = await this.request (request);
+                this.data.timePointer = response.returnValue.datetime;
+            }
+            catch (e) {
+                console.error ('Could not get updates: '+e.message);
+                // TODO: depending on the e.code or whatevs
+                // one might just moan to user and give up
+            }
+            this.updates (response.returnValue.swims);
+        }
+        setTimeout (this.updatesRequest.bind(this),5000);
     }
 
     async verifyRequest ( ) {

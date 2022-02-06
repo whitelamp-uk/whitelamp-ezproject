@@ -1,12 +1,13 @@
 <?php
 
 // Minutes to add to "now"
-define ( 'EZP_SWIMLANES_TOKEN_LIFE_MINS',                 10 );
+define ( 'EZP_SWIMLANES_TOKEN_LIFE_MINS',   10 );
 
 // Verification code persistence in seconds
-define ( 'EZP_SWIMLANES_VERIFY_TIME',                     300 );
+define ( 'EZP_SWIMLANES_VERIFY_TIME',       300 );
 
 define ( 'EZP_SWIMLANES_DIR_IMAGE_USER',    '/home/docs/www/media/image/user' );
 
 define ( 'EZP_SWIMLANES_FILE_PATTERN_USER', 'user-?.png' );
 
+define ( 'EZP_SWIMLANES_UPDATES_LIMIT',     100 );

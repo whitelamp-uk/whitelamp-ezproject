@@ -83,13 +83,58 @@ CREATE PROCEDURE `ezpSwimlanesSwims`(
 BEGIN
   SELECT
     `sm`.*
+   ,`log`.`user` AS `updater`
   FROM `ezp_swimlane` AS `sl`
   JOIN `ezp_swim` AS `sm`
     ON `sm`.`swimpool`=`sl`.`swimpool`
    AND `sm`.`swimlane`=`sl`.`code`
    AND `sm`.`status`=statusCode
+  JOIN (
+    SELECT
+      `swim_id`
+     ,MAX(`created`) AS `created`
+    FROM `ezp_swimlog`
+    GROUP BY `swim_id`
+  ) AS `last`
+    ON `last`.`swim_id`=`sm`.`id`
+  JOIN `ezp_swimlog` AS `log`
+    ON `log`.`swim_id`=`sm`.`id`
+   AND `log`.`created`=`last`.`created`
   WHERE `sl`.`swimpool`=swimpoolCode
     AND `sl`.`code`=swimlaneCode
+  ;
+END$$
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS `ezpSwimlanesUpdates`$$
+CREATE PROCEDURE `ezpSwimlanesUpdates`(
+  IN        `swimpoolCode` CHAR(4) CHARSET ascii
+ ,IN        `dt` datetime
+ ,IN        `lmt` int(11) unsigned
+)
+BEGIN
+  SELECT
+    `sm`.*
+   ,`log`.`user` AS `updater`
+  FROM `ezp_swimlane` AS `sl`
+  JOIN `ezp_swim` AS `sm`
+    ON `sm`.`swimpool`=`sl`.`swimpool`
+   AND `sm`.`swimlane`=`sl`.`code`
+  JOIN (
+    SELECT
+      `swim_id`
+     ,MAX(`created`) AS `created`
+    FROM `ezp_swimlog`
+    GROUP BY `swim_id`
+  ) AS `last`
+    ON `last`.`swim_id`=`sm`.`id`
+  JOIN `ezp_swimlog` AS `log`
+    ON `log`.`swim_id`=`sm`.`id`
+   AND `log`.`created`=`last`.`created`
+  WHERE `sl`.`swimpool`=swimpoolCode
+    AND `last`.`created`>ezpCTZOut(dt)
+  LIMIT lmt
   ;
 END$$
 

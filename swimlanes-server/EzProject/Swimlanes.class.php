@@ -23,19 +23,19 @@ class Swimlanes {
         // This method is for client app authentication of a browser session
         // The standard base class hpapi.js expects to receive user details
         // having the property templates (for Handlebars)
-            $result = $this->hpapi->dbCall (
-                'ezpSwimlanesUsers'
-               ,$this->hpapi->email
-            );
+        $result = $this->hpapi->dbCall (
+            'ezpSwimlanesUsers',
+            $this->hpapi->email
+        );
         $user = $this->hpapi->parse2D ($result) [0];
         $user->templates = $this->templates ();
         return $user;
     }
 
     public function config ( ) {
-        $out                        = new \stdClass ();
+        $out = new \stdClass ();
         try {
-            $out->timezoneExpected  = $this->timezone;
+            $out->timezoneExpected = $this->timezone;
         }
         catch (\Exception $e) {
             $this->hpapi->diagnostic ($e->getMessage());
@@ -44,8 +44,8 @@ class Swimlanes {
         }
         try {
             $result = $this->hpapi->dbCall (
-                'ezpSwimlanesUsers'
-               ,null
+                'ezpSwimlanesUsers',
+                null
             );
             $users = $this->hpapi->parse2D ($result);
             $result = $this->hpapi->dbCall (
@@ -108,13 +108,13 @@ class Swimlanes {
         }
 
         try {
-            $user                           = $this->hpapi->dbCall (
-                'ezpSwimlanesUserDetails'
-               ,$this->userId
+            $user = $this->hpapi->dbCall (
+                'ezpSwimlanesUserDetails',
+                $this->userId
             );
-            $answerHash                     = $user[0]['secretAnswerHash'];
-            $verifyCode                     = $user[0]['verifyCode'];
-            $verifyCodeExpiry               = $user[0]['verifyCodeExpiry'];
+            $answerHash         = $user[0]['secretAnswerHash'];
+            $verifyCode         = $user[0]['verifyCode'];
+            $verifyCodeExpiry   = $user[0]['verifyCodeExpiry'];
         }
         catch (\Exception $e) {
             $this->hpapi->diagnostic ($e->getMessage());
@@ -133,18 +133,18 @@ class Swimlanes {
             throw new \Exception (EZP_SWIMLANES_STR_PWD_RESET_EXPIRY);
             return false;
         }
-        $expires                            = null;
+        $expires                = null;
         if (HPAPI_PASSWORD_DAYS) {
-            $expires                        = $this->hpapi->timetamp;
-            $expires                       += HPAPI_PASSWORD_DAYS * 86400;
+            $expires            = $this->hpapi->timetamp;
+            $expires           += HPAPI_PASSWORD_DAYS * 86400;
         }
         try {
             $this->hpapi->dbCall (
-                'ezpSwimlanesSetPasswordHash'
-               ,$this->userId
-               ,$this->hpapi->passwordHash ($newPassword)
-               ,$expires
-               ,1
+                'ezpSwimlanesSetPasswordHash',
+                $this->userId,
+                $this->hpapi->passwordHash ($newPassword),
+                $expires,
+                1
             );
             return true;
         }
@@ -161,13 +161,13 @@ class Swimlanes {
         // /etc/security/pwquality.conf can be used to configure pwscore.
         // Turns out pwscore uses cracklib by default anyway so perhaps we should simplify this.
 
-        $CRACKLIB           = "/usr/sbin/cracklib-check";
+        $CRACKLIB = "/usr/sbin/cracklib-check";
         if (!file_exists($CRACKLIB)) {
             $this->hpapi->diagnostic ('passwordTest(): cracklib-check not found');
             throw new \Exception (EZP_SWIMLANES_STR_PASSWORD_TEST.' [1]');
             return false;
         }
-        $PWSCORE            = "/usr/bin/pwscore";
+        $PWSCORE = "/usr/bin/pwscore";
         if (!file_exists($PWSCORE)) {
             $this->hpapi->diagnostic ('passwordTest(): pwscore not found');
             throw new \Exception (EZP_SWIMLANES_STR_PASSWORD_TEST.' [2]');
@@ -178,9 +178,9 @@ class Swimlanes {
         // Prevent UTF-8 characters being stripped by escapeshellarg
         setlocale (LC_ALL,'en_GB.utf-8'); //TODO check side-effects of this!
 
-        $out                = [];
-        $ret                = null;
-        $command            = "echo '".escapeshellarg($pwd)."' | {$CRACKLIB}";
+        $out = [];
+        $ret = null;
+        $command = "echo '".escapeshellarg($pwd)."' | {$CRACKLIB}";
         exec ($command,$out,$ret);
         if ($ret>0) {
             throw new \Exception (EZP_SWIMLANES_STR_PASSWORD_TEST.' [3]');
@@ -195,46 +195,46 @@ class Swimlanes {
         if ($match[1]!='OK') {
             $this->hpapi->diagnostic ('cracklib result="'.$match[1].'"');
             if (stripos($match[1],'dictionary word')!==false) {
-                $msg        = EZP_SWIMLANES_STR_PASSWORD_DICTIONARY;
+                $msg = EZP_SWIMLANES_STR_PASSWORD_DICTIONARY;
                 return false;
             }
             if (stripos($match[1],'DIFFERENT characters')!==false) {
-                $msg        = EZP_SWIMLANES_STR_PASSWORD_CHARACTERS;
+                $msg = EZP_SWIMLANES_STR_PASSWORD_CHARACTERS;
                 return false;
             }
-            $msg            = EZP_SWIMLANES_STR_PASSWORD_OTHER;
+            $msg = EZP_SWIMLANES_STR_PASSWORD_OTHER;
             return false;
         } 
         // cracklib is happy (or perhaps preg_match() failed?)
-        $out                = [];
-        $ret                = null;
-        $command            = "echo '".escapeshellarg($pwd)."' | {$PWSCORE} 2>&1"; // NB to get stderr
+        $out = [];
+        $ret = null;
+        $command = "echo '".escapeshellarg($pwd)."' | {$PWSCORE} 2>&1"; // NB to get stderr
         exec ($command,$out,$ret);
         if (is_numeric($out[0])) {
             $this->hpapi->diagnostic ('pwscore: '.$out[0]);
             if (1*$out[0]<$minscore) {
-                $msg        = EZP_SWIMLANES_STR_PASSWORD_SCORE.' score='.$out[0].' but '.$minscore.' required';
+                $msg = EZP_SWIMLANES_STR_PASSWORD_SCORE.' score='.$out[0].' but '.$minscore.' required';
                 return false;
             }
         }
         else {
-            $msg            = trim ($out[1]);
+            $msg = trim ($out[1]);
             return false;
         }
         return true;
     }
 
     public function phoneParse ($number) {
-        $number                 = preg_replace ('/[^0-9]+/','',$number);
+        $number = preg_replace ('/[^0-9]+/','',$number);
         if (strpos($number,'0')===0 && strpos($number,'00')!==0) {
-            $number             = EZP_SWIMLANES_PHONE_DEFAULT_COUNTRY_CODE.substr($number,1);
+            $number = EZP_SWIMLANES_PHONE_DEFAULT_COUNTRY_CODE.substr($number,1);
         }
         return $number;
     }
 
     public function report ($args) {
         try {
-            $result                         = $this->hpapi->dbCall (
+            $result = $this->hpapi->dbCall (
                 ...$args
             );
             return $this->hpapi->parse2D ($result);
@@ -247,19 +247,19 @@ class Swimlanes {
 
     public function reports ( ) {
         try {
-            $result                         = $this->hpapi->dbCall (
-                'hpapiSprargs'
-               ,'whitelamp-ezproject'
-               ,'swimlanes-server'
-               ,'\Ezp\Swimlanes'
-               ,'report'
+            $result = $this->hpapi->dbCall (
+                'hpapiSprargs',
+                'whitelamp-ezproject',
+                'swimlanes-server',
+                '\Ezp\Swimlanes',
+                'report'
             );
-            $rows                           = array ();
+            $rows = [];
             foreach ($result as $row) {
-                $spr                        = $row['spr'];
+                $spr = $row['spr'];
                 if (!array_key_exists($spr,$rows)) {
-                    $rows[$spr]             = new \stdClass ();
-                    $rows[$spr]->arguments  = array ();
+                    $rows[$spr] = new \stdClass ();
+                    $rows[$spr]->arguments  = [];
                     $rows[$spr]->spr        = $row['spr'];
                     $rows[$spr]->reportName = $row['notes'];
                 }
@@ -280,11 +280,11 @@ class Swimlanes {
                 if (defined($arg->constraints)) {
                     $arg->constraints       = constant ($arg->constraints);
                 }
-                array_push ($rows[$spr]->arguments,$arg);
+                $rows[$spr]->arguments[]    = $arg;
             }
-            $reports                        = array ();
+            $reports = [];
             foreach ($rows as $row) {
-                array_push ($reports,$row);
+                $reports[] = $row;
             }
             return $reports;
         }
@@ -307,10 +307,10 @@ class Swimlanes {
             return false;
         }
         try {
-            $user                           = $this->hpapi->dbCall (
-                'ezpSwimlanesUserQuestion'
-               ,$this->userId
-               ,$phoneEnd
+            $user = $this->hpapi->dbCall (
+                'ezpSwimlanesUserQuestion',
+                $this->userId,
+                $phoneEnd
             );
         }
         catch (\Exception $e) {
@@ -400,6 +400,9 @@ class Swimlanes {
     }
 
     public function swims ($swimpoolCode,$swimlaneCode,$statusCode) {
+        $output = new \stdClass ();
+        $dt = new \Datetime ();
+        $output->datetime = $dt->format ('Y-m-d H:i:s');
         try {
             if (count($this->swimlanes($swimpoolCode))) {
                 $result = $this->hpapi->dbCall (
@@ -408,7 +411,8 @@ class Swimlanes {
                     $swimlaneCode,
                     $statusCode
                 );
-                return $this->hpapi->parse2D ($result);
+                $output->swims = $this->hpapi->parse2D ($result);
+                return $output;
             }
             else {
                 throw new \Exception (EZP_SWIMLANES_STR_403);
@@ -423,18 +427,49 @@ class Swimlanes {
     }
 
     public function templates ( ) {
-        $g                      = array ();
-        $t                      = array ();
+        $g = [];
+        $t = [];
         foreach (glob(EZP_SWIMLANES_GLOB_TEMPLATE_GLOBAL) as $f) {
-            array_push ($g,basename($f));
+            $g[] = basename ($f);
         }
         foreach (glob(EZP_SWIMLANES_GLOB_TEMPLATE_APP) as $f) {
-            $f                  = basename ($f);
+            $f = basename ($f);
             if (!in_array($f,$g)) {
-                array_push ($t,explode('.',$f)[0]);
+                $t[] = explode ('.',$f) [0];
             }
         }
         return $t;
+    }
+
+    public function updates ($swimpoolCode,$datetime_after) {
+        $output = new \stdClass ();
+        $dt = new \Datetime ();
+        $output->datetime = $dt->format ('Y-m-d H:i:s');
+        try {
+            if (count($this->swimlanes($swimpoolCode))) {
+                $result = $this->hpapi->dbCall (
+                    'ezpSwimlanesUpdates',
+                    $swimpoolCode,
+                    $datetime_after,
+                    EZP_SWIMLANES_UPDATES_LIMIT + 1
+                );
+                $output->swims = $this->hpapi->parse2D ($result);
+                if (count($swims)>EZP_SWIMLANES_UPDATES_LIMIT) {
+                    array_pop ($output->swims);
+                    $output->warning = EZP_SWIMLANES_STR_LIMIT.EZP_SWIMLANES_UPDATES_LIMIT;
+                }
+                return $output;
+            }
+            else {
+                throw new \Exception (EZP_SWIMLANES_STR_403);
+                return false;
+            }
+        }
+        catch (\Exception $e) {
+            $this->hpapi->diagnostic ($e->getMessage());
+            throw new \Exception (EZP_SWIMLANES_STR_DB);
+            return false;
+        }
     }
 
 }
