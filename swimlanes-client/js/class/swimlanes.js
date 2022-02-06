@@ -75,10 +75,8 @@ export class Swimlanes extends Global {
         }
         try {
             response = await this.request (request);
-console.log ('PING:');
             if (!this.data.timePointer) {
                 this.data.timePointer = response.returnValue.datetime;
-console.log (this.data.timePointer);
             }
             return response.returnValue.swims;
         }
@@ -115,9 +113,7 @@ console.log (this.data.timePointer);
 
     async updatesRequest ( ) {
         var request,response;
-console.log (this.data.swimpoolCode+' '+this.data.timePointer);
         if (this.data.swimpoolCode && this.data.timePointer) {
-console.log ('PONG');
             request = {
                 "email" : this.access.email.value,
                 "method" : {

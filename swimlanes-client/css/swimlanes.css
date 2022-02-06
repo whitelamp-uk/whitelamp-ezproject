@@ -58,6 +58,17 @@
     box-sizing: inherit;
 }
 
+#swimpool select,
+#swimpool ::placeholder {
+    color: grey;
+    font-style: italic;
+}
+#swimpool select.selected {
+    color: unset;
+    font-style: unset;
+}
+
+
 #toolbar {
     position: absolute;
     left: 16em;
@@ -66,11 +77,19 @@
 }
 
 #toolbar [name],
-#toolbar button {
+#toolbar button,
+#toolbar .set .open {
     border-style: solid;
     border-color: grey;
     border-width: 1px;
     border-radius: 0;
+}
+
+#toolbar .set .open {
+    margin: 0 0.3em 0 0.3em;
+    background-color: cyan;
+    padding: 0 0.1em 0 0.1em;
+    cursor: pointer;
 }
 
 #toolbar select {
@@ -88,6 +107,7 @@
 #toolbar .set button.selected {
     background-color: gold;
 }
+
 #toolbar .set.swimlane {
     position: fixed;
     right: 3em;

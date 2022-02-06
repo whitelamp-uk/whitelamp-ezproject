@@ -5,7 +5,7 @@ import {Swimlanes} from './swimlanes.js';
 
 export class Gui extends Swimlanes {
 
-    adminer (action,table,column,operator,value) {
+    adminer (action,table,column=null,operator=null,value=null) {
         var db_user,url,win;
         db_user = this.qs (this.restricted,'#toolbar input[name="db_user"]');
         if (db_user && db_user.value) {
@@ -13,12 +13,16 @@ export class Gui extends Swimlanes {
             url += '?username=' + db_user.value;
             url += '&db=ezproject';
             url += '&' + action + '=' + table;
-            if (action=='select') {
+            if (action=='select' && column) {
                 url += '&where[0][col]=' + column;
                 url += '&where[0][op]=' + operator;
                 url += '&where[0][val]=' + value;
             }
             else if (action=='edit') {
+                if (!column) {
+                    this.statusShow ('Sorry something went wrong...');
+                    return;
+                }
                 url += '&where[' + column + ']=' + value;
             }
             console.log ('URL: '+url);
@@ -170,7 +174,7 @@ export class Gui extends Swimlanes {
     }
 
     swimlanesInit ( ) {
-        var buttonset,i,form,pool,opts,status;
+        var buttonset,i,form,open,pool,opts,status;
         form = this.qs (this.restricted,'#toolbar');
         pool = document.createElement ('select');
         pool.id = 'input-pool';
@@ -178,7 +182,7 @@ export class Gui extends Swimlanes {
         opts = [];
         opts[0] = document.createElement ('option');
         opts[0].value = '';
-        opts[0].textContent = 'Swimpool:';
+        opts[0].textContent = 'Select pool:';
         pool.appendChild (opts[0]);
         for (i=0;i<this.data.config.swimpools.length;i++) {
             opts[i+1] = document.createElement ('option');
@@ -193,6 +197,7 @@ export class Gui extends Swimlanes {
         i.setAttribute ('placeholder','Database user');
         form.appendChild (i);
         pool.addEventListener ('input',this.swimpool.bind(this));
+        // Status button set
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
         buttonset.classList.add ('status');
@@ -203,16 +208,27 @@ export class Gui extends Swimlanes {
             status.dataset.icon = this.data.config.statuses[i].icon;
             status.textContent = this.data.config.statuses[i].code;
             status.setAttribute ('title',this.data.config.statuses[i].name);
-            buttonset.appendChild (status);
             status.addEventListener ('click',this.buttonSetSelect.bind(this));
             status.addEventListener ('click',this.toggleStatus.bind(this));
+            buttonset.appendChild (status);
             if (this.data.config.statuses[i].show_by_default) {
                 status.click ();
             }
         }
+        open = document.createElement ('span');
+        open.classList.add ('open');
+        open.innerHTML = '&#8599;';
+        open.addEventListener ('click',this.statusesList.bind(this));
+        buttonset.appendChild (open);
+        // Swimlane button set
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
         buttonset.classList.add ('swimlane');
+        open = document.createElement ('span');
+        open.classList.add ('open');
+        open.innerHTML = '&#8598;';
+        open.addEventListener ('click',this.swimlanesList.bind(this));
+        buttonset.appendChild (open);
         form.appendChild (buttonset);
         window.addEventListener ('resize',this.resize.bind(this));
         this.updatesRequest ();
@@ -333,6 +349,18 @@ export class Gui extends Swimlanes {
         }
     }
 
+    swimlanesList (evt) {
+        var p;
+        p = this.qs (this.restricted,'#input-pool');
+        if (p.value) {
+             this.adminer ('select','ezp_swimlane','swimpool','%3D',p.value);
+        }
+    }
+
+    statusesList (evt) {
+        this.adminer ('select','ezp_status');
+    }
+
     swimpool (evt) {
         var code,lane,lanes;
         code = evt.currentTarget.value;
@@ -341,6 +369,12 @@ export class Gui extends Swimlanes {
             lane.remove ();
         }
         this.swimlanes (code);
+        if (code) {
+            evt.currentTarget.classList.add ('selected');
+        }
+        else {
+            evt.currentTarget.classList.remove ('selected');
+        }
     }
 
     async swims (cell) {
