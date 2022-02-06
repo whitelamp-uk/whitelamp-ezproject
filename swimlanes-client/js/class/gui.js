@@ -288,7 +288,7 @@ export class Gui extends Swimlanes {
                     button.dataset.swimpool = lanesNew[i].swimpool;
                     button.dataset.swimlane = lanesNew[i].code;
                     button.setAttribute ('title',lanesNew[i].name);
-                    button.textContent = lanesNew[i].swimpool+'-'+lanesNew[i].code
+                    button.textContent = lanesNew[i].code
                     buttonset.appendChild (button);
                     button.addEventListener ('click',this.buttonSetSelect.bind(this));
                     button.addEventListener ('click',this.toggleLane.bind(this));
