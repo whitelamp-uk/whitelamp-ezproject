@@ -408,11 +408,13 @@ export class Gui extends Swimlanes {
     swimsList (evt) {
         var ids,swim,swims;
         swims = this.qsa (evt.currentTarget.parentElement,'.swim[data-id]');
-        ids = '';
-        for (swim of swims) {
-            ids += swim.dataset.id + ',';
+        if (swims.length) {
+            ids = '';
+            for (swim of swims) {
+                ids += swim.dataset.id + ',';
+            }
+            this.adminer ('select','ezp_swim','id','IN',ids.substring(0,ids.length-1));
         }
-        this.adminer ('select','ezp_swim','id','IN',ids.substring(0,ids.length-1));
     }
 
     toggleLane (evt) {
