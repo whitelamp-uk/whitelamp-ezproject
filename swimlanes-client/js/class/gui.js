@@ -61,6 +61,13 @@ export class Gui extends Swimlanes {
         elmt.classList.remove ('flash');
     }
 
+    nullToEmpty (val) {
+        if (val===null) {
+            return '';
+        }
+        return val;
+    }
+
     resize (evt) {
         if (this.resizeTimeout) {
             clearTimeout (this.resizeTimeout);
@@ -109,17 +116,21 @@ export class Gui extends Swimlanes {
             // Update swim
             this.qs(s,'summary').textContent
                 = '#' + swim.id + ' ' + swim.name;
-            this.qs(s,'pre:nth-child(1)').textContent
+            this.qs(s,'pre:nth-of-type(1)').textContent
                 = 'STATUS: ' + swim.status;
-            this.qs(s,'pre:nth-child(2)').textContent
+            this.qs(s,'pre:nth-of-type(2)').textContent
+                = 'PROGRESS BY: ' + this.nullToEmpty(swim.progress_by_date);
+            this.qs(s,'pre:nth-of-type(3)').textContent
+                = 'CLOSE BY: ' + this.nullToEmpty(swim.close_by_date);
+            this.qs(s,'pre:nth-of-type(4)').textContent
                 = 'NOTES: ' + swim.notes;
-            this.qs(s,'pre:nth-child(3)').textContent
+            this.qs(s,'pre:nth-of-type(5)').textContent
                 = 'SPEC: ' + swim.specification;
-            this.qs(s,'pre:nth-child(4)').textContent
+            this.qs(s,'pre:nth-of-type(6)').textContent
                 = 'CREATED: ' + swim.created;
-            this.qs(s,'pre:nth-child(5)').textContent
+            this.qs(s,'pre:nth-of-type(7)').textContent
                 = 'UPDATED: ' + swim.updated;
-            this.qs(s,'pre:nth-child(6)').textContent
+            this.qs(s,'pre:nth-of-type(8)').textContent
                 = 'UPDATER: ' + swim.updater;
         }
         else {
@@ -143,6 +154,12 @@ export class Gui extends Swimlanes {
             p.textContent = 'STATUS: ' + cell.parentElement.dataset.swimpool;
             p.textContent += '-' + cell.parentElement.dataset.swimlane;
             p.textContent += ' ' + swim.status;
+            s.appendChild (p);
+            p = document.createElement ('pre');
+            p.textContent = 'PROGRESS BY: ' + this.nullToEmpty(swim.progress_by_date);
+            s.appendChild (p);
+            p = document.createElement ('pre');
+            p.textContent = 'CLOSE BY: ' + this.nullToEmpty(swim.close_by_date);
             s.appendChild (p);
             p = document.createElement ('pre');
             p.textContent = 'NOTES: ' + swim.notes;
@@ -465,7 +482,8 @@ export class Gui extends Swimlanes {
                 '#swimpool section.swimlane .status details[data-id="'+swims[i].id+'"]'
             );
             if (swim && swim.parentElement!=cell) {
-                swim.remove ();
+                swim.parentElement.removeChild (swim);
+                cell.prepend (swim);
             }
             this.swim (cell,swims[i]);
         }
