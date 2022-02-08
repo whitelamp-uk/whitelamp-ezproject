@@ -624,7 +624,7 @@ export class Gui extends Swimlanes {
     }
 
     updates (swims) {
-        var i,cell,swim;
+        var i,button,cell,swim;
         for (i=0;i<swims.length;i++) {
             cell = this.qs (
                 this.restricted,
@@ -636,9 +636,17 @@ export class Gui extends Swimlanes {
             );
             if (swim && swim.parentElement!=cell) {
                 swim.parentElement.removeChild (swim);
+                if (!cell.classList.contains('selected')) {
+                    cell.classList.add ('selected');
+                    button = this.qs (this.restricted,'#toolbar .set.status [data-swimstate="'+cell.dataset.swimstate+'"]');
+                    button.classList.add ('selected');
+                }
                 cell.prepend (swim);
+                this.statusShow ('Update (and move): '+cell.parentElement.dataset.swimpool+'-'+cell.parentElement.dataset.swimlane+' '+swims[i].status);
             }
-//alert ('SWIM '+cell.parentElement.dataset.swimpool+'-'+cell.parentElement.dataset.swimlane+' '+swims[i].status);
+            else {
+                this.statusShow ('Update: '+cell.parentElement.dataset.swimpool+'-'+cell.parentElement.dataset.swimlane+' '+swims[i].status);
+            }
             this.swim (cell,swims[i]);
         }
     }
