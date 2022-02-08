@@ -84,6 +84,7 @@ BEGIN
   SELECT
     `sm`.*
    ,`log`.`user` AS `updater`
+   ,`recent`.`edits_recent`
   FROM `ezp_swimlane` AS `sl`
   JOIN `ezp_swim` AS `sm`
     ON `sm`.`swimpool`=`sl`.`swimpool`
@@ -100,6 +101,15 @@ BEGIN
   JOIN `ezp_swimlog` AS `log`
     ON `log`.`swim_id`=`sm`.`id`
    AND `log`.`created`=`last`.`created`
+  JOIN (
+    SELECT
+      `swim_id`
+     ,COUNT(*) AS `edits_recent`
+    FROM `ezp_swimlog`
+    WHERE DATE(`created`)>=DATE_SUB(CURDATE(),INTERVAL 7 DAY)
+    GROUP BY `swim_id`
+  ) AS `recent`
+    ON `recent`.`swim_id`=`sm`.`id`
   WHERE `sl`.`swimpool`=swimpoolCode
     AND `sl`.`code`=swimlaneCode
   ;
