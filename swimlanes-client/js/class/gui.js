@@ -247,21 +247,24 @@ export class Gui extends Swimlanes {
             // Update swim
             this.qs(s,'summary').textContent
                 = '#' + swim.id + ' ' + swim.name;
-            this.qs(s,'pre:nth-of-type(1)').textContent
-                = 'STATUS: ' + swim.status;
+            // The first <pre> tag is the navigation bit
             this.qs(s,'pre:nth-of-type(2)').textContent
-                = 'PROGRESS BY: ' + this.nullToEmpty(swim.progress_by_date);
+                = 'STATUS: ' + cell.parentElement.dataset.swimpool
+                + '-' + cell.parentElement.dataset.swimlane
+                + ' ' + swim.status;
             this.qs(s,'pre:nth-of-type(3)').textContent
-                = 'CLOSE BY: ' + this.nullToEmpty(swim.close_by_date);
+                = 'PROGRESS BY: ' + this.nullToEmpty(swim.progress_by_date);
             this.qs(s,'pre:nth-of-type(4)').textContent
-                = 'NOTES: ' + swim.notes;
+                = 'CLOSE BY: ' + this.nullToEmpty(swim.close_by_date);
             this.qs(s,'pre:nth-of-type(5)').textContent
-                = 'SPEC: ' + swim.specification;
+                = 'NOTES: ' + swim.notes;
             this.qs(s,'pre:nth-of-type(6)').textContent
-                = 'CREATED: ' + swim.created;
+                = 'SPEC: ' + swim.specification;
             this.qs(s,'pre:nth-of-type(7)').textContent
-                = 'UPDATED: ' + swim.updated;
+                = 'CREATED: ' + swim.created;
             this.qs(s,'pre:nth-of-type(8)').textContent
+                = 'UPDATED: ' + swim.updated;
+            this.qs(s,'pre:nth-of-type(9)').textContent
                 = 'UPDATER: ' + swim.updater;
         }
         else {
@@ -275,9 +278,13 @@ export class Gui extends Swimlanes {
             p = document.createElement ('pre');
             p.dataset.id = swim.id;
             sp = document.createElement ('span');
+            sp.classList.add ('close');
+            sp.innerHTML  = '<span class="arrow">&swarr;</span> Close';
+            sp.addEventListener ('click',this.swimClose.bind(this));
+            p.appendChild (sp);
+            sp = document.createElement ('span');
             sp.classList.add ('link');
-            sp.textContent = 'Edit this ';
-            sp.innerHTML += '<span class="arrow">&#8599;</span>';
+            sp.innerHTML += 'Edit <span class="arrow">&nearr;</span>';
             sp.addEventListener ('click',this.swimEdit.bind(this));
             p.appendChild (sp);
             s.appendChild (p);
@@ -307,14 +314,15 @@ export class Gui extends Swimlanes {
             p = document.createElement ('pre');
             p.textContent = 'UPDATER: ' + swim.updater;
             s.appendChild (p);
-            s.addEventListener ('click',this.swimClose.bind(this));
             cell.appendChild (s);
         }
     }
 
     swimClose (evt) {
-        if (evt.currentTarget.hasAttribute('open')) {
-            evt.currentTarget.removeAttribute ('open');
+        var details;
+        details = evt.currentTarget.parentElement.parentElement;
+        if (details.hasAttribute('open')) {
+            details.removeAttribute ('open');
         }
     }
 
@@ -366,7 +374,7 @@ export class Gui extends Swimlanes {
         }
         open = document.createElement ('span');
         open.classList.add ('open');
-        open.innerHTML = '&#8599;';
+        open.innerHTML = '&nearr;';
         open.addEventListener ('click',this.statusesList.bind(this));
         buttonset.appendChild (open);
         // Select sort method
@@ -387,7 +395,7 @@ export class Gui extends Swimlanes {
         buttonset.classList.add ('swimlane');
         open = document.createElement ('span');
         open.classList.add ('open');
-        open.innerHTML = '&#8598;';
+        open.innerHTML = '&nwarr;';
         open.addEventListener ('click',this.swimlanesList.bind(this));
         buttonset.appendChild (open);
         form.appendChild (buttonset);
@@ -495,7 +503,7 @@ export class Gui extends Swimlanes {
                         if (cell.dataset.swimstate in lanesNew[i].swims) {
                             qty = document.createElement ('span');
                             qty.classList.add ('swims');
-                            qty.innerHTML = '<span class="count">('+lanesNew[i].swims[cell.dataset.swimstate]+') &#8599;</span>';
+                            qty.innerHTML = '<span class="count">('+lanesNew[i].swims[cell.dataset.swimstate]+') &nearr;</span>';
                             labelc.appendChild (qty);
                         }
                         cell.appendChild (labelc);
@@ -630,9 +638,11 @@ export class Gui extends Swimlanes {
                 swim.parentElement.removeChild (swim);
                 cell.prepend (swim);
             }
+//alert ('SWIM '+cell.parentElement.dataset.swimpool+'-'+cell.parentElement.dataset.swimlane+' '+swims[i].status);
             this.swim (cell,swims[i]);
         }
     }
 
 }
 
+harriet@burdenandburden.co.uk

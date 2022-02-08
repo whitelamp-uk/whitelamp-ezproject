@@ -78,6 +78,7 @@
 }
 
 #swimpool .swim .link,
+#swimpool .swim .close,
 #toolbar [name],
 #toolbar button,
 #toolbar .set .open {
@@ -92,13 +93,24 @@
 #swimpool .swims .count {
     background-color: cyan;
 }
-#swimpool .swim .link,
+#swimpool .swim .close {
+    background-color: pink;
+}
+#toolbar .set .open,
+#swimpool .swim .close,
+#swimpool .swim .link {
+    cursor: pointer;
+}
 #toolbar .set .open {
     margin: 0 0.3em 0 0.3em;
     padding: 0 0.1em 0 0.1em;
-    cursor: pointer;
 }
-#swimpool .swim .arrow {
+#swimpool .swim .close,
+#swimpool .swim .link {
+    margin: 0 0.6em 0 0;
+    padding: 0 0.3em 0 0.3em;
+}
+#swimpool .arrow {
     font-size: 1.6em;
 }
 
