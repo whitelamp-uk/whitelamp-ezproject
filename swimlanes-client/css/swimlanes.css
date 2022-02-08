@@ -63,7 +63,8 @@
     color: grey;
     font-style: italic;
 }
-#swimpool select.selected {
+#swimpool select.selected,
+#swimpool #input-sort {
     color: unset;
     font-style: unset;
 }
@@ -105,6 +106,9 @@
 #toolbar input {
     width: 8em;
     line-height: 1.0;
+}
+#toolbar #input-sort {
+    width: 15em;
 }
 
 #toolbar .set button {

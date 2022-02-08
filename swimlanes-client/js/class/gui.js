@@ -109,6 +109,137 @@ export class Gui extends Swimlanes {
         );
     }
 
+    sort (rows,sort) {
+        if (!this.sorts()['sort']) {
+            return rows;
+        }
+        if (sort=='close') {
+            rows.sort (
+                function (a,b) {
+                    return this.sortFunction(a.close_by_date,b.close_by_date,true,true).bind(this);
+                }
+            );
+        }
+        else if (sort=='progress') {
+            rows.sort (
+                function (a,b) {
+                    return this.sortFunction(a.progress_by_date,b.progress_by_date,true,true).bind(this);
+                }
+            );
+        }
+        else if (sort=='updated') {
+            rows.sort (
+                function (a,b) {
+                    var ta,tb;
+                    if (a.updated) {
+                        ta = a.updated;
+                    }
+                    else {
+                        ta = a.created;
+                    }
+                    if (b.updated) {
+                        tb = b.updated;
+                    }
+                    else {
+                        tb = b.created;
+                    }
+                    return this.sortFunction(ta,tb,false,false).bind(this);
+                    
+                }
+            );
+        }
+        else if (sort=='edits') {
+            rows.sort (
+                function (a,b) {
+                    return this.sortFunction(a.edits_recent,b.edits_recent,false).bind(this);
+                }
+            );
+        }
+        else if (sort=='oldest') {
+            rows.sort (
+                function (a,b) {
+                    return this.sortFunction(a.created,b.created,true).bind(this);
+                }
+            );
+        }
+        else if (sort=='youngest') {
+            rows.sort (
+                function (a,b) {
+                    return this.sortFunction(a.created,b.created,false).bind(this);
+                }
+            );
+        }
+        return rows;
+    }
+
+    sortAll (evt) {
+        var cell,cells;
+        cells = this.qsa (this.restricted,'#swimpool section.status.selected');
+        for (cell of cells) {
+            this.sortCell (cell,evt.currentTarget.value);
+        }
+    }
+
+    sortCell (cell,sortOption) {
+        var arr,i,swim,swims;
+        swims = this.qsa (cell,'.swim[data-id]');
+        arr = [];
+        for (swim of swims) {
+            arr.push (swim);
+        }
+        arr = this.sort (arr,sortOption);
+        for (i=0;i<arr.length;i++) {
+            cell.removeChild (arr[i]);
+            cell.prepend (arr[i]);
+        }
+    }
+
+    sortFunction (a,b,ascending=true,missingIsHigh=false) {
+        if (a==b) {
+            return 0;
+        }
+        if (missingIsHigh) {
+            // 0, null or "" treated as high
+            if (!b || b>a) {
+                if (ascending) {
+                    return -1;
+                }
+                return 1;
+            }
+            if (!a || b<a) {
+                if (ascending) {
+                    return 1;
+                }
+                return -1;
+            }
+        }
+        // 0, null or "" treated as low
+        if (b>a) {
+            if (ascending) {
+                return -1;
+            }
+            return 1;
+        }
+        if (a<b) {
+            if (ascending) {
+                return -1;
+            }
+            return 1;
+        }
+        return 0;
+    }
+
+    sorts (rows,sort) {
+        return {
+            close : "By closure deadline",
+            progress : "By progress deadline",
+            updated : "By most recent update",
+            edits : "By most edits recently",
+            oldest : "By oldest first",
+            youngest : "By youngest first",
+        };
+    }
+
     swim (cell,swim) {
         var p,s,sm,sp;
         s = this.qs (cell,'.swim[data-id="'+swim.id+'"]');
@@ -192,7 +323,7 @@ export class Gui extends Swimlanes {
     }
 
     swimlanesInit ( ) {
-        var buttonset,i,form,open,pool,opts,status;
+        var buttonset,i,form,open,pool,opt,opts,sort,sorter,sorts,status;
         form = this.qs (this.restricted,'#toolbar');
         pool = document.createElement ('select');
         pool.id = 'input-pool';
@@ -238,6 +369,18 @@ export class Gui extends Swimlanes {
         open.innerHTML = '&#8599;';
         open.addEventListener ('click',this.statusesList.bind(this));
         buttonset.appendChild (open);
+        // Select sort method
+        sorter = document.createElement ('select');
+        sorter.id = 'input-sort';
+        sorts = this.sorts ();
+        for (sort of Object.keys(sorts)) {
+            opt = document.createElement ('option');
+            opt.value = sort;
+            opt.textContent = sorts[sort];
+            sorter.appendChild (opt);
+        }
+        sorter.addEventListener ('input',this.sortAll.bind(this));
+        form.appendChild (sorter);
         // Swimlane button set
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
@@ -396,13 +539,15 @@ export class Gui extends Swimlanes {
     }
 
     async swims (cell) {
-        var i,p,s,swim,swimsNew,swimsOld;
+        var i,p,s,sort,swim,swimsNew,swimsOld;
         swimsNew = await this.swimsRequest (
             cell.parentElement.dataset.swimpool,
             cell.parentElement.dataset.swimlane,
             cell.dataset.swimstate
         );
-        swimsOld    = this.qsa (cell,'.swim');
+        sort = this.qs (this.restricted,'#input-sort');
+        swimsNew = this.sort (swimsNew,sort.options[sort.selectedIndex].value);
+        swimsOld = this.qsa (cell,'.swim');
         // Remove unwanted swims
         for (swim of swimsOld) {
             if (!this.find(swimsNew,'id',swim.dataset.id)) {
