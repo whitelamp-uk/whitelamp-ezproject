@@ -635,7 +635,7 @@ export class Gui extends Swimlanes {
                 '#swimpool section.swimlane .status details[data-id="'+swims[i].id+'"]'
             );
             if (swim && swim.parentElement!=cell) {
-                if (swim.parentElement.contains('selected') && !cell.classList.contains('selected')) {
+                if (swim.parentElement.classList.contains('selected') && !cell.classList.contains('selected')) {
                     cell.classList.add ('selected');
                     button = this.qs (this.restricted,'#toolbar .set.status [data-swimstate="'+cell.dataset.swimstate+'"]');
                     button.classList.add ('selected');
