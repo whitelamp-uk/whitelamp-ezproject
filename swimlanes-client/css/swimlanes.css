@@ -101,9 +101,15 @@
 #swimpool .swim .link {
     cursor: pointer;
 }
-#toolbar .set .open {
-    margin: 0 0.3em 0 0.3em;
+#toolbar .set .open  {
+    margin: 0;
     padding: 0 0.1em 0 0.1em;
+}
+#toolbar .set .open.search {
+    padding: 0 0.3em 0 0.3em;
+}
+#toolbar .set .open.new {
+    padding: 0 0.2em 0 0.2em;
 }
 #swimpool .swim .close,
 #swimpool .swim .link {
@@ -114,13 +120,15 @@
     font-size: 1.6em;
 }
 
-#toolbar select,
-#toolbar input {
+#toolbar select {
     width: 8em;
+}
+#toolbar input {
+    width: 7em;
     line-height: 1.0;
 }
 #toolbar #input-sort {
-    width: 15em;
+    width: 13.2em;
 }
 
 #toolbar .set button {

@@ -18,11 +18,7 @@ export class Gui extends Swimlanes {
                 url += '&where[0][op]=' + operator;
                 url += '&where[0][val]=' + value;
             }
-            else if (action=='edit') {
-                if (!column) {
-                    this.statusShow ('Sorry something went wrong...');
-                    return;
-                }
+            else if (action=='edit' && column) {
                 url += '&where[' + column + ']=' + value;
             }
             console.log ('URL: '+url);
@@ -35,7 +31,7 @@ export class Gui extends Swimlanes {
         }
         else {
             this.flash (db_user);
-            this.statusShow ('Enter your database user for Adminer editing');
+            this.statusShow ('Enter your database user for Adminer searching or editing');
         }
     }
 
@@ -240,6 +236,10 @@ export class Gui extends Swimlanes {
         };
     }
 
+    statusesList (evt) {
+        this.adminer ('select','ezp_status');
+    }
+
     swim (cell,swim) {
         var p,s,sm,sp;
         s = this.qs (cell,'.swim[data-id="'+swim.id+'"]');
@@ -347,13 +347,8 @@ export class Gui extends Swimlanes {
             opts[i+1].textContent = this.data.config.swimpools[i].name;
             pool.appendChild (opts[i+1]);
         }
-        form.appendChild (pool);
-        i = document.createElement ('input');
-        i.name = 'db_user';
-        i.setAttribute ('title','Facilitates seamless Adminer linking');
-        i.setAttribute ('placeholder','Database user');
-        form.appendChild (i);
         pool.addEventListener ('input',this.swimpool.bind(this));
+        form.appendChild (pool);
         // Status button set
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
@@ -372,12 +367,33 @@ export class Gui extends Swimlanes {
                 status.click ();
             }
         }
+        // SQL user input
+        i = document.createElement ('input');
+        i.name = 'db_user';
+        i.setAttribute ('title','Facilitates seamless Adminer linking');
+        i.setAttribute ('placeholder','SQL user');
+        buttonset.appendChild (i);
+        // List all statuses
         open = document.createElement ('span');
         open.classList.add ('open');
         open.innerHTML = '&nearr;';
         open.addEventListener ('click',this.statusesList.bind(this));
         buttonset.appendChild (open);
-        // Select sort method
+        // List all swims
+        open = document.createElement ('span');
+        open.classList.add ('open');
+        open.classList.add ('search');
+        open.textContent = '?';
+        open.addEventListener ('click',this.swimSearch.bind(this));
+        buttonset.appendChild (open);
+        // Insert a swim
+        open = document.createElement ('span');
+        open.classList.add ('open');
+        open.classList.add ('new');
+        open.textContent = '+';
+        open.addEventListener ('click',this.swimNew.bind(this));
+        buttonset.appendChild (open);
+        // Sort selector
         sorter = document.createElement ('select');
         sorter.id = 'input-sort';
         sorts = this.sorts ();
@@ -400,6 +416,7 @@ export class Gui extends Swimlanes {
         buttonset.appendChild (open);
         form.appendChild (buttonset);
         window.addEventListener ('resize',this.resize.bind(this));
+        this.data.updatesList = [];
         this.updatesRequest ();
     }
 
@@ -526,8 +543,8 @@ export class Gui extends Swimlanes {
         }
     }
 
-    statusesList (evt) {
-        this.adminer ('select','ezp_status');
+    swimNew (evt) {
+        this.adminer ('edit','ezp_swim');
     }
 
     swimpool (evt) {
@@ -573,6 +590,10 @@ export class Gui extends Swimlanes {
         for (cell of cells) {
             this.swims (cell);
         }
+    }
+
+    swimSearch (evt) {
+        this.adminer ('select','ezp_swim');
     }
 
     swimsList (evt) {
@@ -624,7 +645,7 @@ export class Gui extends Swimlanes {
     }
 
     updates (swims) {
-        var i,button,cell,swim;
+        var i,button,cell,msg,mvd,swim;
         for (i=0;i<swims.length;i++) {
             cell = this.qs (
                 this.restricted,
@@ -634,24 +655,45 @@ export class Gui extends Swimlanes {
                 this.restricted,
                 '#swimpool section.swimlane .status details[data-id="'+swims[i].id+'"]'
             );
-            if (swim && swim.parentElement!=cell) {
-                if (swim.parentElement.classList.contains('selected') && !cell.classList.contains('selected')) {
-                    // The old parent is visible and the new parent is not
-                    // So prevent the user from losing sight of the swim
-                    // By, of course, auto-selecting the new parent (and its button)
-                    cell.classList.add ('selected');
-                    button = this.qs (this.restricted,'#toolbar .set.status [data-swimstate="'+cell.dataset.swimstate+'"]');
-                    button.classList.add ('selected');
+            if (swim) {
+                if (swim.parentElement!=cell) {
+                    mvd = true;
+                    if (swim.parentElement.classList.contains('selected') && !cell.classList.contains('selected')) {
+                        // The old parent is visible and the new parent is not
+                        // So prevent the user from losing sight of the swim
+                        // By, of course, auto-selecting the new parent (and its button)
+                        cell.classList.add ('selected');
+                        button = this.qs (this.restricted,'#toolbar .set.status [data-swimstate="'+cell.dataset.swimstate+'"]');
+                        button.classList.add ('selected');
+                    }
+                    swim.parentElement.removeChild (swim);
+                    cell.prepend (swim);
                 }
-                swim.parentElement.removeChild (swim);
-                cell.prepend (swim);
-                this.statusShow ('Update (and move): '+cell.parentElement.dataset.swimpool+'-'+cell.parentElement.dataset.swimlane+' '+swims[i].status);
+            }
+            if (mvd) {
+                msg     = 'MOVED: ' + swims[i].name;
+                msg    += ' --> ' + cell.parentElement.dataset.swimpool;
+                msg    += '-' + cell.parentElement.dataset.swimlane;
+                msg    += '-' + swims[i].status;
+                msg    += '-#' + swims[i].id;
+                msg    += ' [' + swims[i].updater + ']';
+                this.statusShow (msg);
             }
             else {
-                this.statusShow ('Update: '+cell.parentElement.dataset.swimpool+'-'+cell.parentElement.dataset.swimlane+' '+swims[i].status);
+                this.data.updatesList.push (
+                    {
+                        swimpool : cell.parentElement.dataset.swimpool,
+                        swimlane : cell.parentElement.dataset.swimlane,
+                        id : swims[i].id,
+                        name : swims[i].name
+                    }
+                );
             }
-            this.swim (cell,swims[i]);
         }
+    }
+
+    updatesNotify (evt) {
+        
     }
 
 }

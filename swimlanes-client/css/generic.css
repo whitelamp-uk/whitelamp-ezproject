@@ -474,10 +474,10 @@ section.view {
     z-index:            999;
     position:           fixed;
     right:              2em;
-    top:                5.5em;
+    bottom:             0;
     box-sizing:         border-box;
     width:              0;
-    height:             2.8em;
+    height:             2.4em;
     background-color:   var(--color-background-warning);
     border-style:       solid;
     border-width:       0;
@@ -486,15 +486,16 @@ section.view {
     padding:            0.5em 0 0 0;
     overflow:           hidden;
     white-space:        nowrap;
+    text-align:         center;
 }
 #gui-status.transition {
     border-width:       var(--dim-border-width-component);
     padding:            0.5em 0.5em 0 0.5em;
-    transition:         width 0.5s;
+    transition:         width 1.0s;
 }
 #gui-status.transition.visible {
     border-width:       var(--dim-border-width-component);
-    width:              50vw;
+    width:              calc(100vw - 4em);
 }
 
 #gui-tech {
