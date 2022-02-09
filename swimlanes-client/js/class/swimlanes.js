@@ -129,6 +129,7 @@ export class Swimlanes extends Global {
             }
             try {
                 response = await this.request (request);
+                this.updates (response.returnValue.swims);
                 this.data.timePointer = response.returnValue.datetime;
             }
             catch (e) {
@@ -136,7 +137,6 @@ export class Swimlanes extends Global {
                 // TODO: depending on the e.code or whatevs
                 // one might just moan to user and give up
             }
-            this.updates (response.returnValue.swims);
         }
         setTimeout (this.updatesRequest.bind(this),5000);
     }
