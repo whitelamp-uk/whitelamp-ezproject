@@ -636,6 +636,9 @@ export class Gui extends Swimlanes {
             );
             if (swim && swim.parentElement!=cell) {
                 if (swim.parentElement.classList.contains('selected') && !cell.classList.contains('selected')) {
+                    // The old parent is visible and the new parent is not
+                    // So prevent the user from losing sight of the swim
+                    // By, of course, auto-selecting the new parent (and its button)
                     cell.classList.add ('selected');
                     button = this.qs (this.restricted,'#toolbar .set.status [data-swimstate="'+cell.dataset.swimstate+'"]');
                     button.classList.add ('selected');
