@@ -130,12 +130,15 @@ export class Swimlanes extends Global {
             }
             try {
                 response = await this.request (request);
-                this.updates (response.returnValue.swims);
             }
             catch (e) {
                 console.error ('Could not receive/render updates: '+e.message);
                 return;
             }
+
+                this.departs (response.returnValue.departs);
+                this.updates (response.returnValue.swims);
+
             this.data.timePointer = response.returnValue.datetime;
         }
     }

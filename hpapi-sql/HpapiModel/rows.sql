@@ -73,6 +73,7 @@ INSERT IGNORE INTO `hpapi_model` (`model`, `notes`) VALUES
 
 INSERT IGNORE INTO `hpapi_spr` (`model`, `spr`, `notes`) VALUES
 
+('EzProject',	'ezpSwimlanesDeparts',	'IDs of swims that have recently moved to another pool'),
 ('EzProject',	'ezpSwimlanesStatuses',	'State of a swim - Kanban states'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	'Swimlanes'),
 ('EzProject',	'ezpSwimlanesSwimpools',	'Swimpools - groups of swimlanes'),
@@ -85,6 +86,8 @@ INSERT IGNORE INTO `hpapi_spr` (`model`, `spr`, `notes`) VALUES
 
 INSERT IGNORE INTO `hpapi_sprarg` (`model`, `spr`, `argument`, `name`, `empty_allowed`, `pattern`) VALUES
 
+('EzProject',	'ezpSwimlanesDeparts',	1,	'Swimpool code',	0,	'varchar-4'),
+('EzProject',	'ezpSwimlanesDeparts',	2,	'Date-time',	0,	'datetime'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	1,	'Email',	0,	'email'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	2,	'Swimpool code',	0,	'varchar-4'),
 ('EzProject',	'ezpSwimlanesSwims',	1,	'Swimpool code',	0,	'varchar-4'),
@@ -100,6 +103,7 @@ INSERT IGNORE INTO `hpapi_sprarg` (`model`, `spr`, `argument`, `name`, `empty_al
 
 INSERT IGNORE INTO `hpapi_call` (`model`, `spr`, `vendor`, `package`, `class`, `method`) VALUES
 
+('EzProject',	'ezpSwimlanesDeparts',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'updates'),
 ('EzProject',	'ezpSwimlanesStatuses',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'config'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swimlanes'),
 ('EzProject',	'ezpSwimlanesSwimlanes',	'whitelamp-ezproject',	'swimlanes-server',	'\\EzProject\\Swimlanes',	'swims'),

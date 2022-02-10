@@ -21,6 +21,38 @@ export class Gui extends Swimlanes {
         super (config);
     }
 
+    departs (departs) {
+        var i,msg,name,swim,update,updater;
+        for (i=0;i<departs.length;i++) {
+            swim = this.qs (this.restricted,'#swimpool .swimlane .swim[data-id="'+departs[i].id+'"]');
+            if (swim) {
+                name = this.qs(swim,'summary').textContent;
+                name = name.split (' ');
+                name = name[1];
+                updater = departs[i].updater.split ('@') [0];
+                update = {
+                    swimpool : swim.parentElement.parentElement.dataset.swimpool,
+                    swimlane : swim.parentElement.parentElement.dataset.swimlane,
+                    status : swim.parentElement.dataset.swimstate,
+                    id : departs[i].id,
+                    name : name,
+                    moved : true,
+                    updater : updater,
+                    updated : departs[i].updated
+                }
+                msg     = 'GONE: <-- ' + swim.parentElement.parentElement.dataset.swimpool;
+                msg    += '-' + swim.parentElement.parentElement.dataset.swimlane;
+                msg    += '-' + swim.parentElement.dataset.swimstate;
+                msg    += '-#' + departs[i].id;
+                msg    += ' "' + name;
+                msg    += '" [' + updater + ']';
+                this.statusShow (msg);
+                this.updateShow (update,true);
+                swim.remove ();
+            }
+        }
+    }
+
     async flash (elmt) {
         elmt.classList.add ('flash');
         await this.sleep (1500);
@@ -307,7 +339,7 @@ export class Gui extends Swimlanes {
     swimFind (evt) {
         var button,settings,swim;
         swim = this.qs (this.restricted,'#swimpool .status .swim[data-id="'+evt.currentTarget.dataset.id+'"]');
-        if (swim) {
+        if (swim && !swim.classList.contains('gone')) {
             button = this.qs (this.restricted,'#toolbar .settings');
             settings = this.qs (this.restricted,'#swimlanes-settings');
             if (settings.classList.contains('selected')) {
@@ -660,37 +692,52 @@ export class Gui extends Swimlanes {
                     swim.parentElement.removeChild (swim);
                     cell.prepend (swim);
                 }
-                this.swim (cell,swims[i]);
-                if (swims[i].moved) {
-                    msg     = 'MOVED: ' + swims[i].name;
-                    msg    += ' --> ' + cell.parentElement.dataset.swimpool;
-                    msg    += '-' + cell.parentElement.dataset.swimlane;
-                    msg    += '-' + swims[i].status;
-                    msg    += '-#' + swims[i].id;
-                    msg    += ' "' + swims[i].name;
-                    msg    += '" [' + swims[i].updater + ']';
-                    this.statusShow (msg);
-                }
-                this.updateShow (swims[i]);
             }
+            else {
+                swims[i].new = true;
+            }
+            if (swims[i].moved || swims[i].new) {
+                    if (swims[i].new) {
+                        msg = 'NEW';
+                    }
+                    else {
+                        msg = 'MOVED';
+                    }
+                    msg += ': ' + swims[i].name;
+                    msg += ' --> ' + cell.parentElement.dataset.swimpool;
+                    msg += '-' + cell.parentElement.dataset.swimlane;
+                    msg += '-' + swims[i].status;
+                    msg += '-#' + swims[i].id;
+                    msg += ' "' + swims[i].name;
+                    msg += '" [' + swims[i].updater + ']';
+                    this.statusShow (msg);
+            }
+            this.swim (cell,swims[i]);
+            this.updateShow (swims[i]);
         }
     }
 
-    updateShow (swim) {
+    updateShow (swim,gone=false) {
         var col,row,p,updates;
         updates = this.qs (this.restricted,'#swimlanes-updates');
         if (updates) {
             row = document.createElement ('tr');
+            if (gone) {
+                row.classList.add ('gone');
+            }
             row.dataset.id = swim.id;
+            // Swim
             col = document.createElement ('td');
             col.textContent = swim.swimpool + '-';
             col.textContent += swim.swimlane + '-';
             col.textContent += swim.status + '#';
             col.textContent += swim.id;
             row.appendChild (col);
+            // Name
             col = document.createElement ('td');
             col.textContent = swim.name;
             row.appendChild (col);
+            // Moved?
             col = document.createElement ('td');
             col.classList.add ('center');
             if (swim.moved) {
@@ -700,15 +747,28 @@ export class Gui extends Swimlanes {
                 col.innerHTML = '&nbsp;';
             }
             row.appendChild (col);
+            // Gone?
+            col = document.createElement ('td');
+            col.classList.add ('center');
+            if (gone) {
+                col.innerHTML = '&check;';
+            }
+            else {
+                col.innerHTML = '&nbsp;';
+            }
+            row.appendChild (col);
+            // Updater
             col = document.createElement ('td');
             p = swim.updater;
             p = p.split ('@');
             col.textContent = p[0];
             row.appendChild (col);
+            // Updated at
             col = document.createElement ('td');
             col.textContent = swim.updated;
             row.appendChild (col);
             row.addEventListener ('click',this.swimFind.bind(this));
+            // Prepend the new <tr> to the <tbody>
             updates.prepend (row);
         }
     }

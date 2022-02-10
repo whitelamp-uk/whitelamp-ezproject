@@ -1,5 +1,52 @@
 
 DELIMITER $$
+DROP PROCEDURE IF EXISTS `ezpSwimlanesDeparts`$$
+CREATE PROCEDURE `ezpSwimlanesDeparts`(
+  IN        `swimpoolCode` CHAR(4) CHARSET ascii
+ ,IN        `dt` datetime
+)
+BEGIN
+  SELECT
+    `sm`.`id`
+   ,`after`.`user` AS `updater`
+   ,`after`.`created` AS `updated`
+  FROM `ezp_swimlane` AS `sl`
+  JOIN `ezp_swim` AS `sm`
+    ON `sm`.`swimpool`=`sl`.`swimpool`
+   AND `sm`.`swimlane`=`sl`.`code`
+  JOIN (
+    SELECT
+      `swim_id`
+     ,`swimpool`
+     ,MAX(`created`) AS `created`
+    FROM `ezp_swimlog`
+    WHERE `created`<=ezpCTZOut(dt)
+    GROUP BY `swim_id`
+  ) AS `old`
+    ON `old`.`swim_id`=`sm`.`id`
+  JOIN  `ezp_swimlog` AS `before`
+    ON `before`.`swim_id`=`old`.`swim_id`
+   AND `before`.`created`=`old`.`created`
+  JOIN (
+    SELECT
+      `swim_id`
+     ,`swimpool`
+     ,MIN(`created`) AS `created`
+    FROM `ezp_swimlog`
+    WHERE `created`>ezpCTZOut(dt)
+    GROUP BY `swim_id`
+  ) AS `new`
+    ON `new`.`swim_id`=`sm`.`id`
+  JOIN  `ezp_swimlog` AS `after`
+    ON `after`.`swim_id`=`new`.`swim_id`
+   AND `after`.`created`=`new`.`created`
+  WHERE `before`.`swimpool`=swimpoolCode
+    AND `after`.`swimpool`!=`before`.`swimpool`
+  ;
+END$$
+
+
+DELIMITER $$
 DROP PROCEDURE IF EXISTS `ezpSwimlanesStatuses`$$
 CREATE PROCEDURE `ezpSwimlanesStatuses`(
 )

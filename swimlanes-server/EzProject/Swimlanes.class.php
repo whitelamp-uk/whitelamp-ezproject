@@ -459,6 +459,12 @@ class Swimlanes {
                     array_pop ($output->swims);
                     $output->warning = EZP_SWIMLANES_STR_LIMIT.EZP_SWIMLANES_UPDATES_LIMIT;
                 }
+                $result = $this->hpapi->dbCall (
+                    'ezpSwimlanesDeparts',
+                    $swimpoolCode,
+                    $datetime_after
+                );
+                $output->departs = $this->hpapi->parse2D ($result);
                 return $output;
             }
             else {

@@ -66,6 +66,9 @@
     font-weight: normal;
     padding: 0.3em;
 }
+#swimlanes-settings tr.gone {
+    color: darkgoldenrod;
+}
 #swimlanes-settings thead td {
     font-size: 0.9em;
     cursor: pointer;
@@ -73,6 +76,9 @@
 #swimlanes-settings tbody td {
     font-size: 0.8em;
     cursor: pointer;
+}
+#swimlanes-settings tbody tr.gone td {
+    cursor: default;
 }
 
 
