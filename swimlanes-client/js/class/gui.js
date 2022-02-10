@@ -5,36 +5,6 @@ import {Swimlanes} from './swimlanes.js';
 
 export class Gui extends Swimlanes {
 
-    adminer (action,table,column=null,operator=null,value=null) {
-        var db_user,url,win;
-        db_user = this.qs (this.restricted,'#toolbar input[name="db_user"]');
-        if (db_user && db_user.value) {
-            url  = this.cfg.adminerUrl;
-            url += '?username=' + db_user.value;
-            url += '&db=ezproject';
-            url += '&' + action + '=' + table;
-            if (action=='select' && column) {
-                url += '&where[0][col]=' + column;
-                url += '&where[0][op]=' + operator;
-                url += '&where[0][val]=' + value;
-            }
-            else if (action=='edit' && column) {
-                url += '&where[' + column + ']=' + value;
-            }
-            console.log ('URL: '+url);
-            win = 'swimlanes-adminer-' + action;
-            if (action=='select') {
-                win += '-' + table;
-            }
-            win = window.open (url,win);
-            win.focus ();
-        }
-        else {
-            this.flash (db_user);
-            this.statusShow ('Enter your database user for Adminer searching or editing');
-        }
-    }
-
     buttonSetSelect (evt) {
         evt.preventDefault();
         var button;
@@ -55,6 +25,10 @@ export class Gui extends Swimlanes {
         elmt.classList.add ('flash');
         await this.sleep (1500);
         elmt.classList.remove ('flash');
+    }
+
+    logsList (evt) {
+        this.adminer ('select','ezp_swimlog');
     }
 
     nullToEmpty (val) {
@@ -330,6 +304,20 @@ export class Gui extends Swimlanes {
         this.adminer ('edit','ezp_swim','id','%3D',evt.currentTarget.parentElement.dataset.id);
     }
 
+    swimFind (evt) {
+        var button,settings,swim;
+        swim = this.qs (this.restricted,'#swimpool .status .swim[data-id="'+evt.currentTarget.dataset.id+'"]');
+        if (swim) {
+            button = this.qs (this.restricted,'#toolbar .settings');
+            settings = this.qs (this.restricted,'#swimlanes-settings');
+            if (settings.classList.contains('selected')) {
+                settings.classList.remove ('selected');
+                button.classList.remove ('selected');
+            }
+        }
+        swim.setAttribute ('open','');
+    }
+
     swimlanesInit ( ) {
         var buttonset,i,form,open,pool,opt,opts,sort,sorter,sorts,status;
         form = this.qs (this.restricted,'#toolbar');
@@ -373,26 +361,6 @@ export class Gui extends Swimlanes {
         i.setAttribute ('title','Facilitates seamless Adminer linking');
         i.setAttribute ('placeholder','SQL user');
         buttonset.appendChild (i);
-        // List all statuses
-        open = document.createElement ('span');
-        open.classList.add ('open');
-        open.innerHTML = '&nearr;';
-        open.addEventListener ('click',this.statusesList.bind(this));
-        buttonset.appendChild (open);
-        // List all swims
-        open = document.createElement ('span');
-        open.classList.add ('open');
-        open.classList.add ('search');
-        open.textContent = '?';
-        open.addEventListener ('click',this.swimSearch.bind(this));
-        buttonset.appendChild (open);
-        // Insert a swim
-        open = document.createElement ('span');
-        open.classList.add ('open');
-        open.classList.add ('new');
-        open.textContent = '+';
-        open.addEventListener ('click',this.swimNew.bind(this));
-        buttonset.appendChild (open);
         // Sort selector
         sorter = document.createElement ('select');
         sorter.id = 'input-sort';
@@ -405,17 +373,20 @@ export class Gui extends Swimlanes {
         }
         sorter.addEventListener ('input',this.sortAll.bind(this));
         form.appendChild (sorter);
+        // Setting and logs
+        open = document.createElement ('span');
+        open.classList.add ('settings');
+        open.setAttribute ('title','Settings and logs');
+        open.innerHTML = '&Congruent;';
+        open.addEventListener ('click',this.settingsToggle.bind(this));
+        form.appendChild (open);
         // Swimlane button set
         buttonset = document.createElement ('span');
         buttonset.classList.add ('set');
         buttonset.classList.add ('swimlane');
-        open = document.createElement ('span');
-        open.classList.add ('open');
-        open.innerHTML = '&nwarr;';
-        open.addEventListener ('click',this.swimlanesList.bind(this));
-        buttonset.appendChild (open);
         form.appendChild (buttonset);
         window.addEventListener ('resize',this.resize.bind(this));
+        this.settingsInit ();
         this.data.updatesList = [];
         this.updatesRequest ();
     }
@@ -541,6 +512,9 @@ export class Gui extends Swimlanes {
         if (p.value) {
              this.adminer ('select','ezp_swimlane','swimpool','%3D',p.value);
         }
+        else {
+             this.adminer ('select','ezp_swimlane');
+        }
     }
 
     swimNew (evt) {
@@ -645,8 +619,13 @@ export class Gui extends Swimlanes {
     }
 
     updates (swims) {
-        var i,button,cell,msg,mvd,swim;
+        var i,button,cell,lane,msg,mvd,swim;
         for (i=0;i<swims.length;i++) {
+            swims[i].moved = false;
+            lane = this.qs (
+                this.restricted,
+                '#swimpool section.swimlane[data-swimpool="'+swims[i].swimpool+'"][data-swimlane="'+swims[i].swimlane+'"]'
+            );
             cell = this.qs (
                 this.restricted,
                 '#swimpool section.swimlane[data-swimpool="'+swims[i].swimpool+'"][data-swimlane="'+swims[i].swimlane+'"] .status[data-swimstate="'+swims[i].status+'"]'
@@ -657,43 +636,81 @@ export class Gui extends Swimlanes {
             );
             if (swim) {
                 if (swim.parentElement!=cell) {
-                    mvd = true;
+                    swims[i].moved = true;
                     if (swim.parentElement.classList.contains('selected') && !cell.classList.contains('selected')) {
-                        // The old parent is visible and the new parent is not
+                        // The old parent status is visible and the new is not
                         // So prevent the user from losing sight of the swim
-                        // By, of course, auto-selecting the new parent (and its button)
-                        cell.classList.add ('selected');
+                        // By, of course, auto-selecting the new status
                         button = this.qs (this.restricted,'#toolbar .set.status [data-swimstate="'+cell.dataset.swimstate+'"]');
-                        button.classList.add ('selected');
+                        button.click ();
                     }
                     swim.parentElement.removeChild (swim);
                     cell.prepend (swim);
                 }
-            }
-            if (mvd) {
-                msg     = 'MOVED: ' + swims[i].name;
-                msg    += ' --> ' + cell.parentElement.dataset.swimpool;
-                msg    += '-' + cell.parentElement.dataset.swimlane;
-                msg    += '-' + swims[i].status;
-                msg    += '-#' + swims[i].id;
-                msg    += ' [' + swims[i].updater + ']';
-                this.statusShow (msg);
-            }
-            else {
-                this.data.updatesList.push (
-                    {
-                        swimpool : cell.parentElement.dataset.swimpool,
-                        swimlane : cell.parentElement.dataset.swimlane,
-                        id : swims[i].id,
-                        name : swims[i].name
+                if (swim.parentElement.parentElement!=lane) {
+                    swims[i].moved = true;
+                    if (swim.parentElement.parentElement.classList.contains('selected') && !lane.classList.contains('selected')) {
+                        // The old parent lane is visible and the new is not
+                        // So prevent the user from losing sight of the swim
+                        // By, of course, auto-selecting the new lane
+                        button = this.qs (this.restricted,'#toolbar .set.swimlane [data-swimlane="'+lane.dataset.swimstate+'"]');
+                        button.click ();
                     }
-                );
+                    cell = this.qs (lane,'.set.status [data-swimstate="'+swim.parentElement.dataset.swimstate+'"]');
+                    swim.parentElement.removeChild (swim);
+                    cell.prepend (swim);
+                }
+                this.swim (cell,swims[i]);
+                if (swims[i].moved) {
+                    msg     = 'MOVED: ' + swims[i].name;
+                    msg    += ' --> ' + cell.parentElement.dataset.swimpool;
+                    msg    += '-' + cell.parentElement.dataset.swimlane;
+                    msg    += '-' + swims[i].status;
+                    msg    += '-#' + swims[i].id;
+                    msg    += ' "' + swims[i].name;
+                    msg    += '" [' + swims[i].updater + ']';
+                    this.statusShow (msg);
+                }
+                this.updateShow (swims[i]);
             }
         }
     }
 
-    updatesNotify (evt) {
-        
+    updateShow (swim) {
+        var col,row,p,updates;
+        updates = this.qs (this.restricted,'#swimlanes-updates');
+        if (updates) {
+            row = document.createElement ('tr');
+            row.dataset.id = swim.id;
+            col = document.createElement ('td');
+            col.textContent = swim.swimpool + '-';
+            col.textContent += swim.swimlane + '-';
+            col.textContent += swim.status + '#';
+            col.textContent += swim.id;
+            row.appendChild (col);
+            col = document.createElement ('td');
+            col.textContent = swim.name;
+            row.appendChild (col);
+            col = document.createElement ('td');
+            col.classList.add ('center');
+            if (swim.moved) {
+                col.innerHTML = '&check;';
+            }
+            else {
+                col.innerHTML = '&nbsp;';
+            }
+            row.appendChild (col);
+            col = document.createElement ('td');
+            p = swim.updater;
+            p = p.split ('@');
+            col.textContent = p[0];
+            row.appendChild (col);
+            col = document.createElement ('td');
+            col.textContent = swim.updated;
+            row.appendChild (col);
+            row.addEventListener ('click',this.swimFind.bind(this));
+            updates.prepend (row);
+        }
     }
 
 }

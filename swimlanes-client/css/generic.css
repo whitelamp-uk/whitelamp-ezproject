@@ -474,7 +474,7 @@ section.view {
     z-index:            999;
     position:           fixed;
     right:              2em;
-    bottom:             0;
+    bottom:             0.2em;
     box-sizing:         border-box;
     width:              0;
     height:             2.4em;

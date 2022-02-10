@@ -113,6 +113,7 @@ export class Swimlanes extends Global {
 
     async updatesRequest ( ) {
         var request,response;
+        setTimeout (this.updatesRequest.bind(this),5000);
         if (this.data.swimpoolCode && this.data.timePointer) {
             request = {
                 "email" : this.access.email.value,
@@ -130,15 +131,12 @@ export class Swimlanes extends Global {
             try {
                 response = await this.request (request);
                 this.updates (response.returnValue.swims);
-                this.data.timePointer = response.returnValue.datetime;
             }
             catch (e) {
-                console.error ('Could not get updates: '+e.message);
-                // TODO: depending on the e.code or whatevs
-                // one might just moan to user and give up
+                console.error ('Could not receive/render updates: '+e.message);
             }
+            this.data.timePointer = response.returnValue.datetime;
         }
-        setTimeout (this.updatesRequest.bind(this),5000);
     }
 
     async verifyRequest ( ) {

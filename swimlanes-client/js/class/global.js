@@ -1,9 +1,40 @@
 
 /* Copyright 2022 Whitelamp http://www.whitelamp.co.uk */
 
+// Symbolic link to library file in hpapi/whitelamp-uk/generic-client
 import {Generic} from './generic.js';
 
 export class Global extends Generic {
+
+    adminer (action,table,column=null,operator=null,value=null) {
+        var db_user,url,win;
+        db_user = this.qs (this.restricted,'#toolbar input[name="db_user"]');
+        if (db_user && db_user.value) {
+            url  = this.adminerUrl;
+            url += '?username=' + db_user.value;
+            url += '&db=ezproject';
+            url += '&' + action + '=' + table;
+            if (action=='select' && column) {
+                url += '&where[0][col]=' + column;
+                url += '&where[0][op]=' + operator;
+                url += '&where[0][val]=' + value;
+            }
+            else if (action=='edit' && column) {
+                url += '&where[' + column + ']=' + value;
+            }
+            console.log ('URL: '+url);
+            win = 'swimlanes-adminer-' + action;
+            if (action=='edit' && column) {
+                win += '-' + column;
+            }
+            win = window.open (url,win);
+            win.focus ();
+        }
+        else {
+            this.flash (db_user);
+            this.statusShow ('Enter your database user for Adminer searching or editing');
+        }
+    }
 
     async authAuto ( ) {
         var response;
@@ -73,12 +104,14 @@ export class Global extends Generic {
     }
 
     async authOk (response) {
-console.table (response);
         this.currentUser = response.returnValue;
         super.authOk ();
         // Now get business configuration data this.data.config
         await this.configRequest ();
+        // Object reference
         this.data.currentUser = this.currentUser;
+        // A literal copy
+        this.adminerUrl = this.currentUser.adminerUrl;
         // Render a screen by URL (only when page loads)
         if (this.urlScreen) {
             await this.templateFetch (this.urlScreen);
@@ -271,6 +304,57 @@ console.table (response);
         );
         target.appendChild (link);
         return true;
+    }
+
+    settingsInit ( ) {
+        var menu,open,settings,updates;
+        settings = this.qs (this.restricted,'#swimlanes-settings');
+        menu = this.qs (settings,'menu');
+        // Insert a swim
+        open = document.createElement ('span');
+        open.classList.add ('button');
+        open.textContent = 'New swim';
+        open.addEventListener ('click',this.swimNew.bind(this));
+        menu.appendChild (open);
+        // List swims
+        open = document.createElement ('span');
+        open.classList.add ('button');
+        open.textContent = 'Swims';
+        open.addEventListener ('click',this.swimSearch.bind(this));
+        menu.appendChild (open);
+        // List logs
+        open = document.createElement ('span');
+        open.classList.add ('button');
+        open.textContent = 'Updates';
+        open.addEventListener ('click',this.logsList.bind(this));
+        menu.appendChild (open);
+        updates = this.qs (settings,'.updates');
+        // List swimlanes
+        open = document.createElement ('span');
+        open.textContent = 'Pool/lane codes';
+        open.addEventListener ('click',this.swimlanesList.bind(this));
+        menu.appendChild (open);
+        // List statuses
+        open = document.createElement ('span');
+        open.classList.add ('button');
+        open.textContent = 'Statuses';
+        open.addEventListener ('click',this.statusesList.bind(this));
+        menu.appendChild (open);
+    }
+
+    settingsToggle (evt) {
+        var settings;
+        settings = this.qs (this.restricted,'#swimlanes-settings');
+        if (settings) {
+            if (settings.classList.contains('selected')) {
+                settings.classList.remove ('selected');
+                evt.currentTarget.classList.remove ('selected');
+            }
+            else {
+                settings.classList.add ('selected');
+                evt.currentTarget.classList.add ('selected');
+            }
+        }
     }
 
 }

@@ -44,6 +44,38 @@
     width: calc(100vw - 4em);
 }
 
+
+#swimlanes-settings table {
+    margin-left: 3em;
+    width: calc(100vw - 12em);
+    font-size: 0.9em;
+}
+
+#swimlanes-settings table caption {
+    background-color: rgba(220,220,220,1);
+    padding: 0.3em;
+    text-align: left;
+}
+#swimlanes-settings tbody tr:nth-child(2n-1) {
+    background-color: rgba(232,232,232,1);
+}
+#swimlanes-settings tr,
+#swimlanes-settings th,
+#swimlanes-settings td {
+    border-style: none;
+    font-weight: normal;
+    padding: 0.3em;
+}
+#swimlanes-settings thead td {
+    font-size: 0.9em;
+    cursor: pointer;
+}
+#swimlanes-settings tbody td {
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+
 #swimpool {
     position: static;
     margin: 6em 0 0 2em;
@@ -81,7 +113,9 @@
 #swimpool .swim .close,
 #toolbar [name],
 #toolbar button,
-#toolbar .set .open {
+#toolbar .set .open,
+#swimlanes-settings menu > *,
+#toolbar .settings {
     border-style: solid;
     border-color: grey;
     border-width: 1px;
@@ -90,7 +124,8 @@
 
 #swimpool .swim .link,
 #toolbar .set .open,
-#swimpool .swims .count {
+#swimpool .swims .count,
+#swimlanes-settings menu > * {
     background-color: cyan;
 }
 #swimpool .swim .close {
@@ -98,10 +133,12 @@
 }
 #toolbar .set .open,
 #swimpool .swim .close,
-#swimpool .swim .link {
+#swimpool .swim .link,
+#toolbar .settings,
+#swimlanes-settings menu > * {
     cursor: pointer;
 }
-#toolbar .set .open  {
+#toolbar .set .open {
     margin: 0;
     padding: 0 0.1em 0 0.1em;
 }
@@ -112,29 +149,38 @@
     padding: 0 0.2em 0 0.2em;
 }
 #swimpool .swim .close,
-#swimpool .swim .link {
+#swimpool .swim .link,
+#swimlanes-settings menu > * {
     margin: 0 0.6em 0 0;
     padding: 0 0.3em 0 0.3em;
 }
 #swimpool .arrow {
     font-size: 1.6em;
 }
-
 #toolbar select {
     width: 8em;
+    background-color: lightyellow;
 }
 #toolbar input {
     width: 7em;
+    background-color: lightyellow;
     line-height: 1.0;
 }
 #toolbar #input-sort {
     width: 13.2em;
 }
 
-#toolbar .set button {
-    padding: 0 0.1em 0 0.1em;
+#toolbar .set button,
+#toolbar .settings {
+    padding: 0 0.1em 0.1em 0.1em;
 }
-#toolbar .set button.selected {
+#toolbar .settings {
+    background-color: var(--color-background-input);
+    padding-right: 0.3em;
+    padding-left: 0.2em;
+}
+#toolbar .set button.selected,
+#toolbar .settings.selected {
     background-color: gold;
 }
 
@@ -149,6 +195,9 @@
 #swimpool label > .swims {
     color: black;
     font-weight: bold;
+}
+.center {
+    text-align: center;
 }
 
 #swimpool section.swimlane {
@@ -210,24 +259,41 @@
     cursor: pointer;
 }
 
+#swimlanes-settings {
+    display: none;
+}
+#swimlanes-settings.selected {
+    display: block;
+}
+#swimlanes-settings,
 #swimpool .swim {
     text-align: left;
 }
+#swimlanes-settings,
 #swimpool .swim[open] {
     position: fixed;
-    z-index: 40;
-    left: 3.9em;
-    top: 9em;
-    width: calc(100vw - 7.8em);
-    height: calc(100vh - 12.5em);
     overflow-x:  auto;
     overflow-y:  auto;
-    white-space: pre-wrap;
     border-style: solid;
     border-width: 1px;
     border-color: black;
     background-color: rgba(255,255,255,1);
     padding: 3em;
+}
+#swimlanes-settings {
+    z-index: 50;
+    left: 3.1em;
+    top: 7.15em;
+    width: calc(100vw - 6.2em);
+    height: calc(100vh - 9.95em);
+}
+#swimpool .swim[open] {
+    z-index: 40;
+    left: 3.9em;
+    top: 9em;
+    width: calc(100vw - 7.8em);
+    height: calc(100vh - 12.5em);
+    white-space: pre-wrap;
 }
 #swimpool .swim summary {
     display: inline-block;

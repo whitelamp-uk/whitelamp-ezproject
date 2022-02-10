@@ -29,6 +29,7 @@ class Swimlanes {
         );
         $user = $this->hpapi->parse2D ($result) [0];
         $user->templates = $this->templates ();
+        $user->adminerUrl = EZP_ADMINER_URL;
         return $user;
     }
 
