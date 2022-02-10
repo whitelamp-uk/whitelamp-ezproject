@@ -134,6 +134,7 @@ export class Swimlanes extends Global {
             }
             catch (e) {
                 console.error ('Could not receive/render updates: '+e.message);
+                return;
             }
             this.data.timePointer = response.returnValue.datetime;
         }
