@@ -44,13 +44,31 @@
     width: calc(100vw - 4em);
 }
 
+#actors-test {
+    display: none;
+}
+
+#swimlanes-settings form {
+    margin: 0.3em 0 1em 2.8em;
+    font-size: 0.9em;
+}
+
+#swimlanes-settings form  .save {
+    float: right;
+    margin-right: 2em;
+}
 
 #swimlanes-settings table {
     margin-left: 3em;
     width: calc(100vw - 12em);
     font-size: 0.9em;
 }
-
+#swimlanes-settings input[readonly] {
+    border-style: none;
+    background-color: transparent;
+    overflow: visible;
+    font-style: italic;
+}
 #swimlanes-settings table caption {
     background-color: rgba(220,220,220,1);
     padding: 0.3em;

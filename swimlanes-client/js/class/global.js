@@ -6,13 +6,19 @@ import {Generic} from './generic.js';
 
 export class Global extends Generic {
 
+    actorsTest (evt) {
+        console.error ('actorsTest():');
+        console.error (evt.currentTarget);
+    }
+
     adminer (action,table,column=null,operator=null,value=null) {
-        var db_user,url,win;
-        db_user = this.qs (this.restricted,'#toolbar input[name="db_user"]');
-        if (db_user && db_user.value) {
+        var db_name,db_user,url,win;
+        db_user = this.qs (this.restricted,'#swimlanes-settings input[name="db_user"]');
+        db_name = this.qs (this.restricted,'#swimlanes-settings input[name="db_with_suffix"]');
+        if (db_user && db_user.value && db_name && db_name.value) {
             url  = this.adminerUrl;
             url += '?username=' + db_user.value;
-            url += '&db=ezproject';
+            url += '&db='+db_name.value;
             url += '&' + action + '=' + table;
             if (action=='select' && column) {
                 url += '&where[0][col]=' + column;
@@ -31,8 +37,7 @@ export class Global extends Generic {
             win.focus ();
         }
         else {
-            this.flash (db_user);
-            this.statusShow ('Enter your database user for Adminer searching or editing');
+            this.statusShow ('DB log-in required - set your SQL user and database name');
         }
     }
 
@@ -340,6 +345,28 @@ export class Global extends Generic {
         open.textContent = 'Statuses';
         open.addEventListener ('click',this.statusesList.bind(this));
         menu.appendChild (open);
+        // Settings
+        this.settingsLoad ();
+        this.qs(settings,'form').addEventListener ('input',this.settingsUpdate.bind(this));
+    }
+
+    settingsLoad ( ) {
+        var form,pool,s;
+        s = this.storageRead ('settings',s);
+        if (s && Object.keys(s).length) {
+            form = this.qs (this.restricted,'#swimlanes-settings form');
+            pool = this.qs (this.restricted,'#input-pool');
+            form.db_user.value = s.user;
+            form.db_name.value = s.db;
+            form.db_with_suffix.value = s.db;
+            if (s.db_per_pool) {
+                form.db_use_suffix.checked = true;
+                if (pool.value) {
+                    form.db_with_suffix.value += '_' + pool.value;
+                }
+            }
+            form.db_store.checked = true;
+        }
     }
 
     settingsToggle (evt) {
@@ -355,6 +382,27 @@ export class Global extends Generic {
                 evt.currentTarget.classList.add ('selected');
             }
         }
+    }
+
+    settingsUpdate (evt) {
+        var form,pool,s;
+        form = evt.currentTarget;
+        pool = this.qs (this.restricted,'#input-pool');
+        form.db_with_suffix.value = form.db_name.value;
+        if (form.db_use_suffix.checked && pool.value) {
+            form.db_with_suffix.value += '_' + pool.value;
+        }
+        if (form.db_store.checked) {
+            s = {
+                user : form.db_user.value,
+                db_per_pool : 1 * form.db_use_suffix.checked,
+                db : form.db_name.value
+            };
+        }
+        else {
+            s = {};
+        }
+        this.storageWrite ('settings',s);
     }
 
 }

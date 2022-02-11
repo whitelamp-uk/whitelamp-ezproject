@@ -9,12 +9,13 @@ export class Enforcer extends Gui {
     // but no strict adherance to MVC principles is intended or claimed
 
     actors (templateName) {
+        // For a given screen, set up required event handlers
         var defns;
         this.editModeReset ();
         switch (templateName) {
             case 'home':
                 defns = [
-                    { id: 'say-hello', event: 'click', function: this.sayHello }
+                    { id: 'actors-test', event: 'click', function: this.actorsTest }
                 ];
                 break;
             default:
@@ -36,6 +37,7 @@ export class Enforcer extends Gui {
     }
 
     async loaders (evt,templateName) {
+        // For a given screen, do post-load process(es)
         switch (templateName) {
             case 'home':
                 this.swimlanesInit ();
@@ -49,6 +51,7 @@ export class Enforcer extends Gui {
     }
 
     preloaders (templateName) {
+        // For a given screen, do pre-load process(es)
         switch (templateName) {
             case 'home':
                 return [this.configRequest];

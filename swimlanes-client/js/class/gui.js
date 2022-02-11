@@ -53,12 +53,6 @@ export class Gui extends Swimlanes {
         }
     }
 
-    async flash (elmt) {
-        elmt.classList.add ('flash');
-        await this.sleep (1500);
-        elmt.classList.remove ('flash');
-    }
-
     logsList (evt) {
         this.adminer ('select','ezp_swimlog');
     }
@@ -97,10 +91,6 @@ export class Gui extends Swimlanes {
                 status.style.width = width.offsetWidth + 'px';
             }
         }
-    }
-
-    async sayHello (evt) {
-        console.log (evt.currentTarget);
     }
 
     sleep (msecs) {
@@ -368,6 +358,7 @@ export class Gui extends Swimlanes {
             pool.appendChild (opts[i+1]);
         }
         pool.addEventListener ('input',this.swimpool.bind(this));
+        pool.addEventListener ('input',this.settingsUpdate.bind(this));
         form.appendChild (pool);
         // Status button set
         buttonset = document.createElement ('span');
@@ -387,12 +378,6 @@ export class Gui extends Swimlanes {
                 status.click ();
             }
         }
-        // SQL user input
-        i = document.createElement ('input');
-        i.name = 'db_user';
-        i.setAttribute ('title','Facilitates seamless Adminer linking');
-        i.setAttribute ('placeholder','SQL user');
-        buttonset.appendChild (i);
         // Sort selector
         sorter = document.createElement ('select');
         sorter.id = 'input-sort';

@@ -1,10 +1,21 @@
 
 <!-- Swimlanes front end -->
 
-<!-- <button id="say-hello">Say hello</button> -->
+<button id="actors-test">Test use of Enforcer::actors()</button>
 
 <section id="swimlanes-settings" style="background-color:white">
   <menu></menu>
+  <form>
+    <span class="save">
+      <input id="db_store" type="checkbox" name="db_store" />
+      <label for="db_store">Store these settings</label>
+    </span>
+    <input name="db_user" title="Facilitates seamless Adminer linking" placeholder="SQL user" />
+    <input id="db_use_suffix" type="checkbox" name="db_use_suffix" />
+    <label for="db_use_suffix">Use one DB per pool</label>
+    <input name="db_name" title="Usually ezproject" value="ezproject" />
+    <input readonly name="db_with_suffix" value="ezproject" />
+  </form>
   <table>
     <caption>Recent updates</caption>
     <thead>
