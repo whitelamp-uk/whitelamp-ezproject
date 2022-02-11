@@ -260,7 +260,7 @@
     border-width: 1px;
     overflow-x: auto;
     overflow-y: auto;
-    padding: 1.2em 0 0 0;
+    padding: 1.6em 0 0 0;
     white-space: normal;
 }
 #swimpool section.status.selected {
@@ -321,7 +321,11 @@
 }
 #swimpool .swim summary {
     display: inline-block;
+    width: 100%;
     cursor: pointer;
+}
+#swimpool .swim.focused[data-id] summary {
+    background-color: white;
 }
 #swimpool .swim[open] summary {
     text-decoration: underline;

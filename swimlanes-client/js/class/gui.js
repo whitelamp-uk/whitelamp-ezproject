@@ -310,6 +310,7 @@ export class Gui extends Swimlanes {
             p = document.createElement ('pre');
             p.textContent = 'UPDATER: ' + swim.updater;
             s.appendChild (p);
+            s.addEventListener ('click',this.swimFocus.bind(this));
             cell.appendChild (s);
         }
     }
@@ -338,6 +339,15 @@ export class Gui extends Swimlanes {
             }
         }
         swim.setAttribute ('open','');
+    }
+
+    swimFocus (evt) {
+        var swim,swims;
+        swims = this.qsa (this.restricted,'#swimpool .status .swim[data-id]');
+        for (swim of swims) {
+            swim.classList.remove ('focused');
+        }
+        evt.currentTarget.classList.add ('focused');
     }
 
     swimlanesInit ( ) {
@@ -651,7 +661,7 @@ export class Gui extends Swimlanes {
                 this.restricted,
                 '#swimpool section.swimlane .status details[data-id="'+swims[i].id+'"]'
             );
-            if (swim) {
+            if (cell && swim) {
                 if (swim.parentElement!=cell) {
                     swims[i].moved = true;
                     if (swim.parentElement.classList.contains('selected') && !cell.classList.contains('selected')) {

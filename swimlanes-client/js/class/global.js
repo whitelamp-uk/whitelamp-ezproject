@@ -12,13 +12,14 @@ export class Global extends Generic {
     }
 
     adminer (action,table,column=null,operator=null,value=null) {
-        var db_name,db_user,url,win;
+        var db_name,db_suffix,db_user,url,win;
         db_user = this.qs (this.restricted,'#swimlanes-settings input[name="db_user"]');
-        db_name = this.qs (this.restricted,'#swimlanes-settings input[name="db_with_suffix"]');
-        if (db_user && db_user.value && db_name && db_name.value) {
+        db_name = this.qs (this.restricted,'#swimlanes-settings input[name="db_name"]');
+        db_suffix = this.qs (this.restricted,'#swimlanes-settings input[name="db_suffix"]');
+        if (db_user.value && db_name.value) {
             url  = this.adminerUrl;
             url += '?username=' + db_user.value;
-            url += '&db='+db_name.value;
+            url += '&db=' + db_name.value + db_suffix.value;
             url += '&' + action + '=' + table;
             if (action=='select' && column) {
                 url += '&where[0][col]=' + column;
@@ -358,11 +359,14 @@ export class Global extends Generic {
             pool = this.qs (this.restricted,'#input-pool');
             form.db_user.value = s.user;
             form.db_name.value = s.db;
-            form.db_with_suffix.value = s.db;
+            form.db_suffix.value = '';
             if (s.db_per_pool) {
                 form.db_use_suffix.checked = true;
                 if (pool.value) {
-                    form.db_with_suffix.value += '_' + pool.value;
+                    form.db_suffix.value = '_' + pool.value;
+                }
+                else {
+                    form.db_suffix.value = '_[pool code]';
                 }
             }
             form.db_store.checked = true;
@@ -384,13 +388,18 @@ export class Global extends Generic {
         }
     }
 
-    settingsUpdate (evt) {
+    settingsUpdate ( ) {
         var form,pool,s;
-        form = evt.currentTarget;
+        form = this.qs (this.restricted,'#swimlanes-settings form');
         pool = this.qs (this.restricted,'#input-pool');
-        form.db_with_suffix.value = form.db_name.value;
-        if (form.db_use_suffix.checked && pool.value) {
-            form.db_with_suffix.value += '_' + pool.value;
+        form.db_suffix.value = '';
+        if (form.db_use_suffix.checked) {
+            if (pool.value) {
+                form.db_suffix.value = '_' + pool.value;
+            }
+            else {
+                form.db_suffix.value = '_[pool code]';
+            }
         }
         if (form.db_store.checked) {
             s = {
