@@ -77,6 +77,13 @@
 #swimlanes-settings tbody tr:nth-child(2n-1) {
     background-color: rgba(232,232,232,1);
 }
+#swimlanes-settings tbody tr:nth-child(-n + 5) {
+    color: rgba(63,63,63,1);
+}
+#swimlanes-settings tbody tr:nth-child(-n + 5) {
+    color: rgba(63,63,63,1);
+}
+
 #swimlanes-settings tr,
 #swimlanes-settings th,
 #swimlanes-settings td {

@@ -9,12 +9,14 @@ BEGIN
   INSERT INTO `ezp_swimlog` (
     `user`,`swim_id`,`parent_swim_id`,
     `swimpool`,`swimlane`,`status`,
-    `project`,`name`,`notes`,`specification`
+    `project`,`name`,
+    `notes`,`specification`,`dev_log`
   )
   VALUES (
     usr,NEW.`id`,NEW.`parent_swim_id`,
     LOWER(NEW.`swimpool`),LOWER(NEW.`swimlane`),LOWER(NEW.`status`),
-    NEW.`project`,NEW.`name`,NEW.`notes`,NEW.`specification`
+    LOWER(NEW.`project`),NEW.`name`,
+    NEW.`notes`,NEW.`specification`,NEW.`dev_log`
   );
 END$$
 
@@ -28,12 +30,14 @@ BEGIN
   INSERT INTO `ezp_swimlog` (
     `user`,`swim_id`,`parent_swim_id`,
     `swimpool`,`swimlane`,`status`,
-    `project`,`name`,`notes`,`specification`
+    `project`,`name`,
+    `notes`,`specification`,`dev_log`
   )
   VALUES (
     usr,NEW.`id`,NEW.`parent_swim_id`,
     LOWER(NEW.`swimpool`),LOWER(NEW.`swimlane`),LOWER(NEW.`status`),
-    NEW.`project`,NEW.`name`,NEW.`notes`,NEW.`specification`
+    LOWER(NEW.`project`),NEW.`name`,
+    NEW.`notes`,NEW.`specification`,NEW.`dev_log`
   );
 END$$
 
@@ -48,17 +52,15 @@ BEGIN
   INSERT INTO `ezp_swimlog` (
     `user`,`swim_id`,
     `parent_swim_id`,`swimpool`,
-    `swimlane`,`status`,`project`,
-    `name`,`notes`,`specification`
+    `swimlane`,`status`,
+    `project`,`name`,
+    `notes`,`specification`,`dev_log`
   )
   VALUES (
-    usr,OLD.`id`,
-    OLD.`parent_swim_id`,OLD.`swimpool`,
-    OLD.`swimlane`,OLD.`status`,OLD.`project`,
-    OLD.`name`,OLD.`notes`,OLD.`specification`
+    usr,OLD.`id`,OLD.`parent_swim_id`,
+    OLD.`swimpool`,OLD.`swimlane`,OLD.`status`,
+    LOWER(OLD.`project`),OLD.`name`,
+    OLD.`notes`,OLD.`specification`,OLD.`dev_log`
   );
 END$$
-
-
-
 

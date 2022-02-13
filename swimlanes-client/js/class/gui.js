@@ -257,10 +257,12 @@ export class Gui extends Swimlanes {
             this.qs(s,'pre:nth-of-type(6)').textContent
                 = 'SPEC: ' + swim.specification;
             this.qs(s,'pre:nth-of-type(7)').textContent
-                = 'CREATED: ' + swim.created;
+                = 'DEV LOG: ' + swim.dev_log;
             this.qs(s,'pre:nth-of-type(8)').textContent
-                = 'UPDATED: ' + swim.updated;
+                = 'CREATED: ' + swim.created;
             this.qs(s,'pre:nth-of-type(9)').textContent
+                = 'UPDATED: ' + swim.updated;
+            this.qs(s,'pre:nth-of-type(10)').textContent
                 = 'UPDATER: ' + swim.updater;
         }
         else {
@@ -300,6 +302,9 @@ export class Gui extends Swimlanes {
             s.appendChild (p);
             p = document.createElement ('pre');
             p.textContent = 'SPEC: ' + swim.specification;
+            s.appendChild (p);
+            p = document.createElement ('pre');
+            p.textContent = 'DEV LOG: ' + swim.dev_log;
             s.appendChild (p);
             p = document.createElement ('pre');
             p.textContent = 'CREATED: ' + swim.created;
