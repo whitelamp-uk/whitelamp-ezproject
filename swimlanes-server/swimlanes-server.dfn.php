@@ -1,6 +1,6 @@
 <?php
 
-/* Copyright 2018 Whitelamp http://www.whitelamp.com/ */
+/* Copyright 2022 Whitelamp http://www.whitelamp.com/ */
 
 
 define ( 'EZP_SWIMLANES_STR_403',   '601 403 Sorry - data unavailable' );

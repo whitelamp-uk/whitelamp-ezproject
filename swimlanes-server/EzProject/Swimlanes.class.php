@@ -1,6 +1,6 @@
 <?php
 
-/* Copyright 2020 Whitelamp http://www.whitelamp.co.uk */
+/* Copyright 2022 Whitelamp http://www.whitelamp.co.uk */
 
 namespace EzProject;
 
