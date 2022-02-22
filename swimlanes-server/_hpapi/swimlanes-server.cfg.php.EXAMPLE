@@ -8,8 +8,6 @@ define ( 'EZP_SWIMLANES_VERIFY_TIME',       300 );
 
 define ( 'EZP_SWIMLANES_DIR_IMAGE_USER',    '/home/docs/www/media/image/user' );
 
-define ( 'EZP_SWIMLANES_FILE_PATTERN_USER', 'user-?.png' );
-
 define ( 'EZP_SWIMLANES_UPDATES_LIMIT',     100 );
 
 define ( 'EZP_ADMINER_URL',                 '/my-adminer/' );
