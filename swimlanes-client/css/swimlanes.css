@@ -24,6 +24,15 @@
     padding: 0;
 }
 
+#whitelamp-ezproject-swimlanes-client nav.navigator {
+    background-size: 6.4em auto;
+    background-position: top 0.8em left 1em;
+}
+#whitelamp-ezproject-swimlanes-client a[data-icon=lock] {
+    left: 8.2em;
+}
+
+
 #whitelamp-ezproject-swimlanes-client .nugget,
 #whitelamp-ezproject-swimlanes-client #gui-splash section {
     padding: 1em;
@@ -135,8 +144,8 @@
 
 #toolbar {
     position: absolute;
-    left: 16em;
-    top: 2em;
+    left: 12.4em;
+    top: 1.85em;
     z-index: 40;
 }
 
