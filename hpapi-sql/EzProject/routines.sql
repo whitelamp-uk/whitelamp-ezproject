@@ -159,6 +159,7 @@ BEGIN
     ON `recent`.`swim_id`=`sm`.`id`
   WHERE `sl`.`swimpool`=swimpoolCode
     AND `sl`.`code`=swimlaneCode
+  ORDER BY `sm`.`updated` DESC
   ;
 END$$
 
