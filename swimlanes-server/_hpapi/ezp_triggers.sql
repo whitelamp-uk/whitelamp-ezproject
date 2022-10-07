@@ -64,3 +64,21 @@ BEGIN
   );
 END$$
 
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS `timesheetBeforeInsert`$$
+CREATE TRIGGER `timesheetBeforeInsert` BEFORE INSERT ON `ezp_timesheet` FOR EACH ROW
+BEGIN
+  SET NEW.`project`=LOWER(NEW.`project`)
+  ;
+END$$
+
+
+DELIMITER $$
+DROP TRIGGER IF EXISTS `timesheetBeforeUpdate`$$
+CREATE TRIGGER `timesheetBeforeUpdate` BEFORE UPDATE ON `ezp_timesheet` FOR EACH ROW
+BEGIN
+  SET NEW.`project`=LOWER(NEW.`project`)
+  ;
+END$$
+
