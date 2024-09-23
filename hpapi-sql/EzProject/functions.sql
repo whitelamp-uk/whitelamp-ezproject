@@ -1,6 +1,15 @@
 
 
 DELIMITER $$
+DROP FUNCTION IF EXISTS `ezpBasename`$$
+CREATE FUNCTION `ezpBasename` (
+  filepath varchar (255) CHARACTER SET 'ascii'
+) RETURNS varchar(255) DETERMINISTIC
+BEGIN
+  RETURN SUBSTRING_INDEX( SUBSTRING_INDEX(filepath,'/',-1) ,'\\',-1);
+END$$
+
+DELIMITER $$
 DROP FUNCTION IF EXISTS `ezpCTZIn`$$
 CREATE FUNCTION `ezpCTZIn` (
   t timestamp
